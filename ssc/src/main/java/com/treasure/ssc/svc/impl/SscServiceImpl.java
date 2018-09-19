@@ -123,18 +123,10 @@ public class SscServiceImpl implements SscService {
         }
         // 是否买
         boolean buyFlag = false;
+
         list = list.stream().sorted(Comparator.comparing(e -> e.getNo())).collect(Collectors.toList());
         // TODO 还没计算完
         for (SscVo vo : list) {
-            // 后三组三计算
-            Integer aft3MaxCount = vo.getAft3MaxCount();
-            // 组三
-            if (aft3MaxCount == SscConst.MAX_COUNT_3) {
-                buyFlag = true;
-                // 非组三
-            } else {
-
-            }
             // 本次购买需要花费的钱 = 第一次花费 + (2 * 第一次花费)
             BigDecimal cost = startMoney.add(startMoney.multiply(BigDecimal.valueOf(2)));
 
@@ -143,6 +135,18 @@ public class SscServiceImpl implements SscService {
                 // 如果1次中了
                 // 如果1次没中，2次中了
                 // 如果1次、2次都没中
+            }
+
+            // 后三组三计算
+            Integer aft3MaxCount = vo.getAft3MaxCount();
+            // 组三
+            if (aft3MaxCount == SscConst.MAX_COUNT_3) {
+                // 下次就购买
+                buyFlag = true;
+            // 非组三
+            } else {
+                // 下次就不买
+                buyFlag = false;
             }
 
         }
