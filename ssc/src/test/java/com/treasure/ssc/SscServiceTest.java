@@ -8,6 +8,8 @@ import com.treasure.ssc.vo.SscVo;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,6 +21,18 @@ import java.util.List;
  * @date: 2018/9/18 16:33
  */
 public class SscServiceTest {
+
+    /**
+     * 归纳收入
+     */
+    @Test
+    public void reduceMoney() throws IOException {
+        SscService sscService = new SscServiceImpl();
+        Path path = Paths.get("E:", "files3", "2018-09-18.json");
+        byte[] bytes = Files.readAllBytes(path);
+        List<SscVo> list = JSON.parseArray(new String(bytes, Charset.defaultCharset()), SscVo.class);
+        sscService.reduceMoney12OneDay(list, BigDecimal.valueOf(50), BigDecimal.valueOf(3));
+    }
 
     /**
      * 初始化数据

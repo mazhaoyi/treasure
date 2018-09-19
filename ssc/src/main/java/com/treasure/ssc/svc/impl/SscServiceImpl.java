@@ -19,9 +19,12 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author: mazy
@@ -111,6 +114,38 @@ public class SscServiceImpl implements SscService {
             e.setAft3MaxCount(maxCount3Aft);
         });
         return list;
+    }
+
+    @Override
+    public BigDecimal reduceMoney12OneDay(List<SscVo> list, BigDecimal countMoney, BigDecimal startMoney) {
+        if (CollectionUtils.isEmpty(list)) {
+            return BigDecimal.valueOf(0);
+        }
+        // 是否买
+        boolean buyFlag = false;
+        list = list.stream().sorted(Comparator.comparing(e -> e.getNo())).collect(Collectors.toList());
+        for (SscVo vo : list) {
+            // 后三组三计算
+            Integer aft3MaxCount = vo.getAft3MaxCount();
+            // 组三
+            if (aft3MaxCount == SscConst.MAX_COUNT_3) {
+                buyFlag = true;
+                // 非组三
+            } else {
+
+            }
+            // 本次购买需要花费的钱 = 第一次花费 + (2 * 第一次花费)
+            BigDecimal cost = startMoney.add(startMoney.multiply(BigDecimal.valueOf(2)));
+
+            // 确定本次要购买，并且剩余的钱够花
+            if (buyFlag && countMoney.compareTo(startMoney) > 0) {
+                // 如果1次中了
+                // 如果1次没中，2次中了
+                // 如果1次、2次都没中
+            }
+
+        }
+        return null;
     }
 
 }
