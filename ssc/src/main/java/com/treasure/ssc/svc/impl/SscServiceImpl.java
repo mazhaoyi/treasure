@@ -124,6 +124,7 @@ public class SscServiceImpl implements SscService {
         // 是否买
         boolean buyFlag = false;
         list = list.stream().sorted(Comparator.comparing(e -> e.getNo())).collect(Collectors.toList());
+        // TODO 还没计算完
         for (SscVo vo : list) {
             // 后三组三计算
             Integer aft3MaxCount = vo.getAft3MaxCount();
