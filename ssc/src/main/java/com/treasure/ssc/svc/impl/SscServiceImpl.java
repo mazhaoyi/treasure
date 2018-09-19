@@ -3,8 +3,11 @@ package com.treasure.ssc.svc.impl;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.treasure.ssc.svc.SscService;
-import com.treasure.ssc.util.SscConst;
+import com.treasure.ssc.cons.SscConst;
+import com.treasure.ssc.util.SscUtils;
 import com.treasure.ssc.vo.SscVo;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -81,4 +84,33 @@ public class SscServiceImpl implements SscService {
 
         return list;
     }
+
+    @Override
+    public List<SscVo> reduceList(List<SscVo> list) {
+        if (CollectionUtils.isEmpty(list)) {
+            return list;
+        }
+        // num长度
+        int numLength = 5;
+        list.parallelStream().filter(e -> StringUtils.length(e.getNum()) == numLength).forEach(e -> {
+            String num = e.getNum();
+            // 前三字符串
+            String num3Bef = SscUtils.create3Before(num);
+            // 中三字符串
+            String num3Mid = SscUtils.create3Middle(num);
+            // 后三字符串
+            String num3Aft = SscUtils.create3After(num);
+            // 前三相同的数量
+            int maxCount3Bef = SscUtils.maxCountChar(num3Bef);
+            // 中三相同的数量
+            int maxCount3Min = SscUtils.maxCountChar(num3Mid);
+            // 后三相同的数量
+            int maxCount3Aft = SscUtils.maxCountChar(num3Aft);
+            e.setBef3MaxCount(maxCount3Bef);
+            e.setMid3MaxCount(maxCount3Min);
+            e.setAft3MaxCount(maxCount3Aft);
+        });
+        return list;
+    }
+
 }

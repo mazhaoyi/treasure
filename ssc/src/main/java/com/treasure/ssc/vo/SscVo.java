@@ -20,6 +20,42 @@ public class SscVo implements Serializable {
      * 号码
      */
     private String num;
+    /**
+     * 前三最大相同个数
+     */
+    private Integer bef3MaxCount;
+    /**
+     * 中三最大相同个数
+     */
+    private Integer mid3MaxCount;
+    /**
+     * 后三最大相同个数
+     */
+    private Integer aft3MaxCount;
+
+    public Integer getBef3MaxCount() {
+        return this.bef3MaxCount;
+    }
+
+    public void setBef3MaxCount(Integer bef3MaxCount) {
+        this.bef3MaxCount = bef3MaxCount;
+    }
+
+    public Integer getMid3MaxCount() {
+        return this.mid3MaxCount;
+    }
+
+    public void setMid3MaxCount(Integer mid3MaxCount) {
+        this.mid3MaxCount = mid3MaxCount;
+    }
+
+    public Integer getAft3MaxCount() {
+        return this.aft3MaxCount;
+    }
+
+    public void setAft3MaxCount(Integer aft3MaxCount) {
+        this.aft3MaxCount = aft3MaxCount;
+    }
 
     public String getDay() {
         return this.day;

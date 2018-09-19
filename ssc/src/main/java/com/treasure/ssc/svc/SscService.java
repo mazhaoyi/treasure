@@ -16,4 +16,11 @@ public interface SscService {
      * @return
      */
     List<SscVo> list(LocalDate date);
+
+    /**
+     * 计算列表中的数据
+     * @param list
+     * @return
+     */
+    List<SscVo> reduceList(List<SscVo> list);
 }

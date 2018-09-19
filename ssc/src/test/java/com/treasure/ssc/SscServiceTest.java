@@ -5,8 +5,10 @@ import com.treasure.ssc.svc.SscService;
 import com.treasure.ssc.svc.impl.SscServiceImpl;
 import com.treasure.ssc.util.FileUtils;
 import com.treasure.ssc.vo.SscVo;
+import org.junit.Test;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -17,24 +19,67 @@ import java.util.List;
  * @date: 2018/9/18 16:33
  */
 public class SscServiceTest {
-    /*public static void main(String[] args) {
+
+    /**
+     * 初始化数据
+     */
+    @Test
+    public void initData() {
+        //LocalDate endDate1 = LocalDate.of(2018, 2, 15);
+        // LocalDate beginDate1 = LocalDate.of(2017, 9, 19);
+
         // 现在
-        LocalDate date = LocalDate.now();
+        LocalDate endDate = LocalDate.now();
         // 一年前
-        LocalDate oneYearAgo = LocalDate.now().minusYears(1);
-        // LocalDate oneYearAgo = LocalDate.of(2018, 2, 22);
+        LocalDate beginDate = LocalDate.of(2018, 2, 22);
+
         SscService sscService = new SscServiceImpl();
         // 从一年前开始，一天一天往现在走，直到走到现在
-        while (oneYearAgo.isBefore(date)) {
+        while (beginDate.isBefore(endDate)) {
 
-            List<SscVo> list = sscService.list(oneYearAgo);
-            Path path = Paths.get("E:", "files", oneYearAgo.toString() + ".json");
+            List<SscVo> list = sscService.list(beginDate);
+            Path path = Paths.get("E:", "files", beginDate.toString() + ".json");
             try {
                 FileUtils.write(JSON.toJSONBytes(list), path);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            oneYearAgo = oneYearAgo.plusDays(1);
+            beginDate = beginDate.plusDays(1);
         }
-    }*/
+    }
+
+    /**
+     * 计算数据，从文件中把json读出来，计算过后，再存入另外一个文件中
+     */
+    @Test
+    public void reduceData() {
+        SscService sscService = new SscServiceImpl();
+        // 文件根目录
+        Path fromPath = Paths.get("E:", "files");
+        try {
+            // 读取所有文件，计算
+            Files.walk(fromPath).forEach(e -> {
+                if (Files.isDirectory(e)) {
+                    return;
+                }
+                try {
+                    // 文件名
+                    String pathName = e.getFileName().toString();
+                    List<SscVo> list = JSON.parseArray(new String(Files.readAllBytes(e)), SscVo.class);
+                    // 计算文件
+                    list = sscService.reduceList(list);
+                    // 计算完的文件目录
+                    Path targetPath = Paths.get("E:", "files3", pathName);
+                    // 计算完成，放入新文件
+                    FileUtils.write(JSON.toJSONBytes(list), targetPath);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }
