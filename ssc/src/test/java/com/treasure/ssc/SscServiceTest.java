@@ -31,7 +31,7 @@ public class SscServiceTest {
         LocalDate begin = LocalDate.of(2018, 9, 1);
         LocalDate end = LocalDate.of(2018, 9, 18);
         BigDecimal total = BigDecimal.valueOf(1000);
-        BigDecimal start = BigDecimal.valueOf(100);
+        BigDecimal start = BigDecimal.valueOf(1);
         while (begin.isBefore(end)) {
             Path path = Paths.get("E:", "files3", begin.toString() + ".json");
             byte[] bytes = Files.readAllBytes(path);

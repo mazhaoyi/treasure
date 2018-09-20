@@ -139,7 +139,7 @@ public class SscServiceImpl implements SscService {
         // 不中次数（不是不中的票数，买一次，都不中为一次不中）
         int outTimes = 0;
         // 最大不中次数
-        int outTimesMax = 100;
+        int outTimesMax = 2;
         // 规避次数
         int evadeCount = 0;
         // 最大规避次数
@@ -253,8 +253,10 @@ public class SscServiceImpl implements SscService {
             if (redFlag && ticket == 0) {
                 // 第二次花费
                 BigDecimal secondTime = startMoney.multiply(BigDecimal.valueOf(2));
-                // 本次购买需要花费的钱 = 第一次花费 + 第二次花费
-                BigDecimal cost = startMoney.add(secondTime);
+                // 第三次花费
+                BigDecimal thirdTime = secondTime.multiply(BigDecimal.valueOf(2));
+                // 本次购买需要花费的钱 = 第一次花费 + 第二次花费 + 第三次花费
+                BigDecimal cost = startMoney.add(secondTime).add(thirdTime);
 
                 // 本金已经无法支付一次购买，那么不再进行
                 if (countMoney.compareTo(cost) < 0) {
