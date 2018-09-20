@@ -17,6 +17,8 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -31,6 +33,7 @@ import java.util.stream.Collectors;
  * @date: 2018/9/18 13:34
  */
 public class SscServiceImpl implements SscService {
+    private static final Logger logger = LoggerFactory.getLogger(SscServiceImpl.class);
 
     @Override
     public List<SscVo> list(LocalDate date) {
@@ -119,38 +122,102 @@ public class SscServiceImpl implements SscService {
     @Override
     public BigDecimal reduceMoney12OneDay(List<SscVo> list, BigDecimal countMoney, BigDecimal startMoney) {
         if (CollectionUtils.isEmpty(list)) {
-            return BigDecimal.valueOf(0);
+            return countMoney;
         }
-        // 是否买
-        boolean buyFlag = false;
+        // 是否红了
+        boolean redFlag = false;
+        // 当前是第几注
+        int ticket = 0;
 
         list = list.stream().sorted(Comparator.comparing(e -> e.getNo())).collect(Collectors.toList());
-        // TODO 还没计算完
-        for (SscVo vo : list) {
-            // 本次购买需要花费的钱 = 第一次花费 + (2 * 第一次花费)
-            BigDecimal cost = startMoney.add(startMoney.multiply(BigDecimal.valueOf(2)));
 
-            // 确定本次要购买，并且剩余的钱够花
-            if (buyFlag && countMoney.compareTo(startMoney) > 0) {
-                // 如果1次中了
-                // 如果1次没中，2次中了
-                // 如果1次、2次都没中
-            }
+        logger.info("开始计算，总金钱={}，首注金钱={}", countMoney, startMoney);
+        // 开始计算
+        for (int i = 0; i < list.size(); i++) {
+            SscVo vo = list.get(i);
 
+            /** 判断本次循环是否红了 **/
             // 后三组三计算
             Integer aft3MaxCount = vo.getAft3MaxCount();
             // 组三
             if (aft3MaxCount == SscConst.MAX_COUNT_3) {
-                // 下次就购买
-                buyFlag = true;
+                // 红了
+                redFlag = true;
+                logger.info("^_^ 本次红了，日期={}，期数={}，号码={}", vo.getDay(), vo.getNo(), vo.getNum());
             // 非组三
             } else {
-                // 下次就不买
-                buyFlag = false;
+                // 不红
+                redFlag = false;
+                logger.info("本次红了，日期={}，期数={}，号码={}", vo.getDay(), vo.getNo(), vo.getNum());
             }
 
+            /** 清算上次结果 */
+            // 没有持票
+            if (ticket == 0) {
+            // 第一次票
+            } else if (ticket == 1) {
+                // 红了
+                if (redFlag) {
+                    // 第一轮赏金
+                    BigDecimal fee = startMoney.multiply(SscConst.ZU_3_MULTIPLE);
+                    // 第二轮金钱
+                    BigDecimal remain = startMoney.multiply(BigDecimal.valueOf(2));
+                    // 1，返回第一轮赏金；2，撤回第二轮金钱；3，ticket标注为0
+                    countMoney = countMoney.add(fee).add(remain);
+                    ticket = 0;
+                    logger.info("^_^ 第一票获得赏金={}，撤回第二轮金钱={}，归零票轮数={}", fee, remain, ticket);
+                // 不红，那么标记下一轮
+                } else {
+                    ticket++;
+                    logger.info("增加票轮数={}", ticket);
+                }
+            // 第二次票
+            } else if (ticket == 2) {
+                // 红了
+                if (redFlag) {
+                    // 第二轮赏金
+                    BigDecimal fee = startMoney.multiply(BigDecimal.valueOf(2)).multiply(SscConst.ZU_3_MULTIPLE);
+                    // 1，返回第二轮赏金；2，ticket标注为0
+                    countMoney = countMoney.add(fee);
+                    ticket = 0;
+                    logger.info("^_^ 第二票获得赏金={}，归零票轮数={}", fee, ticket);
+                // 不红ticket标注为0，结束
+                } else {
+                    ticket = 0;
+                    logger.info("第二轮不中，归零票轮数={}", ticket);
+                }
+            }
+
+            /** 如果本轮已经是倒数第二轮那么就不购买，总共120轮 */
+            if (i > 117) {
+                logger.warn("本轮已经是第 [{}] 期，不购买", vo.getNo());
+                continue;
+            }
+
+            /** 购买新票 */
+
+            // 第二次花费
+            BigDecimal secondTime = startMoney.multiply(BigDecimal.valueOf(2));
+            // 本次购买需要花费的钱 = 第一次花费 + 第二次花费
+            BigDecimal cost = startMoney.add(secondTime);
+
+            // 确定本轮红了，并且手中没有票，买票
+            if (redFlag && ticket == 0) {
+                // 本金已经无法支付一次购买，那么不再进行
+                if (countMoney.compareTo(cost) < 0) {
+                    logger.error("您的本金已经不够支付本次购买，本金={}，需要支付={}", countMoney, cost);
+                    break;
+                // 本金足够，支付本次购买金钱，ticket置为1
+                } else {
+                    logger.info("本金剩余=¥{}", countMoney);
+                    countMoney = countMoney.subtract(cost);
+                    ticket = 1;
+                    logger.info("支付 ¥{}=¥{}+¥{} 后，剩余=¥{}", cost, startMoney, secondTime, countMoney);
+                }
+            }
         }
-        return null;
+        logger.info("结束计算，总金钱={}", countMoney);
+        return countMoney;
     }
 
 }
