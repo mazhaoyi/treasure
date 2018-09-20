@@ -15,6 +15,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author: mazy
@@ -49,7 +50,7 @@ public class FrontServiceImpl implements FrontService {
     }
 
     @Override
-    public List<BuyVo> buyDouble(LocalDate date, String no, BigDecimal start, int times) {
+    public List<BuyVo> buyDouble(String username, LocalDate date, String no, BigDecimal start, int times) {
         List<BuyVo> list = Lists.newArrayList();
         // no转换成int类型
         int noInt = Integer.valueOf(no);
@@ -60,11 +61,24 @@ public class FrontServiceImpl implements FrontService {
             buyVo.setMoney(getMoneyByTimes(start, i + 1));
             list.add(buyVo);
         }
+        // 写入文件
+        try {
+            Files.write(SscConst.BUY_DIR.resolve(username + ".json"), JSON.toJSONBytes(list));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return list;
     }
 
     @Override
-    public BuyVo getNoMoney(LocalDate date, String no) {
+    public BuyVo getNoMoney(String username, LocalDate date, String no) {
+        try {
+            List<BuyVo> list = JSON.parseArray(new String(Files.readAllBytes(SscConst.BUY_DIR.resolve(username + ".json")), Charset.defaultCharset()), BuyVo.class);
+            Optional<BuyVo> optional = list.parallelStream().filter(e -> e.getNo().equals(no) && e.getDate().equals(date)).findFirst();
+            return optional.isPresent() ? optional.get() : null;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
@@ -79,7 +93,6 @@ public class FrontServiceImpl implements FrontService {
 
     public static void main(String[] args) {
         FrontService frontService = new FrontServiceImpl();
-        List<BuyVo> list = frontService.buyDouble(LocalDate.now(), "102", BigDecimal.valueOf(0.9), 5);
-        System.out.println(JSON.toJSONString(list));
+        System.out.println(JSON.toJSONString(frontService.getNoMoney("mzy", LocalDate.of(2018, 9, 21), "105")));
     }
 }

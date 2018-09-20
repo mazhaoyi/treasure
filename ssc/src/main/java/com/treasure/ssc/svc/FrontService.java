@@ -68,7 +68,7 @@ public interface FrontService {
      * @param times 一次追几期
      * @return
      */
-    List<BuyVo> buyDouble(LocalDate date, String no, BigDecimal start, int times);
+    List<BuyVo> buyDouble(String username, LocalDate date, String no, BigDecimal start, int times);
 
     /**
      * 根据日期，期数，查询这一期下注多少钱
@@ -76,7 +76,7 @@ public interface FrontService {
      * @param no 期数
      * @return
      */
-    BuyVo getNoMoney(LocalDate date, String no);
+    BuyVo getNoMoney(String username, LocalDate date, String no);
 
     /**
      * 根据初始金钱，第几次翻倍，计算这一期的金钱数
