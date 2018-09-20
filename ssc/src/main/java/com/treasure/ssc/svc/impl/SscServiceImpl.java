@@ -134,8 +134,22 @@ public class SscServiceImpl implements SscService {
         int secondCount = 0;
         // 总购买次数
         int allCount = 0;
+        // 不中次数（不是不中的票数，买一次，都不中为一次不中）
+        int outTimes = 0;
+        // 最大不中次数
+        int outTimesMax = 2;
+        // 规避次数
+        int evadeCount = 0;
+        // 最大规避次数
+        int evadeCountMax = 2;
+        // 连续不红最大次数
+        int coldCountMax = 3;
+        // 连续不红次数
+        int coldCount = 0;
 
         list = list.stream().sorted(Comparator.comparing(e -> e.getNo())).collect(Collectors.toList());
+        // 两次红之间不红次数列表
+        List<Integer> coldList = Lists.newArrayList();
 
         logger.info("开始计算，总金钱={}，首注金钱={}", countMoney, startMoney);
         // 开始计算
@@ -150,10 +164,13 @@ public class SscServiceImpl implements SscService {
                 // 红了
                 redFlag = true;
                 logger.info("^_^ 本次红了，日期={}，期数={}，号码={}", vo.getDay(), vo.getNo(), vo.getNum());
+                coldList.add(coldCount);
+                coldCount = 0;
             // 非组三
             } else {
                 // 不红
                 redFlag = false;
+                coldCount++;
                 logger.info("本次不红，日期={}，期数={}，号码={}", vo.getDay(), vo.getNo(), vo.getNum());
             }
 
@@ -193,6 +210,8 @@ public class SscServiceImpl implements SscService {
                 // 不红ticket标注为0，结束
                 } else {
                     ticket = 0;
+                    // 增加不中次数
+                    outTimes++;
                     logger.info("第二票不中，归零票轮数={}", ticket);
                 }
             }
@@ -218,6 +237,24 @@ public class SscServiceImpl implements SscService {
                     break;
                 // 本金足够，支付本次购买金钱，ticket置为1
                 } else {
+                    // 不中次数 >= 最大不中次数，进行规避动作
+                    if (outTimes >= outTimesMax) {
+                        logger.info("已经有 {} 次不中，最大不中次数={}，实施规避动作！", outTimes, outTimesMax);
+                        // 可以规避
+                        if (evadeCount < evadeCountMax) {
+                            // 规避一次
+                            evadeCount++;
+                            logger.info("实施规避动作，规避次数 = {}，最大规避次数为 = {}", evadeCount, evadeCountMax);
+                            continue;
+                        }else {
+                            logger.info("规避次数为 = {}，最大规避次数为 = {}，不中次数归0，规避次数归0！", evadeCount, evadeCountMax);
+                            // 不中次数归零
+                            outTimes = 0;
+                            // 规避次数归零
+                            evadeCount = 0;
+                            continue;
+                        }
+                    }
                     logger.info("本金剩余=¥{}", countMoney);
                     countMoney = countMoney.subtract(cost);
                     ticket = 1;

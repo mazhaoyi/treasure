@@ -28,8 +28,8 @@ public class SscServiceTest {
     @Test
     public void reduceAllMoney() throws IOException {
         SscService sscService = new SscServiceImpl();
-        LocalDate begin = LocalDate.of(2018, 6, 2);
-        LocalDate end = LocalDate.of(2018, 9, 19);
+        LocalDate begin = LocalDate.of(2018, 6, 17);
+        LocalDate end = LocalDate.of(2018, 9, 18);
         BigDecimal total = BigDecimal.valueOf(1000);
         BigDecimal start = BigDecimal.valueOf(1);
         while (begin.isBefore(end)) {
