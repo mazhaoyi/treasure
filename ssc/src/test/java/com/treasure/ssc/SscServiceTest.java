@@ -39,13 +39,10 @@ public class SscServiceTest {
      */
     @Test
     public void initData() {
-        //LocalDate endDate1 = LocalDate.of(2018, 2, 15);
-        // LocalDate beginDate1 = LocalDate.of(2017, 9, 19);
-
         // 现在
         LocalDate endDate = LocalDate.now();
-        // 一年前
-        LocalDate beginDate = LocalDate.of(2018, 2, 22);
+        // 2018.6.2号开始，2号之前的数据有问题
+        LocalDate beginDate = LocalDate.of(2018, 6, 2);
 
         SscService sscService = new SscServiceImpl();
         // 从一年前开始，一天一天往现在走，直到走到现在
