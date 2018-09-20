@@ -148,12 +148,13 @@ public class SscServiceImpl implements SscService {
             } else {
                 // 不红
                 redFlag = false;
-                logger.info("本次红了，日期={}，期数={}，号码={}", vo.getDay(), vo.getNo(), vo.getNum());
+                logger.info("本次不红，日期={}，期数={}，号码={}", vo.getDay(), vo.getNo(), vo.getNum());
             }
 
             /** 清算上次结果 */
             // 没有持票
             if (ticket == 0) {
+                logger.info("手中没有持票！");
             // 第一次票
             } else if (ticket == 1) {
                 // 红了
@@ -169,7 +170,7 @@ public class SscServiceImpl implements SscService {
                 // 不红，那么标记下一轮
                 } else {
                     ticket++;
-                    logger.info("增加票轮数={}", ticket);
+                    logger.info("第一票不中，增加票轮数={}", ticket);
                 }
             // 第二次票
             } else if (ticket == 2) {
@@ -184,7 +185,7 @@ public class SscServiceImpl implements SscService {
                 // 不红ticket标注为0，结束
                 } else {
                     ticket = 0;
-                    logger.info("第二轮不中，归零票轮数={}", ticket);
+                    logger.info("第二票不中，归零票轮数={}", ticket);
                 }
             }
 
@@ -196,23 +197,23 @@ public class SscServiceImpl implements SscService {
 
             /** 购买新票 */
 
-            // 第二次花费
-            BigDecimal secondTime = startMoney.multiply(BigDecimal.valueOf(2));
-            // 本次购买需要花费的钱 = 第一次花费 + 第二次花费
-            BigDecimal cost = startMoney.add(secondTime);
-
             // 确定本轮红了，并且手中没有票，买票
             if (redFlag && ticket == 0) {
+                // 第二次花费
+                BigDecimal secondTime = startMoney.multiply(BigDecimal.valueOf(2));
+                // 本次购买需要花费的钱 = 第一次花费 + 第二次花费
+                BigDecimal cost = startMoney.add(secondTime);
+
                 // 本金已经无法支付一次购买，那么不再进行
                 if (countMoney.compareTo(cost) < 0) {
-                    logger.error("您的本金已经不够支付本次购买，本金={}，需要支付={}", countMoney, cost);
+                    logger.error("您的本金已经不够支付本次购买，期号={}，本金={}，需要支付={}", vo.getNo(), countMoney, cost);
                     break;
                 // 本金足够，支付本次购买金钱，ticket置为1
                 } else {
                     logger.info("本金剩余=¥{}", countMoney);
                     countMoney = countMoney.subtract(cost);
                     ticket = 1;
-                    logger.info("支付 ¥{}=¥{}+¥{} 后，剩余=¥{}", cost, startMoney, secondTime, countMoney);
+                    logger.info("期号={}，支付 ¥{}=¥{}+¥{} 后，剩余=¥{}", vo.getNo(), cost, startMoney, secondTime, countMoney);
                 }
             }
         }
