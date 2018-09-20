@@ -23,7 +23,26 @@ import java.util.List;
 public class SscServiceTest {
 
     /**
-     * 归纳收入
+     * 归纳从6月2号到9月18号金钱
+     */
+    @Test
+    public void reduceAllMoney() throws IOException {
+        SscService sscService = new SscServiceImpl();
+        LocalDate begin = LocalDate.of(2018, 6, 2);
+        LocalDate end = LocalDate.of(2018, 9, 19);
+        BigDecimal total = BigDecimal.valueOf(1000);
+        BigDecimal start = BigDecimal.valueOf(1);
+        while (begin.isBefore(end)) {
+            Path path = Paths.get("E:", "files3", begin.toString() + ".json");
+            byte[] bytes = Files.readAllBytes(path);
+            List<SscVo> list = JSON.parseArray(new String(bytes, Charset.defaultCharset()), SscVo.class);
+            total = sscService.reduceMoney12OneDay(list, total, start);
+            begin = begin.plusDays(1);
+        }
+    }
+
+    /**
+     * 归纳一天收入
      */
     @Test
     public void reduceMoney() throws IOException {
