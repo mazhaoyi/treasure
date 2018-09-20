@@ -128,6 +128,12 @@ public class SscServiceImpl implements SscService {
         boolean redFlag = false;
         // 当前是第几注
         int ticket = 0;
+        // 第一票中的数量
+        int oneCount = 0;
+        // 第二票中的数量
+        int secondCount = 0;
+        // 总购买次数
+        int allCount = 0;
 
         list = list.stream().sorted(Comparator.comparing(e -> e.getNo())).collect(Collectors.toList());
 
@@ -166,6 +172,7 @@ public class SscServiceImpl implements SscService {
                     // 1，返回第一轮赏金；2，撤回第二轮金钱；3，ticket标注为0
                     countMoney = countMoney.add(fee).add(remain);
                     ticket = 0;
+                    oneCount++;
                     logger.info("^_^ 第一票获得赏金={}，撤回第二轮金钱={}，归零票轮数={}", fee, remain, ticket);
                 // 不红，那么标记下一轮
                 } else {
@@ -181,6 +188,7 @@ public class SscServiceImpl implements SscService {
                     // 1，返回第二轮赏金；2，ticket标注为0
                     countMoney = countMoney.add(fee);
                     ticket = 0;
+                    secondCount++;
                     logger.info("^_^ 第二票获得赏金={}，归零票轮数={}", fee, ticket);
                 // 不红ticket标注为0，结束
                 } else {
@@ -190,7 +198,7 @@ public class SscServiceImpl implements SscService {
             }
 
             /** 如果本轮已经是倒数第二轮那么就不购买，总共120轮 */
-            if (i > 117) {
+            if (StringUtils.compare("118", vo.getNo()) < 0) {
                 logger.warn("本轮已经是第 [{}] 期，不购买", vo.getNo());
                 continue;
             }
@@ -213,11 +221,12 @@ public class SscServiceImpl implements SscService {
                     logger.info("本金剩余=¥{}", countMoney);
                     countMoney = countMoney.subtract(cost);
                     ticket = 1;
-                    logger.info("期号={}，支付 ¥{}=¥{}+¥{} 后，剩余=¥{}", vo.getNo(), cost, startMoney, secondTime, countMoney);
+                    allCount++;
+                    logger.info("期号={}号红了之后，下期开奖前购买，支付 ¥{}=¥{}+¥{} 后，剩余=¥{}", vo.getNo(), cost, startMoney, secondTime, countMoney);
                 }
             }
         }
-        logger.info("结束计算，总金钱={}", countMoney);
+        logger.info("结束计算，总购买次数={}，第一票中的数量={}，第二票中的数量={}，剩余总金钱={}", allCount, oneCount, secondCount, countMoney);
         return countMoney;
     }
 

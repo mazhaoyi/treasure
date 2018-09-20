@@ -28,10 +28,10 @@ public class SscServiceTest {
     @Test
     public void reduceMoney() throws IOException {
         SscService sscService = new SscServiceImpl();
-        Path path = Paths.get("E:", "files3", "2018-09-18.json");
+        Path path = Paths.get("E:", "files3", "2018-06-02.json");
         byte[] bytes = Files.readAllBytes(path);
         List<SscVo> list = JSON.parseArray(new String(bytes, Charset.defaultCharset()), SscVo.class);
-        sscService.reduceMoney12OneDay(list, BigDecimal.valueOf(50), BigDecimal.valueOf(3));
+        sscService.reduceMoney12OneDay(list, BigDecimal.valueOf(500), BigDecimal.valueOf(3));
     }
 
     /**
