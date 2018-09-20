@@ -132,12 +132,14 @@ public class SscServiceImpl implements SscService {
         int oneCount = 0;
         // 第二票中的数量
         int secondCount = 0;
+        // 第三票中的数量
+        int thirdCount = 0;
         // 总购买次数
         int allCount = 0;
         // 不中次数（不是不中的票数，买一次，都不中为一次不中）
         int outTimes = 0;
         // 最大不中次数
-        int outTimesMax = 2;
+        int outTimesMax = 100;
         // 规避次数
         int evadeCount = 0;
         // 最大规避次数
@@ -202,17 +204,40 @@ public class SscServiceImpl implements SscService {
                 if (redFlag) {
                     // 第二轮赏金
                     BigDecimal fee = startMoney.multiply(BigDecimal.valueOf(2)).multiply(SscConst.ZU_3_MULTIPLE);
-                    // 1，返回第二轮赏金；2，ticket标注为0
-                    countMoney = countMoney.add(fee);
+                    // 第三轮金钱
+                    BigDecimal remain = startMoney
+                            .multiply(BigDecimal.valueOf(2))
+                            .multiply(BigDecimal.valueOf(2));
+                    // 1，返回第二轮赏金；2，撤回第三轮金钱；3，ticket标注为0
+                    countMoney = countMoney.add(fee).add(remain);
                     ticket = 0;
                     secondCount++;
                     logger.info("^_^ 第二票获得赏金={}，归零票轮数={}", fee, ticket);
+                // 不红，那么标记下一轮
+                } else {
+                    ticket++;
+                    logger.info("第二票不中，增加票轮数={}", ticket);
+                }
+            // 第三次票
+            } else if (ticket == 3) {
+                // 红了
+                if (redFlag) {
+                    // 第三轮赏金
+                    BigDecimal fee = startMoney
+                            .multiply(BigDecimal.valueOf(2))
+                            .multiply(BigDecimal.valueOf(2))
+                            .multiply(SscConst.ZU_3_MULTIPLE);
+                    // 1，返回第三轮赏金；2，ticket标注为0
+                    countMoney = countMoney.add(fee);
+                    ticket = 0;
+                    thirdCount++;
+                    logger.info("^_^ 第三票获得赏金={}，归零票轮数={}", fee, ticket);
                 // 不红ticket标注为0，结束
                 } else {
                     ticket = 0;
                     // 增加不中次数
                     outTimes++;
-                    logger.info("第二票不中，归零票轮数={}", ticket);
+                    logger.info("第三票不中，归零票轮数={}", ticket);
                 }
             }
 

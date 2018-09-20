@@ -28,10 +28,10 @@ public class SscServiceTest {
     @Test
     public void reduceAllMoney() throws IOException {
         SscService sscService = new SscServiceImpl();
-        LocalDate begin = LocalDate.of(2018, 6, 17);
+        LocalDate begin = LocalDate.of(2018, 9, 1);
         LocalDate end = LocalDate.of(2018, 9, 18);
         BigDecimal total = BigDecimal.valueOf(1000);
-        BigDecimal start = BigDecimal.valueOf(1);
+        BigDecimal start = BigDecimal.valueOf(100);
         while (begin.isBefore(end)) {
             Path path = Paths.get("E:", "files3", begin.toString() + ".json");
             byte[] bytes = Files.readAllBytes(path);
