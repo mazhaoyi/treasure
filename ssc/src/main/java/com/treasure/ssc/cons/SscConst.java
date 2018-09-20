@@ -1,6 +1,8 @@
 package com.treasure.ssc.cons;
 
 import java.math.BigDecimal;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * @author: mazy
@@ -19,4 +21,16 @@ public class SscConst {
      * 组三获奖倍数
      */
     public static final BigDecimal ZU_3_MULTIPLE = BigDecimal.valueOf(3.58888888);
+    /**
+     * 购买目录
+     */
+    public static final Path BUY_DIR = Paths.get("E:", "files3", "buydata");
+    /**
+     * 金钱文件
+     */
+    public static final Path MONEY_DIR = Paths.get("E:", "files3", "moneydata");
+    /**
+     * 源文件目录
+     */
+    public static final Path SOURCE_DIR = Paths.get("E:", "files3", "sourcedata");
 }

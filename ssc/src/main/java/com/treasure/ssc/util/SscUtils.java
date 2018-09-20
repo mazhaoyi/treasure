@@ -61,4 +61,14 @@ public class SscUtils {
         return res;
     }
 
+    /**
+     * 把数字转换成字符串，长度为size，如果长度不够，在前面补0
+     * @param num 数字
+     * @param length 长度
+     * @return
+     */
+    public static final String frontZero(int num, int length) {
+        return String.format("%0" + length + "d", num);
+    }
+
 }
