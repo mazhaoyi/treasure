@@ -8,6 +8,9 @@ spring:
   profiles:
     # 默认开发环境
     active: dev
+  thymeleaf:
+    prefix: classpath:/template/
+    suffix: .html
 logback:
   # 日志根文件
   file: E:/usr/logs

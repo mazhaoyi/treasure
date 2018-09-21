@@ -1,5 +1,6 @@
 package com.treasure.ssc.converter;
 
+import javafx.scene.input.DataFormat;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.convert.converter.Converter;
 
@@ -38,5 +39,15 @@ public class String2DateConverter implements Converter<String, Date> {
             e.printStackTrace();
         }
         return date;
+    }
+
+    public static void main(String[] args) {
+        DateFormat dateFormat = DateFormat.getDateInstance();
+        try {
+            Date date = dateFormat.parse("2018-09-17 00:00:01");
+            System.out.println(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }

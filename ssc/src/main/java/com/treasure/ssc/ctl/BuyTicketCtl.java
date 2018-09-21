@@ -5,9 +5,11 @@ import com.treasure.ssc.svc.BuySvc;
 import com.treasure.ssc.vo.SscVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 import java.time.ZoneId;
 import java.util.Date;
@@ -16,14 +18,14 @@ import java.util.Date;
  * @author: mazy
  * @date: 2018/9/21 12:19
  */
-@RestController
+@Controller
 @RequestMapping(value = "/buy")
 public class BuyTicketCtl {
     @Autowired
     private BuySvc buySvc;
 
-    @PostMapping(value = "/nextno")
-    public Object nextNo(String no, @JSONField(format = "yyyy-MM-dd") Date date) {
+    @GetMapping(value = "/nextno")
+    public String nextNo(String no, @JSONField(format = "yyyy-MM-dd") Date date, ModelMap modelMap) {
         if (!StringUtils.isNumeric(no)) {
             throw new RuntimeException("no must number");
         }
@@ -31,6 +33,7 @@ public class BuyTicketCtl {
             throw new RuntimeException("no must in 0-120");
         }
         SscVo vo = buySvc.nextNo(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), no);
-        return vo;
+        modelMap.put("vo", vo);
+        return "mainplant";
     }
 }
