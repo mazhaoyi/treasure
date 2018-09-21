@@ -2,7 +2,7 @@ package com.treasure.ssc.svc.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
-import com.treasure.ssc.svc.SscService;
+import com.treasure.ssc.svc.SscSvc;
 import com.treasure.ssc.cons.SscConst;
 import com.treasure.ssc.util.SscUtils;
 import com.treasure.ssc.vo.SscVo;
@@ -19,6 +19,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -32,8 +33,9 @@ import java.util.stream.Collectors;
  * @author: mazy
  * @date: 2018/9/18 13:34
  */
-public class SscServiceImpl implements SscService {
-    private static final Logger logger = LoggerFactory.getLogger(SscServiceImpl.class);
+@Service
+public class SscSvcImpl implements SscSvc {
+    private static final Logger logger = LoggerFactory.getLogger(SscSvcImpl.class);
 
     @Override
     public List<SscVo> list(LocalDate date) {

@@ -1,8 +1,8 @@
 package com.treasure.ssc;
 
 import com.alibaba.fastjson.JSON;
-import com.treasure.ssc.svc.SscService;
-import com.treasure.ssc.svc.impl.SscServiceImpl;
+import com.treasure.ssc.svc.SscSvc;
+import com.treasure.ssc.svc.impl.SscSvcImpl;
 import com.treasure.ssc.util.FileUtils;
 import com.treasure.ssc.vo.SscVo;
 import org.junit.Test;
@@ -20,14 +20,14 @@ import java.util.List;
  * @author: mazy
  * @date: 2018/9/18 16:33
  */
-public class SscServiceTest {
+public class SscSvcTest {
 
     /**
      * 归纳从6月2号到9月18号金钱
      */
     @Test
     public void reduceAllMoney() throws IOException {
-        SscService sscService = new SscServiceImpl();
+        SscSvc sscService = new SscSvcImpl();
         LocalDate begin = LocalDate.of(2018, 9, 1);
         LocalDate end = LocalDate.of(2018, 9, 18);
         BigDecimal total = BigDecimal.valueOf(1000);
@@ -46,7 +46,7 @@ public class SscServiceTest {
      */
     @Test
     public void reduceMoney() throws IOException {
-        SscService sscService = new SscServiceImpl();
+        SscSvc sscService = new SscSvcImpl();
         Path path = Paths.get("E:", "files3", "2018-06-02.json");
         byte[] bytes = Files.readAllBytes(path);
         List<SscVo> list = JSON.parseArray(new String(bytes, Charset.defaultCharset()), SscVo.class);
@@ -63,7 +63,7 @@ public class SscServiceTest {
         // 2018.6.2号开始，2号之前的数据有问题
         LocalDate beginDate = LocalDate.of(2018, 6, 2);
 
-        SscService sscService = new SscServiceImpl();
+        SscSvc sscService = new SscSvcImpl();
         // 从一年前开始，一天一天往现在走，直到走到现在
         while (beginDate.isBefore(endDate)) {
 
@@ -83,7 +83,7 @@ public class SscServiceTest {
      */
     @Test
     public void reduceData() {
-        SscService sscService = new SscServiceImpl();
+        SscSvc sscService = new SscSvcImpl();
         // 文件根目录
         Path fromPath = Paths.get("E:", "files");
         try {

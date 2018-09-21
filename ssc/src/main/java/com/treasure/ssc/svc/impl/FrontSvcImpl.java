@@ -3,10 +3,11 @@ package com.treasure.ssc.svc.impl;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.treasure.ssc.cons.SscConst;
-import com.treasure.ssc.svc.FrontService;
+import com.treasure.ssc.svc.FrontSvc;
 import com.treasure.ssc.util.SscUtils;
 import com.treasure.ssc.vo.BuyVo;
 import com.treasure.ssc.vo.SscVo;
+import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -21,7 +22,8 @@ import java.util.Optional;
  * @author: mazy
  * @date: 2018/9/20 23:21
  */
-public class FrontServiceImpl implements FrontService {
+@Service
+public class FrontSvcImpl implements FrontSvc {
     @Override
     public SscVo getByDateAndNo(LocalDate date, String no) {
         Path path = SscConst.SOURCE_DIR.resolve(date.toString() + ".json");
@@ -55,10 +57,16 @@ public class FrontServiceImpl implements FrontService {
         // no转换成int类型
         int noInt = Integer.valueOf(no);
         for (int i = 0; i < times; i++) {
+            // 本期金钱
+            BigDecimal thisMoney = getMoneyByTimes(start, i + 1);
+            // 总金钱
+            BigDecimal allMoney = getAllMoney(username);
+            // 剩余金钱写入文件
+            saveMoney(allMoney, username);
             BuyVo buyVo = new BuyVo();
             buyVo.setDate(date);
             buyVo.setNo(SscUtils.frontZero(noInt++, 3));
-            buyVo.setMoney(getMoneyByTimes(start, i + 1));
+            buyVo.setMoney(thisMoney);
             list.add(buyVo);
         }
         // 写入文件
@@ -92,7 +100,7 @@ public class FrontServiceImpl implements FrontService {
     }
 
     public static void main(String[] args) {
-        FrontService frontService = new FrontServiceImpl();
+        FrontSvc frontService = new FrontSvcImpl();
         System.out.println(JSON.toJSONString(frontService.getNoMoney("mzy", LocalDate.of(2018, 9, 21), "105")));
     }
 }

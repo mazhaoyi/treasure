@@ -10,7 +10,7 @@ import java.util.List;
  * @author: mazy
  * @date: 2018/9/18 13:31
  */
-public interface SscService {
+public interface SscSvc {
     /**
      * 查询某天的数据
      * @param date

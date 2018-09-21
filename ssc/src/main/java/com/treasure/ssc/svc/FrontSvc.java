@@ -16,7 +16,7 @@ import java.util.List;
  * @author: mazy
  * @date: 2018/9/20 23:15
  */
-public interface FrontService {
+public interface FrontSvc {
     /**
      * 初始化数据
      * @param allMoney
@@ -39,6 +39,23 @@ public interface FrontService {
                     e1.printStackTrace();
                 }
             });
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 存钱
+     * @param money
+     * @param username
+     * @return
+     */
+    default boolean saveMoney(BigDecimal money, String username) {
+        Path moneyPath = SscConst.MONEY_DIR.resolve(username + ".txt");
+        try {
+            Files.write(moneyPath, money.toString().getBytes(Charset.defaultCharset()));
         } catch (IOException e) {
             e.printStackTrace();
             return false;
