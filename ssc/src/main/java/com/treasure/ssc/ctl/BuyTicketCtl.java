@@ -32,8 +32,11 @@ public class BuyTicketCtl {
         Integer noInt = Integer.valueOf(no);
         // 最大期数
         int maxNo = 120;
-        if (noInt < 1 || noInt > maxNo) {
-            return ResUtils.error("必须是0-120期！");
+        if (noInt < 1) {
+            return ResUtils.error("必须是从1期开始！");
+        }
+        if (noInt > maxNo) {
+            return ResUtils.error(120, "最大期数为120！", null);
         }
         int line = noInt / 20 + (noInt % 20 == 0 ? 0 : 1);
         // 把no转换成3位数

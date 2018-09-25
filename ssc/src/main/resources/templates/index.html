@@ -82,17 +82,34 @@
             // 现在的no
             var no = $("#nowNo").val();
             // 计算下一个no
-            var nextNo = ++no;
+            var nextNo = no == 120 ? 0 : ++no;
             // 新的数字
             $("#nowNo").val(nextNo);
             $('#nextData').html('>> ' + (nextNo + 1));
+            if (nextNo == 0) {
+                // 清空数据
+                $('#d1').children('div.ctt').html('');
+                // 日期变成明天
+                var initDate = new Date($('#initDate').val());
+                initDate.setDate(initDate.getDate() + 1);
+                var month = initDate.getMonth() + 1;
+                if (month.toString().length < 2) {
+                    month = '0' + month;
+                }
+                var date = initDate.getDate();
+                if (date.toString().length < 2) {
+                    date = '0' + date;
+                }
+                $('#initDate').val(initDate.getFullYear() + '-' + month + '-' + date);
+                return;
+            }
             // 获取数据
             ajaxSubmit();
         }
     </script>
 </head>
 <body>
-<div class="ct1">
+<div id="d1" class="ct1">
     <div id="t1" class="ctt"></div>
     <div id="t2" class="ctt"></div>
     <div id="t3" class="ctt"></div>
@@ -103,7 +120,7 @@
 <div class="ct2">
     <div>
         日期：
-        <input type="date" id="initDate" value="2018-09-18"/>
+        <input type="date" id="initDate" value="2018-06-02"/>
     </div>
     <div>
         期号：
