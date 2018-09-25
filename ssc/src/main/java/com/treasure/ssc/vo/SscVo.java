@@ -32,6 +32,18 @@ public class SscVo implements Serializable {
      * 后三最大相同个数
      */
     private Integer aft3MaxCount;
+    /**
+     * 在第几行
+     */
+    private Integer line;
+
+    public Integer getLine() {
+        return this.line;
+    }
+
+    public void setLine(Integer line) {
+        this.line = line;
+    }
 
     public Integer getBef3MaxCount() {
         return this.bef3MaxCount;

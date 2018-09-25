@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .ct1{
+            width: 2064px;
+            height: 500px;
+        }
+        .ctt{
+            color: black;
+            margin-left: 20px;
+            float: left;
+            width: 250px;
+            height: 500px;
+            border: black 1px solid;
+            text-align: center;
+            padding-top: 10px;
+        }
+        .ct2{
+            width: 300px;
+            height: 50px;
+            margin-left: 20px;
+        }
+    </style>
+    <script src="static/js/jquery-3.3.1.min.js" type="application/javascript"></script>
+    <script type="application/javascript">
+        $(function () {
+            var butt = $('#nowNo').val();
+            $('#nextData').html('>> ' + ++butt);
+        });
+        // 获取数据
+        function ajaxSubmit() {
+            var initDate = $("#initDate").val();
+            var no = $("#nowNo").val();
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: '/buy/nextno',
+                contentType: 'application/json;charset=utf-8',
+                data: {'date':initDate, 'no':no},
+                success: function (data) {
+                    if (data == null) {
+                        alert('没有响应结果！');
+                        return;
+                    }
+                    if (data.code != 200) {
+                        alert(data.message);
+                        return;
+                    }
+                    var line = data.data.line;
+                    var did = '';
+                    if (line == 1) {
+                        did = '#t1';
+                    } else if (line == 2) {
+                        did = '#t2';
+                    } else if (line == 3) {
+                        did = '#t3';
+                    } else if (line == 4) {
+                        did = '#t4';
+                    } else if (line == 5) {
+                        did = '#t5';
+                    } else if (line == 6) {
+                        did = '#t6';
+                    }
+                    var aft3MaxCount = data.data.aft3MaxCount;
+                    var cl;
+                    if (aft3MaxCount == 2) {
+                        cl = true;
+                    }
+                    var d = $('<div>' + data.data.day + '-' + data.data.no + '-' + data.data.num + '</div>');
+                    $(did).append(d);
+                    if (cl) {
+                        d.css('color', 'red');
+                    }
+
+                }
+            });
+        }
+        function nextNo() {
+            // 现在的no
+            var no = $("#nowNo").val();
+            // 计算下一个no
+            var nextNo = ++no;
+            // 新的数字
+            $("#nowNo").val(nextNo);
+            $('#nextData').html('>> ' + (nextNo + 1));
+            // 获取数据
+            ajaxSubmit();
+        }
+    </script>
+</head>
+<body>
+<div class="ct1">
+    <div id="t1" class="ctt"></div>
+    <div id="t2" class="ctt"></div>
+    <div id="t3" class="ctt"></div>
+    <div id="t4" class="ctt"></div>
+    <div id="t5" class="ctt"></div>
+    <div id="t6" class="ctt"></div>
+</div>
+<div class="ct2">
+    <div>
+        日期：
+        <input type="date" id="initDate" value="2018-09-18"/>
+    </div>
+    <div>
+        期号：
+        <input type="number" id="nowNo" value="0">
+    </div>
+    <div>
+        下期：
+        <button id="nextData" onclick="nextNo()"></button>
+    </div>
+</div>
+</body>
+</html>

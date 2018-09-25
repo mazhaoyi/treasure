@@ -74,8 +74,12 @@ public class SpringConfig extends WebMvcConfigurationSupport {
     @Override
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
         super.addResourceHandlers(registry);
-        registry.addResourceHandler("favicon.ico")
+        // 注册静态资源
+        registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:/templates/static/");
+        // 首页资源
+        registry.addResourceHandler("index.html")
+                .addResourceLocations("classpath:/templates/index.html");
     }
 
 }
