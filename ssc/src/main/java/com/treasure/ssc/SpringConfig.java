@@ -8,6 +8,7 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 import java.nio.charset.Charset;
@@ -64,6 +65,17 @@ public class SpringConfig extends WebMvcConfigurationSupport {
         fastJsonHttpMessageConverter.setDefaultCharset(Charset.forName("UTF-8"));
 
         converters.add(fastJsonHttpMessageConverter);
+    }
+
+    /**
+     * 加载静态资源
+     * @param registry
+     */
+    @Override
+    protected void addResourceHandlers(ResourceHandlerRegistry registry) {
+        super.addResourceHandlers(registry);
+        registry.addResourceHandler("favicon.ico")
+                .addResourceLocations("classpath:/templates/static/");
     }
 
 }

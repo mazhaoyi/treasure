@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.time.ZoneId;
@@ -34,6 +33,7 @@ public class BuyTicketCtl {
         }
         SscVo vo = buySvc.nextNo(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), no);
         modelMap.put("vo", vo);
+        modelMap.put("test", "中文");
         return "mainplant";
     }
 }

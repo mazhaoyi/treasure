@@ -5,12 +5,11 @@ server:
     max-threads: 0
     uri-encoding: utf-8
 spring:
-  profiles:
-    # 默认开发环境
-    active: dev
   thymeleaf:
-    prefix: classpath:/template/
-    suffix: .html
+    encoding: utf-8
+    servlet:
+      content-type: text/html
+    cache: false
 logback:
   # 日志根文件
   file: E:/usr/logs
