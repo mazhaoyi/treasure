@@ -1,8 +1,8 @@
 package com.treasure.ssc.cons;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 /**
  * @author: mazy
@@ -24,13 +24,13 @@ public class SscConst {
     /**
      * 购买目录
      */
-    public static final Path BUY_DIR = Paths.get("E:", "files3", "buydata");
+    public static final Path BUY_DIR = new File(ClassLoader.getSystemResource("templates/static/json/buydata").getFile()).toPath();
     /**
      * 金钱文件
      */
-    public static final Path MONEY_DIR = Paths.get("E:", "files3", "moneydata");
+    public static final Path MONEY_DIR = new File(ClassLoader.getSystemResource("templates/static/json/moneydata").getFile()).toPath();
     /**
      * 源文件目录
      */
-    public static final Path SOURCE_DIR = Paths.get("E:", "files3", "sourcedata");
+    public static final Path SOURCE_DIR = new File(ClassLoader.getSystemResource("templates/static/json/sourcedata").getFile()).toPath();
 }
