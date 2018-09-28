@@ -1,6 +1,6 @@
 package com.treasure.ssc.util;
 
-import com.treasure.ssc.ctl.vo.BaseOutVo;
+import com.treasure.ssc.ctr.vo.BaseOutVo;
 
 /**
  * 响应结果格式化

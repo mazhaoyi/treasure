@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.treasure.ssc.dao.TicketDao">
+    <insert id="insertBatch" parameterType="com.treasure.ssc.entity.Ticket">
+        insert into ticket (
+            ticket_no,
+            ticket_num,
+            ticket_date,
+            bef3_max_count,
+            mid3_max_count,
+            aft3_max_count,
+            max_count,
+            line
+        ) values
+        <foreach collection="tickets" item="ticket" separator="," index="index">
+        (
+            #{ticket.ticketNo},
+            #{ticket.ticketNum},
+            #{ticket.ticketDate},
+            #{ticket.bef3MaxCount},
+            #{ticket.mid3MaxCount},
+            #{ticket.aft3MaxCount},
+            #{ticket.maxCount},
+            #{ticket.line}
+        )
+        </foreach>
+    </insert>
+</mapper>

@@ -1,4 +1,4 @@
-package com.treasure.ssc.ctl;
+package com.treasure.ssc.ctr;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.treasure.ssc.svc.BuySvc;
@@ -20,10 +20,16 @@ import java.util.Date;
  */
 @RestController
 @RequestMapping(value = "/buy")
-public class BuyTicketCtl {
+public class BuyTicketCtr {
     @Autowired
     private BuySvc buySvc;
 
+    /**
+     * 获取下一期数字
+     * @param no
+     * @param date
+     * @return
+     */
     @GetMapping(value = "/nextno")
     public Object nextNo(String no, @JSONField(format = "yyyy-MM-dd") Date date) {
         if (!StringUtils.isNumeric(no)) {
@@ -44,5 +50,23 @@ public class BuyTicketCtl {
         SscVo vo = buySvc.nextNo(date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), no);
         vo.setLine(line);
         return ResUtils.success(vo);
+    }
+
+    /**
+     * 购买票
+     * @param no
+     * @param date
+     * @param count
+     * @return
+     */
+    @GetMapping(value = "/buy")
+    public Object compMoney(String no, @JSONField(format = "yyyy-MM-dd") Date date, Integer count) {
+        if (count == null || count < 1) {
+            return ResUtils.error("购买期数必须大于0！");
+        }
+        if (!StringUtils.isNumeric(no)) {
+            return ResUtils.error("期数必须是数字！");
+        }
+        return null;
     }
 }

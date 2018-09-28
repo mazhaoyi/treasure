@@ -16,4 +16,6 @@ public interface BuySvc {
      * @return
      */
     SscVo nextNo(LocalDate date, String no);
+
+
 }
