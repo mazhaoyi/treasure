@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.treasure.ssc.dao.SscUserDao">
+    <select id="getByUsername" resultType="com.treasure.ssc.entity.SscUser">
+        select
+            su.user_id userId,
+            su.username,
+            su.money,
+            su.create_time createTime,
+            su.update_time updateTime
+        from ssc_user su where su.username = #{username}
+    </select>
+</mapper>

@@ -25,4 +25,20 @@
         )
         </foreach>
     </insert>
+    <select id="getByNoAndDate" resultType="com.treasure.ssc.vo.SscOutVo">
+        select
+        ticket_id ticketId,
+        ticket_no ticketNo,
+        ticket_num ticketNum,
+        ticket_date ticketDate,
+        bef3_max_count bef3MaxCount,
+        mid3_max_count mid3MaxCount,
+        aft3_max_count aft3MaxCount,
+        max_count maxCount,
+        line
+        <where>
+            ticket_no = #{ticketNo}
+            and ticket_date = #{ticketDate}
+        </where>
+    </select>
 </mapper>

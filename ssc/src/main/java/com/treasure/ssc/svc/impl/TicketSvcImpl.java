@@ -3,10 +3,12 @@ package com.treasure.ssc.svc.impl;
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 import com.treasure.ssc.cons.SscConst;
+import com.treasure.ssc.dao.BuyItemDao;
 import com.treasure.ssc.dao.TicketDao;
 import com.treasure.ssc.entity.Ticket;
 import com.treasure.ssc.svc.TicketSvc;
 import com.treasure.ssc.util.SscUtils;
+import com.treasure.ssc.vo.SscOutVo;
 import com.treasure.ssc.vo.SscVo;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -16,10 +18,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,6 +38,8 @@ public class TicketSvcImpl implements TicketSvc {
 
     @Autowired
     private TicketDao ticketDao;
+    @Autowired
+    private BuyItemDao buyItemDao;
 
     @Override
     public void initTickets() {
@@ -69,6 +76,21 @@ public class TicketSvcImpl implements TicketSvc {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public SscOutVo next(String ticketNo, Date ticketDate) {
+        // 获取票
+        SscOutVo outVo = ticketDao.getByNoAndDate(ticketNo, ticketDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        // 计算中奖
+        List<BigDecimal> buyMoneys = buyItemDao.selectMoneyNowNo("mzy", outVo.getTicketId());
+        // 中奖
+        short bingo = (short) 2;
+        // 后三中奖
+        if (outVo.getAft3MaxCount() == bingo) {
+            
+        }
+        return null;
     }
 
 }

@@ -1,8 +1,10 @@
 package com.treasure.ssc.dao;
 
 import com.treasure.ssc.entity.Ticket;
+import com.treasure.ssc.vo.SscOutVo;
 import org.apache.ibatis.annotations.Param;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -16,4 +18,12 @@ public interface TicketDao {
      * @return
      */
     int insertBatch(@Param("tickets") List<Ticket> tickets);
+
+    /**
+     * 根据NO和DATE查询
+     * @param ticketNo
+     * @param ticketDate
+     * @return
+     */
+    SscOutVo getByNoAndDate(@Param("ticketNo") String ticketNo, @Param("ticketDate") LocalDate ticketDate);
 }
