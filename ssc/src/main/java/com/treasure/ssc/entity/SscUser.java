@@ -2,6 +2,7 @@ package com.treasure.ssc.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -15,6 +16,24 @@ public class SscUser implements Serializable {
     private BigDecimal money;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
+    private String nowNo;
+    private LocalDate nowDate;
+
+    public String getNowNo() {
+        return this.nowNo;
+    }
+
+    public void setNowNo(String nowNo) {
+        this.nowNo = nowNo;
+    }
+
+    public LocalDate getNowDate() {
+        return this.nowDate;
+    }
+
+    public void setNowDate(LocalDate nowDate) {
+        this.nowDate = nowDate;
+    }
 
     public Integer getUserId() {
         return this.userId;

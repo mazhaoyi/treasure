@@ -36,6 +36,7 @@
         aft3_max_count aft3MaxCount,
         max_count maxCount,
         line
+        from ticket
         <where>
             ticket_no = #{ticketNo}
             and ticket_date = #{ticketDate}

@@ -37,9 +37,9 @@
             $.ajax({
                 type: 'GET',
                 dataType: 'json',
-                url: '/buy/nextno',
+                url: '/ticketctr/next',
                 contentType: 'application/json;charset=utf-8',
-                data: {'date':initDate, 'no':no},
+                data: {'ticketDate':initDate, 'ticketNo':no},
                 success: function (data) {
                     if (data == null) {
                         alert('没有响应结果！');
@@ -69,12 +69,15 @@
                     if (aft3MaxCount == 2) {
                         cl = true;
                     }
-                    var d = $('<div>' + data.data.day + '-' + data.data.no + '-' + data.data.num + '</div>');
+                    var d = $('<div>' + data.data.ticketDate + '-' + data.data.ticketNo + '-' + data.data.ticketNum + '</div>');
                     $(did).append(d);
                     if (cl) {
                         d.css('color', 'red');
                     }
-
+                    $('#a_m_id').val(data.data.allMoney);
+                    $('#y_m_id').val(data.data.money);
+                    $('#z_m_id').val(data.data.fee);
+                    $('#c_m_id').val(data.data.reFee);
                 }
             });
         }
@@ -106,6 +109,30 @@
             // 获取数据
             ajaxSubmit();
         }
+        function buyTic() {
+            // 买的期数
+            var buyCount = $('#buyCount').val();
+            var date = $('#initDate').val();
+            var nowNo = $('#nowNo').val();
+            var startMoney = $('#startMoney').val();
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: '/ticketctr/buy',
+                contentType: 'application/json;charset=utf-8',
+                data: {'ticketDate':date, 'ticketNo':nowNo, 'count':buyCount, 'start':startMoney},
+                success: function (data) {
+                    if (data == null) {
+                        alert('没有响应结果！');
+                        return;
+                    }
+                    if (data.code == 200) {
+                        var list = data.data;
+                        alert(JSON.stringify(list));
+                    }
+                }
+            });
+        }
     </script>
 </head>
 <body>
@@ -129,6 +156,23 @@
     <div>
         下期：
         <button id="nextData" onclick="nextNo()"></button>
+    </div>
+    <div style="width: 800px;">
+        买数：
+        <input id="buyCount" value="3"/>
+        买钱：
+        <input id="startMoney" value="0.9"/>
+        <button id="buyBut" onclick="buyTic()">购买</button>
+    </div>
+    <div style="width: 800px;">
+        总金额：
+        <input style="width: 100px;" id="a_m_id" value=""/>
+        原金额：
+        <input style="width: 100px;" id="y_m_id" value=""/>
+        中奖金额：
+        <input style="width: 100px;" id="z_m_id" value=""/>
+        撤单金额：
+        <input style="width: 100px;" id="c_m_id" value=""/>
     </div>
 </div>
 </body>
