@@ -27,6 +27,12 @@ public interface TicketSvc {
     SscOutVo next(String ticketNo, Date ticketDate);
 
     /**
+     * 计算本次中奖
+     * @param ticketId
+     */
+    void compBingo(Integer ticketId);
+
+    /**
      * 购买
      * @param ticketNo
      * @param ticketDate

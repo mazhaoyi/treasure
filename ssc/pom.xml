@@ -11,5 +11,10 @@
 
     <artifactId>ssc</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>com.treasure</groupId>
+            <artifactId>mbgenerator</artifactId>
+        </dependency>
+    </dependencies>
 </project>

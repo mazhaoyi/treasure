@@ -26,11 +26,12 @@ public class TicketCtr {
     @Autowired
     private TicketSvc ticketSvc;
 
-    @GetMapping(value = "/init")
+    /// 不要删除
+    /*@GetMapping(value = "/init")
     public Object initTicket() {
         ticketSvc.initTickets();
         return ResUtils.success(null);
-    }
+    }*/
 
     @GetMapping("/next")
     public Object next(String ticketNo, @JSONField(format = "yyyy-MM-dd") Date ticketDate) {

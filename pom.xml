@@ -10,6 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>ssc</module>
+        <module>mbgenerator</module>
     </modules>
 
     <parent>
@@ -30,8 +31,9 @@
         <mybatis.version>3.4.6</mybatis.version>
         <mybatis.jsr.version>1.0.1</mybatis.jsr.version>
         <mybatis.sbs.version>1.3.2</mybatis.sbs.version>
-        <mybaits.paginator>1.2.9</mybaits.paginator>
+        <mybatis.paginator>1.2.9</mybatis.paginator>
         <mysql.driver.version>8.0.12</mysql.driver.version>
+        <mybatis.generate.version>1.3.6</mybatis.generate.version>
     </properties>
 
     <dependencies>
@@ -81,7 +83,7 @@
         <dependency>
             <groupId>com.github.miemiedev</groupId>
             <artifactId>mybatis-paginator</artifactId>
-            <version>${mybaits.paginator}</version>
+            <version>${mybatis.paginator}</version>
         </dependency>
 
 

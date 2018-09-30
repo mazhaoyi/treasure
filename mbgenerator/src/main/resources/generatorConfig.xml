@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <properties  resource="generator-mysql.properties"/>
+
+    <context id="mysqlTables" targetRuntime="MyBatis3">
+        <jdbcConnection driverClass="${mysql.driver-class-name}"
+                        connectionURL="${mysql.url}"
+                        userId="${mysql.username}"
+                        password="${mysql.password}"/>
+        <!--指定生成的类型为java类型，避免数据库中number等类型字段 -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!--自动生成的实体的存放包路径 -->
+        <javaModelGenerator targetPackage="com.treasure.auto.entity" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+        <!--自动生成的*Mapper.xml文件存放路径 -->
+        <sqlMapGenerator targetPackage="auto.mapper" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!--自动生成的*Mapper.java存放路径 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.treasure.auto.mapper" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <table schema="" tableName="buy" domainObjectName="Buy" >
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table schema="" tableName="buy_item" domainObjectName="BuyItem" >
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table schema="" tableName="ssc_user" domainObjectName="SscUser" >
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+        <table schema="" tableName="ticket" domainObjectName="Ticket" >
+            <property name="useActualColumnNames" value="true"/>
+        </table>
+    </context>
+</generatorConfiguration>

@@ -149,6 +149,11 @@ public class TicketSvcImpl implements TicketSvc {
     }
 
     @Override
+    public void compBingo(Integer ticketId) {
+
+    }
+
+    @Override
     public List<BuyItem> buy(String ticketNo, Date ticketDate, Short count, BigDecimal start) {
         // 查询用户
         SscUser sscUser = sscUserDao.getByUsername("mzy");

@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @date: 2018/4/19 14:06
  */
 @SpringBootApplication
-@MapperScan(value = "com.treasure.ssc.dao")
+@MapperScan(value = {"com.treasure.ssc.dao", "com.treasure.auto.mapper"})
 public class Application {
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
