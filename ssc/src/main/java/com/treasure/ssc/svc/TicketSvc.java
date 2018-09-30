@@ -39,4 +39,12 @@ public interface TicketSvc {
      * @param count
      */
     List<BuyItem> buy(String ticketNo, Date ticketDate, Short count, BigDecimal start);
+    /**
+     * 根据初始金钱，第几次翻倍，计算这一期的金钱数
+     * @param start 初始金钱
+     * @param times 第几次翻倍
+     * @return
+     */
+    BigDecimal getMoneyByTimes(BigDecimal start, int times);
+
 }
