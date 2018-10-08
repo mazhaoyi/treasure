@@ -342,63 +342,133 @@ public class BzExample {
             return (Criteria) this;
         }
 
-        public Criteria andTheDateIsNull() {
-            addCriterion("the_date is null");
+        public Criteria andBzDateIsNull() {
+            addCriterion("bz_date is null");
             return (Criteria) this;
         }
 
-        public Criteria andTheDateIsNotNull() {
-            addCriterion("the_date is not null");
+        public Criteria andBzDateIsNotNull() {
+            addCriterion("bz_date is not null");
             return (Criteria) this;
         }
 
-        public Criteria andTheDateEqualTo(Date value) {
-            addCriterionForJDBCDate("the_date =", value, "theDate");
+        public Criteria andBzDateEqualTo(Date value) {
+            addCriterionForJDBCDate("bz_date =", value, "bzDate");
             return (Criteria) this;
         }
 
-        public Criteria andTheDateNotEqualTo(Date value) {
-            addCriterionForJDBCDate("the_date <>", value, "theDate");
+        public Criteria andBzDateNotEqualTo(Date value) {
+            addCriterionForJDBCDate("bz_date <>", value, "bzDate");
             return (Criteria) this;
         }
 
-        public Criteria andTheDateGreaterThan(Date value) {
-            addCriterionForJDBCDate("the_date >", value, "theDate");
+        public Criteria andBzDateGreaterThan(Date value) {
+            addCriterionForJDBCDate("bz_date >", value, "bzDate");
             return (Criteria) this;
         }
 
-        public Criteria andTheDateGreaterThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("the_date >=", value, "theDate");
+        public Criteria andBzDateGreaterThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("bz_date >=", value, "bzDate");
             return (Criteria) this;
         }
 
-        public Criteria andTheDateLessThan(Date value) {
-            addCriterionForJDBCDate("the_date <", value, "theDate");
+        public Criteria andBzDateLessThan(Date value) {
+            addCriterionForJDBCDate("bz_date <", value, "bzDate");
             return (Criteria) this;
         }
 
-        public Criteria andTheDateLessThanOrEqualTo(Date value) {
-            addCriterionForJDBCDate("the_date <=", value, "theDate");
+        public Criteria andBzDateLessThanOrEqualTo(Date value) {
+            addCriterionForJDBCDate("bz_date <=", value, "bzDate");
             return (Criteria) this;
         }
 
-        public Criteria andTheDateIn(List<Date> values) {
-            addCriterionForJDBCDate("the_date in", values, "theDate");
+        public Criteria andBzDateIn(List<Date> values) {
+            addCriterionForJDBCDate("bz_date in", values, "bzDate");
             return (Criteria) this;
         }
 
-        public Criteria andTheDateNotIn(List<Date> values) {
-            addCriterionForJDBCDate("the_date not in", values, "theDate");
+        public Criteria andBzDateNotIn(List<Date> values) {
+            addCriterionForJDBCDate("bz_date not in", values, "bzDate");
             return (Criteria) this;
         }
 
-        public Criteria andTheDateBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("the_date between", value1, value2, "theDate");
+        public Criteria andBzDateBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("bz_date between", value1, value2, "bzDate");
             return (Criteria) this;
         }
 
-        public Criteria andTheDateNotBetween(Date value1, Date value2) {
-            addCriterionForJDBCDate("the_date not between", value1, value2, "theDate");
+        public Criteria andBzDateNotBetween(Date value1, Date value2) {
+            addCriterionForJDBCDate("bz_date not between", value1, value2, "bzDate");
+            return (Criteria) this;
+        }
+
+        public Criteria andBzTypeCodeIsNull() {
+            addCriterion("bz_type_code is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBzTypeCodeIsNotNull() {
+            addCriterion("bz_type_code is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBzTypeCodeEqualTo(String value) {
+            addCriterion("bz_type_code =", value, "bzTypeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andBzTypeCodeNotEqualTo(String value) {
+            addCriterion("bz_type_code <>", value, "bzTypeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andBzTypeCodeGreaterThan(String value) {
+            addCriterion("bz_type_code >", value, "bzTypeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andBzTypeCodeGreaterThanOrEqualTo(String value) {
+            addCriterion("bz_type_code >=", value, "bzTypeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andBzTypeCodeLessThan(String value) {
+            addCriterion("bz_type_code <", value, "bzTypeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andBzTypeCodeLessThanOrEqualTo(String value) {
+            addCriterion("bz_type_code <=", value, "bzTypeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andBzTypeCodeLike(String value) {
+            addCriterion("bz_type_code like", value, "bzTypeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andBzTypeCodeNotLike(String value) {
+            addCriterion("bz_type_code not like", value, "bzTypeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andBzTypeCodeIn(List<String> values) {
+            addCriterion("bz_type_code in", values, "bzTypeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andBzTypeCodeNotIn(List<String> values) {
+            addCriterion("bz_type_code not in", values, "bzTypeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andBzTypeCodeBetween(String value1, String value2) {
+            addCriterion("bz_type_code between", value1, value2, "bzTypeCode");
+            return (Criteria) this;
+        }
+
+        public Criteria andBzTypeCodeNotBetween(String value1, String value2) {
+            addCriterion("bz_type_code not between", value1, value2, "bzTypeCode");
             return (Criteria) this;
         }
     }
