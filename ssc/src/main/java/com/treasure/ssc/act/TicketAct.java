@@ -1,4 +1,4 @@
-package com.treasure.ssc.ctr;
+package com.treasure.ssc.act;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.treasure.ssc.entity.BuyItem;
@@ -22,7 +22,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "/ticketctr")
-public class TicketCtr {
+public class TicketAct {
     @Autowired
     private TicketSvc ticketSvc;
 

@@ -42,6 +42,5 @@
         <table schema="" tableName="ssc_user" domainObjectName="SscUser"/>
         <table schema="" tableName="ticket" domainObjectName="Ticket"/>
         <table schema="" tableName="bz" domainObjectName="Bz"/>
-        <table schema="" tableName="bz_type" domainObjectName="BzType"/>
     </context>
 </generatorConfiguration>

@@ -66,21 +66,26 @@
 	</appender>
 
 	<!-- SQL 输出到 FILE_OUT -->
-	<logger name="com.doordu.dao" level="DEBUG">
+	<logger name="com.treasure.ssc.dao" level="ERROR">
 		<appender-ref ref="FILE_OUT"/>
 	</logger>
+	<!-- SQL 输出到 FILE_OUT -->
+	<logger name="com.treasure.auto.mapper" level="ERROR">
+		<appender-ref ref="FILE_OUT"/>
+	</logger>
+
 	<!-- controller 输出到 FILE_OUT -->
-	<logger name="com.doordu.act" level="DEBUG">
+	<logger name="com.treasure.ssc.act" level="ERROR">
 		<appender-ref ref="FILE_OUT"/>
 	</logger>
 	<!-- service 输出到 FILE_OUT -->
-	<logger name="com.doordu.service" level="DEBUG">
+	<logger name="com.treasure.ssc.svc" level="ERROR">
 		<appender-ref ref="FILE_OUT"/>
 	</logger>
 
 	<!-- root是logger的一种，是根logger，所以我们可以配置多个logger，但只能配置一个root根logger -->
 	<root>
-		<level value="INFO"/>
+		<level value="ERROR"/>
 		<!-- 所有日志输出到控制台 -->
 		<appender-ref ref="CONSOLE"/>
 		<!-- 所有日志输出到FILE -->

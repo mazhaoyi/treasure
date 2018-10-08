@@ -1,4 +1,4 @@
-package com.treasure.ssc.ctr.vo;
+package com.treasure.ssc.act.vo;
 
 import java.io.Serializable;
 

@@ -282,66 +282,6 @@ public class BzExample {
             return (Criteria) this;
         }
 
-        public Criteria andCountNumIsNull() {
-            addCriterion("count_num is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCountNumIsNotNull() {
-            addCriterion("count_num is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCountNumEqualTo(Short value) {
-            addCriterion("count_num =", value, "countNum");
-            return (Criteria) this;
-        }
-
-        public Criteria andCountNumNotEqualTo(Short value) {
-            addCriterion("count_num <>", value, "countNum");
-            return (Criteria) this;
-        }
-
-        public Criteria andCountNumGreaterThan(Short value) {
-            addCriterion("count_num >", value, "countNum");
-            return (Criteria) this;
-        }
-
-        public Criteria andCountNumGreaterThanOrEqualTo(Short value) {
-            addCriterion("count_num >=", value, "countNum");
-            return (Criteria) this;
-        }
-
-        public Criteria andCountNumLessThan(Short value) {
-            addCriterion("count_num <", value, "countNum");
-            return (Criteria) this;
-        }
-
-        public Criteria andCountNumLessThanOrEqualTo(Short value) {
-            addCriterion("count_num <=", value, "countNum");
-            return (Criteria) this;
-        }
-
-        public Criteria andCountNumIn(List<Short> values) {
-            addCriterion("count_num in", values, "countNum");
-            return (Criteria) this;
-        }
-
-        public Criteria andCountNumNotIn(List<Short> values) {
-            addCriterion("count_num not in", values, "countNum");
-            return (Criteria) this;
-        }
-
-        public Criteria andCountNumBetween(Short value1, Short value2) {
-            addCriterion("count_num between", value1, value2, "countNum");
-            return (Criteria) this;
-        }
-
-        public Criteria andCountNumNotBetween(Short value1, Short value2) {
-            addCriterion("count_num not between", value1, value2, "countNum");
-            return (Criteria) this;
-        }
-
         public Criteria andBzDateIsNull() {
             addCriterion("bz_date is null");
             return (Criteria) this;
@@ -402,73 +342,723 @@ public class BzExample {
             return (Criteria) this;
         }
 
-        public Criteria andBzTypeCodeIsNull() {
-            addCriterion("bz_type_code is null");
+        public Criteria andBsgIsNull() {
+            addCriterion("bsg is null");
             return (Criteria) this;
         }
 
-        public Criteria andBzTypeCodeIsNotNull() {
-            addCriterion("bz_type_code is not null");
+        public Criteria andBsgIsNotNull() {
+            addCriterion("bsg is not null");
             return (Criteria) this;
         }
 
-        public Criteria andBzTypeCodeEqualTo(String value) {
-            addCriterion("bz_type_code =", value, "bzTypeCode");
+        public Criteria andBsgEqualTo(Short value) {
+            addCriterion("bsg =", value, "bsg");
             return (Criteria) this;
         }
 
-        public Criteria andBzTypeCodeNotEqualTo(String value) {
-            addCriterion("bz_type_code <>", value, "bzTypeCode");
+        public Criteria andBsgNotEqualTo(Short value) {
+            addCriterion("bsg <>", value, "bsg");
             return (Criteria) this;
         }
 
-        public Criteria andBzTypeCodeGreaterThan(String value) {
-            addCriterion("bz_type_code >", value, "bzTypeCode");
+        public Criteria andBsgGreaterThan(Short value) {
+            addCriterion("bsg >", value, "bsg");
             return (Criteria) this;
         }
 
-        public Criteria andBzTypeCodeGreaterThanOrEqualTo(String value) {
-            addCriterion("bz_type_code >=", value, "bzTypeCode");
+        public Criteria andBsgGreaterThanOrEqualTo(Short value) {
+            addCriterion("bsg >=", value, "bsg");
             return (Criteria) this;
         }
 
-        public Criteria andBzTypeCodeLessThan(String value) {
-            addCriterion("bz_type_code <", value, "bzTypeCode");
+        public Criteria andBsgLessThan(Short value) {
+            addCriterion("bsg <", value, "bsg");
             return (Criteria) this;
         }
 
-        public Criteria andBzTypeCodeLessThanOrEqualTo(String value) {
-            addCriterion("bz_type_code <=", value, "bzTypeCode");
+        public Criteria andBsgLessThanOrEqualTo(Short value) {
+            addCriterion("bsg <=", value, "bsg");
             return (Criteria) this;
         }
 
-        public Criteria andBzTypeCodeLike(String value) {
-            addCriterion("bz_type_code like", value, "bzTypeCode");
+        public Criteria andBsgIn(List<Short> values) {
+            addCriterion("bsg in", values, "bsg");
             return (Criteria) this;
         }
 
-        public Criteria andBzTypeCodeNotLike(String value) {
-            addCriterion("bz_type_code not like", value, "bzTypeCode");
+        public Criteria andBsgNotIn(List<Short> values) {
+            addCriterion("bsg not in", values, "bsg");
             return (Criteria) this;
         }
 
-        public Criteria andBzTypeCodeIn(List<String> values) {
-            addCriterion("bz_type_code in", values, "bzTypeCode");
+        public Criteria andBsgBetween(Short value1, Short value2) {
+            addCriterion("bsg between", value1, value2, "bsg");
             return (Criteria) this;
         }
 
-        public Criteria andBzTypeCodeNotIn(List<String> values) {
-            addCriterion("bz_type_code not in", values, "bzTypeCode");
+        public Criteria andBsgNotBetween(Short value1, Short value2) {
+            addCriterion("bsg not between", value1, value2, "bsg");
             return (Criteria) this;
         }
 
-        public Criteria andBzTypeCodeBetween(String value1, String value2) {
-            addCriterion("bz_type_code between", value1, value2, "bzTypeCode");
+        public Criteria andQbgIsNull() {
+            addCriterion("qbg is null");
             return (Criteria) this;
         }
 
-        public Criteria andBzTypeCodeNotBetween(String value1, String value2) {
-            addCriterion("bz_type_code not between", value1, value2, "bzTypeCode");
+        public Criteria andQbgIsNotNull() {
+            addCriterion("qbg is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andQbgEqualTo(Short value) {
+            addCriterion("qbg =", value, "qbg");
+            return (Criteria) this;
+        }
+
+        public Criteria andQbgNotEqualTo(Short value) {
+            addCriterion("qbg <>", value, "qbg");
+            return (Criteria) this;
+        }
+
+        public Criteria andQbgGreaterThan(Short value) {
+            addCriterion("qbg >", value, "qbg");
+            return (Criteria) this;
+        }
+
+        public Criteria andQbgGreaterThanOrEqualTo(Short value) {
+            addCriterion("qbg >=", value, "qbg");
+            return (Criteria) this;
+        }
+
+        public Criteria andQbgLessThan(Short value) {
+            addCriterion("qbg <", value, "qbg");
+            return (Criteria) this;
+        }
+
+        public Criteria andQbgLessThanOrEqualTo(Short value) {
+            addCriterion("qbg <=", value, "qbg");
+            return (Criteria) this;
+        }
+
+        public Criteria andQbgIn(List<Short> values) {
+            addCriterion("qbg in", values, "qbg");
+            return (Criteria) this;
+        }
+
+        public Criteria andQbgNotIn(List<Short> values) {
+            addCriterion("qbg not in", values, "qbg");
+            return (Criteria) this;
+        }
+
+        public Criteria andQbgBetween(Short value1, Short value2) {
+            addCriterion("qbg between", value1, value2, "qbg");
+            return (Criteria) this;
+        }
+
+        public Criteria andQbgNotBetween(Short value1, Short value2) {
+            addCriterion("qbg not between", value1, value2, "qbg");
+            return (Criteria) this;
+        }
+
+        public Criteria andQbsIsNull() {
+            addCriterion("qbs is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andQbsIsNotNull() {
+            addCriterion("qbs is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andQbsEqualTo(Short value) {
+            addCriterion("qbs =", value, "qbs");
+            return (Criteria) this;
+        }
+
+        public Criteria andQbsNotEqualTo(Short value) {
+            addCriterion("qbs <>", value, "qbs");
+            return (Criteria) this;
+        }
+
+        public Criteria andQbsGreaterThan(Short value) {
+            addCriterion("qbs >", value, "qbs");
+            return (Criteria) this;
+        }
+
+        public Criteria andQbsGreaterThanOrEqualTo(Short value) {
+            addCriterion("qbs >=", value, "qbs");
+            return (Criteria) this;
+        }
+
+        public Criteria andQbsLessThan(Short value) {
+            addCriterion("qbs <", value, "qbs");
+            return (Criteria) this;
+        }
+
+        public Criteria andQbsLessThanOrEqualTo(Short value) {
+            addCriterion("qbs <=", value, "qbs");
+            return (Criteria) this;
+        }
+
+        public Criteria andQbsIn(List<Short> values) {
+            addCriterion("qbs in", values, "qbs");
+            return (Criteria) this;
+        }
+
+        public Criteria andQbsNotIn(List<Short> values) {
+            addCriterion("qbs not in", values, "qbs");
+            return (Criteria) this;
+        }
+
+        public Criteria andQbsBetween(Short value1, Short value2) {
+            addCriterion("qbs between", value1, value2, "qbs");
+            return (Criteria) this;
+        }
+
+        public Criteria andQbsNotBetween(Short value1, Short value2) {
+            addCriterion("qbs not between", value1, value2, "qbs");
+            return (Criteria) this;
+        }
+
+        public Criteria andQsgIsNull() {
+            addCriterion("qsg is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andQsgIsNotNull() {
+            addCriterion("qsg is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andQsgEqualTo(Short value) {
+            addCriterion("qsg =", value, "qsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andQsgNotEqualTo(Short value) {
+            addCriterion("qsg <>", value, "qsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andQsgGreaterThan(Short value) {
+            addCriterion("qsg >", value, "qsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andQsgGreaterThanOrEqualTo(Short value) {
+            addCriterion("qsg >=", value, "qsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andQsgLessThan(Short value) {
+            addCriterion("qsg <", value, "qsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andQsgLessThanOrEqualTo(Short value) {
+            addCriterion("qsg <=", value, "qsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andQsgIn(List<Short> values) {
+            addCriterion("qsg in", values, "qsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andQsgNotIn(List<Short> values) {
+            addCriterion("qsg not in", values, "qsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andQsgBetween(Short value1, Short value2) {
+            addCriterion("qsg between", value1, value2, "qsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andQsgNotBetween(Short value1, Short value2) {
+            addCriterion("qsg not between", value1, value2, "qsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWbgIsNull() {
+            addCriterion("wbg is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWbgIsNotNull() {
+            addCriterion("wbg is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWbgEqualTo(Short value) {
+            addCriterion("wbg =", value, "wbg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWbgNotEqualTo(Short value) {
+            addCriterion("wbg <>", value, "wbg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWbgGreaterThan(Short value) {
+            addCriterion("wbg >", value, "wbg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWbgGreaterThanOrEqualTo(Short value) {
+            addCriterion("wbg >=", value, "wbg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWbgLessThan(Short value) {
+            addCriterion("wbg <", value, "wbg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWbgLessThanOrEqualTo(Short value) {
+            addCriterion("wbg <=", value, "wbg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWbgIn(List<Short> values) {
+            addCriterion("wbg in", values, "wbg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWbgNotIn(List<Short> values) {
+            addCriterion("wbg not in", values, "wbg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWbgBetween(Short value1, Short value2) {
+            addCriterion("wbg between", value1, value2, "wbg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWbgNotBetween(Short value1, Short value2) {
+            addCriterion("wbg not between", value1, value2, "wbg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWbsIsNull() {
+            addCriterion("wbs is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWbsIsNotNull() {
+            addCriterion("wbs is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWbsEqualTo(Short value) {
+            addCriterion("wbs =", value, "wbs");
+            return (Criteria) this;
+        }
+
+        public Criteria andWbsNotEqualTo(Short value) {
+            addCriterion("wbs <>", value, "wbs");
+            return (Criteria) this;
+        }
+
+        public Criteria andWbsGreaterThan(Short value) {
+            addCriterion("wbs >", value, "wbs");
+            return (Criteria) this;
+        }
+
+        public Criteria andWbsGreaterThanOrEqualTo(Short value) {
+            addCriterion("wbs >=", value, "wbs");
+            return (Criteria) this;
+        }
+
+        public Criteria andWbsLessThan(Short value) {
+            addCriterion("wbs <", value, "wbs");
+            return (Criteria) this;
+        }
+
+        public Criteria andWbsLessThanOrEqualTo(Short value) {
+            addCriterion("wbs <=", value, "wbs");
+            return (Criteria) this;
+        }
+
+        public Criteria andWbsIn(List<Short> values) {
+            addCriterion("wbs in", values, "wbs");
+            return (Criteria) this;
+        }
+
+        public Criteria andWbsNotIn(List<Short> values) {
+            addCriterion("wbs not in", values, "wbs");
+            return (Criteria) this;
+        }
+
+        public Criteria andWbsBetween(Short value1, Short value2) {
+            addCriterion("wbs between", value1, value2, "wbs");
+            return (Criteria) this;
+        }
+
+        public Criteria andWbsNotBetween(Short value1, Short value2) {
+            addCriterion("wbs not between", value1, value2, "wbs");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqbIsNull() {
+            addCriterion("wqb is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqbIsNotNull() {
+            addCriterion("wqb is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqbEqualTo(Short value) {
+            addCriterion("wqb =", value, "wqb");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqbNotEqualTo(Short value) {
+            addCriterion("wqb <>", value, "wqb");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqbGreaterThan(Short value) {
+            addCriterion("wqb >", value, "wqb");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqbGreaterThanOrEqualTo(Short value) {
+            addCriterion("wqb >=", value, "wqb");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqbLessThan(Short value) {
+            addCriterion("wqb <", value, "wqb");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqbLessThanOrEqualTo(Short value) {
+            addCriterion("wqb <=", value, "wqb");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqbIn(List<Short> values) {
+            addCriterion("wqb in", values, "wqb");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqbNotIn(List<Short> values) {
+            addCriterion("wqb not in", values, "wqb");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqbBetween(Short value1, Short value2) {
+            addCriterion("wqb between", value1, value2, "wqb");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqbNotBetween(Short value1, Short value2) {
+            addCriterion("wqb not between", value1, value2, "wqb");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqgIsNull() {
+            addCriterion("wqg is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqgIsNotNull() {
+            addCriterion("wqg is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqgEqualTo(Short value) {
+            addCriterion("wqg =", value, "wqg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqgNotEqualTo(Short value) {
+            addCriterion("wqg <>", value, "wqg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqgGreaterThan(Short value) {
+            addCriterion("wqg >", value, "wqg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqgGreaterThanOrEqualTo(Short value) {
+            addCriterion("wqg >=", value, "wqg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqgLessThan(Short value) {
+            addCriterion("wqg <", value, "wqg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqgLessThanOrEqualTo(Short value) {
+            addCriterion("wqg <=", value, "wqg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqgIn(List<Short> values) {
+            addCriterion("wqg in", values, "wqg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqgNotIn(List<Short> values) {
+            addCriterion("wqg not in", values, "wqg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqgBetween(Short value1, Short value2) {
+            addCriterion("wqg between", value1, value2, "wqg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqgNotBetween(Short value1, Short value2) {
+            addCriterion("wqg not between", value1, value2, "wqg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqsIsNull() {
+            addCriterion("wqs is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqsIsNotNull() {
+            addCriterion("wqs is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqsEqualTo(Short value) {
+            addCriterion("wqs =", value, "wqs");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqsNotEqualTo(Short value) {
+            addCriterion("wqs <>", value, "wqs");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqsGreaterThan(Short value) {
+            addCriterion("wqs >", value, "wqs");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqsGreaterThanOrEqualTo(Short value) {
+            addCriterion("wqs >=", value, "wqs");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqsLessThan(Short value) {
+            addCriterion("wqs <", value, "wqs");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqsLessThanOrEqualTo(Short value) {
+            addCriterion("wqs <=", value, "wqs");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqsIn(List<Short> values) {
+            addCriterion("wqs in", values, "wqs");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqsNotIn(List<Short> values) {
+            addCriterion("wqs not in", values, "wqs");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqsBetween(Short value1, Short value2) {
+            addCriterion("wqs between", value1, value2, "wqs");
+            return (Criteria) this;
+        }
+
+        public Criteria andWqsNotBetween(Short value1, Short value2) {
+            addCriterion("wqs not between", value1, value2, "wqs");
+            return (Criteria) this;
+        }
+
+        public Criteria andWsgIsNull() {
+            addCriterion("wsg is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWsgIsNotNull() {
+            addCriterion("wsg is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWsgEqualTo(Short value) {
+            addCriterion("wsg =", value, "wsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWsgNotEqualTo(Short value) {
+            addCriterion("wsg <>", value, "wsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWsgGreaterThan(Short value) {
+            addCriterion("wsg >", value, "wsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWsgGreaterThanOrEqualTo(Short value) {
+            addCriterion("wsg >=", value, "wsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWsgLessThan(Short value) {
+            addCriterion("wsg <", value, "wsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWsgLessThanOrEqualTo(Short value) {
+            addCriterion("wsg <=", value, "wsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWsgIn(List<Short> values) {
+            addCriterion("wsg in", values, "wsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWsgNotIn(List<Short> values) {
+            addCriterion("wsg not in", values, "wsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWsgBetween(Short value1, Short value2) {
+            addCriterion("wsg between", value1, value2, "wsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWsgNotBetween(Short value1, Short value2) {
+            addCriterion("wsg not between", value1, value2, "wsg");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxzsIsNull() {
+            addCriterion("wxzs is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxzsIsNotNull() {
+            addCriterion("wxzs is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxzsEqualTo(Short value) {
+            addCriterion("wxzs =", value, "wxzs");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxzsNotEqualTo(Short value) {
+            addCriterion("wxzs <>", value, "wxzs");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxzsGreaterThan(Short value) {
+            addCriterion("wxzs >", value, "wxzs");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxzsGreaterThanOrEqualTo(Short value) {
+            addCriterion("wxzs >=", value, "wxzs");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxzsLessThan(Short value) {
+            addCriterion("wxzs <", value, "wxzs");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxzsLessThanOrEqualTo(Short value) {
+            addCriterion("wxzs <=", value, "wxzs");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxzsIn(List<Short> values) {
+            addCriterion("wxzs in", values, "wxzs");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxzsNotIn(List<Short> values) {
+            addCriterion("wxzs not in", values, "wxzs");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxzsBetween(Short value1, Short value2) {
+            addCriterion("wxzs between", value1, value2, "wxzs");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxzsNotBetween(Short value1, Short value2) {
+            addCriterion("wxzs not between", value1, value2, "wxzs");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxzwIsNull() {
+            addCriterion("wxzw is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxzwIsNotNull() {
+            addCriterion("wxzw is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxzwEqualTo(Short value) {
+            addCriterion("wxzw =", value, "wxzw");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxzwNotEqualTo(Short value) {
+            addCriterion("wxzw <>", value, "wxzw");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxzwGreaterThan(Short value) {
+            addCriterion("wxzw >", value, "wxzw");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxzwGreaterThanOrEqualTo(Short value) {
+            addCriterion("wxzw >=", value, "wxzw");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxzwLessThan(Short value) {
+            addCriterion("wxzw <", value, "wxzw");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxzwLessThanOrEqualTo(Short value) {
+            addCriterion("wxzw <=", value, "wxzw");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxzwIn(List<Short> values) {
+            addCriterion("wxzw in", values, "wxzw");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxzwNotIn(List<Short> values) {
+            addCriterion("wxzw not in", values, "wxzw");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxzwBetween(Short value1, Short value2) {
+            addCriterion("wxzw between", value1, value2, "wxzw");
+            return (Criteria) this;
+        }
+
+        public Criteria andWxzwNotBetween(Short value1, Short value2) {
+            addCriterion("wxzw not between", value1, value2, "wxzw");
             return (Criteria) this;
         }
     }
