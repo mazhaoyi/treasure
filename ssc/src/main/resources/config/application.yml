@@ -11,10 +11,16 @@ spring:
       content-type: text/html
     cache: false
   datasource:
-    url: jdbc:mysql://192.168.2.171:3306/red_myb?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false&useSSL=false&useTimezone=true&serverTimezone=Asia/Shanghai
+    ### 家里
+    #url: jdbc:mysql://192.168.2.171:3306/red_myb?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false&useSSL=false&useTimezone=true&serverTimezone=Asia/Shanghai
+    #driver-class-name: com.mysql.cj.jdbc.Driver
+    #username: root
+    #password: Admin123!
+    ### 公司
+    url: jdbc:mysql://10.0.19.142:3306/red_myb?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false&useSSL=false&useTimezone=true&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: Admin123!
+    password: root123
   jpa:
     open-in-view: false
 logback:

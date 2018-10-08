@@ -15,6 +15,20 @@
         <dao.target.dir>src/main/java</dao.target.dir>
     </properties>
 
+    <dependencies>
+        <!-- mybatis -->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-typehandlers-jsr310</artifactId>
+            <version>${mybatis.jsr.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.miemiedev</groupId>
+            <artifactId>mybatis-paginator</artifactId>
+            <version>${mybatis.paginator}</version>
+        </dependency>
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>

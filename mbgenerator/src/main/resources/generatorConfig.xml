@@ -6,10 +6,19 @@
     <properties  resource="generator-mysql.properties"/>
 
     <context id="mysqlTables" targetRuntime="MyBatis3">
+        <commentGenerator>
+            <!-- 这个元素用来去除指定生成的注释中是否包含生成的日期 false:表示保护 -->
+            <!-- 如果生成日期，会造成即使修改一个字段，整个实体类所有属性都会发生变化，不利于版本控制，所以设置为true -->
+            <property name="suppressDate" value="true" />
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="false" />
+        </commentGenerator>
+
         <jdbcConnection driverClass="${mysql.driver-class-name}"
                         connectionURL="${mysql.url}"
                         userId="${mysql.username}"
                         password="${mysql.password}"/>
+
         <!--指定生成的类型为java类型，避免数据库中number等类型字段 -->
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
@@ -28,17 +37,10 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table schema="" tableName="buy" domainObjectName="Buy" >
-            <property name="useActualColumnNames" value="true"/>
-        </table>
-        <table schema="" tableName="buy_item" domainObjectName="BuyItem" >
-            <property name="useActualColumnNames" value="true"/>
-        </table>
-        <table schema="" tableName="ssc_user" domainObjectName="SscUser" >
-            <property name="useActualColumnNames" value="true"/>
-        </table>
-        <table schema="" tableName="ticket" domainObjectName="Ticket" >
-            <property name="useActualColumnNames" value="true"/>
-        </table>
+        <table schema="" tableName="buy" domainObjectName="Buy"/>
+        <table schema="" tableName="buy_item" domainObjectName="BuyItem"/>
+        <table schema="" tableName="ssc_user" domainObjectName="SscUser"/>
+        <table schema="" tableName="ticket" domainObjectName="Ticket"/>
+        <table schema="" tableName="bz" domainObjectName="Bz"/>
     </context>
 </generatorConfiguration>
