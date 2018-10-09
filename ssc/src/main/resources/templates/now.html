@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        div {
+            float: left;
+            margin-left: 10px;
+            width: 202px;
+        }
+        ul {
+            list-style: none;
+            width: 200px;
+            border: 1px solid darkgray;
+            padding: 0px;
+            height: 602px;
+        }
+        ul li {
+            height: 30px;
+        }
+    </style>
+    <script src="static/js/jquery-3.3.1.min.js" type="application/javascript"></script>
+    <script type="application/javascript">
+        // 自动加载JavaScript
+        $(function () {
+            initData();
+        });
+        // 初始化数据
+        function initData() {
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: '/analyze/list',
+                contentType: 'application/json;charset=utf-8',
+                success: function (data) {
+                    if (data == null) {
+                        alert('没有响应结果！');
+                        return;
+                    }
+                    if (data.code != 200) {
+                        alert(data.message);
+                        return;
+                    }
+                    var datas = data.data;
+                    for (var i = 0; i < datas.length; i++) {
+                        var dt = datas[i];
+                        // 期号
+                        var no = dt.no;
+                        // 号码
+                        var num = dt.num;
+                        var li = '<li>' + no + ' ' + num + '</li>';
+                        // jquery li对象
+                        var jli = $(li);
+                        if (i >= 0 && i < 20) {
+                            $('#u1').append(jli);
+                        } else if (i >= 20 && i < 40) {
+                            $('#u2').append(jli);
+                        } else if (i >= 40 && i < 60) {
+                            $('#u3').append(jli);
+                        } else if (i >= 60 && i < 80) {
+                            $('#u4').append(jli);
+                        } else if (i >= 80 && i < 100) {
+                            $('#u5').append(jli);
+                        } else if (i >= 100 && i < 120) {
+                            $('#u6').append(jli);
+                        }
+
+                        // 后三最大相同个数
+                        var aft3MaxCount = dt.aft3MaxCount;
+                        // 后三012路
+                        var aft3012 = dt.aft3012;
+                        if (aft3MaxCount == 2) {
+                            jli.append('<span style="color: red;width: 10px;"> 组三</span>');
+                        } else if (aft3MaxCount == 1) {
+                            jli.append('<span style="width: 10px;"> 组六</span>');
+                        } else if (aft3MaxCount == 3) {
+                            jli.append('<span style="color: #5865ff;width: 10px;"> 豹子</span>');
+                        }
+                        if (aft3012) {
+                            jli.append('<span style="color: #ffdc10;width: 10px;"> 012</span>');
+                        } else {
+                            jli.append('<span style="width: 10px;"> </span>');
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <ul id="u1"></ul>
+    </div>
+    <div>
+        <ul id="u2"></ul>
+    </div>
+    <div>
+        <ul id="u3"></ul>
+    </div>
+    <div>
+        <ul id="u4"></ul>
+    </div>
+    <div>
+        <ul id="u5"></ul>
+    </div>
+    <div>
+        <ul id="u6"></ul>
+    </div>
+</body>
+</html>

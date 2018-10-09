@@ -71,4 +71,48 @@ public class SscUtils {
         return String.format("%0" + length + "d", num);
     }
 
+    /**
+     * 判断012路
+     * @param str
+     * @return
+     */
+    public static final boolean check012(String str) {
+        // 字符长度
+        int length = 3;
+        if (StringUtils.length(str) != length) {
+            return false;
+        }
+        // 必须是数字
+        if (!StringUtils.isNumeric(str)) {
+            return false;
+        }
+        // 有0路
+        boolean has0 = false;
+        // 有1路
+        boolean has1 = false;
+        // 有2路
+        boolean has2 = false;
+
+        // 除数
+        int divideNum = 3;
+        for (char c : str.toCharArray()) {
+            Integer cv = Integer.valueOf(String.valueOf(c));
+            // int1 对3取余
+            if (cv % divideNum == 0) {
+                has0 = true;
+            } else if (cv % divideNum == 1) {
+                has1 = true;
+            } else if (cv % divideNum == 2) {
+                has2 = true;
+            }
+        }
+
+        // 012路全有
+        if (has0 && has1 && has2) {
+            return true;
+        }
+
+        return false;
+    }
+
 }

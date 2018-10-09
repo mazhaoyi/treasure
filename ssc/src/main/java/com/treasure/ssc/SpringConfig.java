@@ -80,6 +80,9 @@ public class SpringConfig extends WebMvcConfigurationSupport {
         // 首页资源
         registry.addResourceHandler("index.html")
                 .addResourceLocations("classpath:/templates/index.html");
+        // now资源
+        registry.addResourceHandler("now.html")
+                .addResourceLocations("classpath:/templates/now.html");
     }
 
 }
