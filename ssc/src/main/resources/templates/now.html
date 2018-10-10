@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <style type="text/css">
-        div {
+        #outDiv div {
             float: left;
             margin-left: 10px;
             width: 202px;
@@ -25,8 +25,33 @@
         // 自动加载JavaScript
         $(function () {
             var today = new Date();
-            createData(today.toLocaleDateString(), 3);
+            $('#hiddenDate').val(today);
+            $('#showDate').val(today.toLocaleDateString());
+            $('#showType').val(3);
+            createData(today, 3);
         });
+        // 修改日期
+        function changeDay(day) {
+            var hiddenDate = $('#hiddenDate');
+            if (hiddenDate.val() == null) {
+                var today = new Date();
+                $('#hiddenDate').val(today);
+            }
+            var pd = new Date(hiddenDate.val());
+            pd.setDate(pd.getDate() + day);
+            $('#hiddenDate').val(pd);
+            $('#showDate').val(pd.toLocaleDateString());
+
+            var showType = $('#showType').val();
+            createData(pd, showType);
+        }
+        // 切换类型1-前三，2-中三，3-后三
+        function changeType(type) {
+            $('#showType').val(type);
+            var day = $('#hiddenDate').val();
+            day = new Date(day);
+            createData(day, type);
+        }
 
         /**
          * 获取数据
@@ -34,10 +59,24 @@
          * @param type 类型1-前三，2-中三，3-后三
          */
         function createData(date, type) {
+            date = date.toLocaleDateString();
+            var u1 = $('#u1');
+            var u2 = $('#u2');
+            var u3 = $('#u3');
+            var u4 = $('#u4');
+            var u5 = $('#u5');
+            var u6 = $('#u6');
+            // 清空页面
+            u1.html('');
+            u2.html('');
+            u3.html('');
+            u4.html('');
+            u5.html('');
+            u6.html('');
             // 1-前三，2-中三，3-后三
             var befType = 1, midType = 2, aftType = 3;
             // 默认后三
-            if (type == null || type != 1 || type != 2 || type != 3) {
+            if (type == null || (type != 1 && type != 2 && type != 3)) {
                 type = 3;
             }
             $.ajax({
@@ -66,17 +105,17 @@
                         // jquery li对象
                         var jli = $(li);
                         if (i >= 0 && i < 20) {
-                            $('#u1').append(jli);
+                            u1.append(jli);
                         } else if (i >= 20 && i < 40) {
-                            $('#u2').append(jli);
+                            u2.append(jli);
                         } else if (i >= 40 && i < 60) {
-                            $('#u3').append(jli);
+                            u3.append(jli);
                         } else if (i >= 60 && i < 80) {
-                            $('#u4').append(jli);
+                            u4.append(jli);
                         } else if (i >= 80 && i < 100) {
-                            $('#u5').append(jli);
+                            u5.append(jli);
                         } else if (i >= 100 && i < 120) {
-                            $('#u6').append(jli);
+                            u6.append(jli);
                         }
                         // 前三
                         if (type == befType) {
@@ -140,23 +179,35 @@
     </script>
 </head>
 <body>
-    <div>
-        <ul id="u1"></ul>
+    <div id="headDiv">
+        <button style="height: 30px;width: 100px;" onclick="changeDay(-1)">前一天</button>
+        <button style="height: 30px;width: 100px;" onclick="changeDay(1)">后一天</button>
+        <button style="height: 30px;width: 100px;" onclick="changeType(1)">前 三</button>
+        <button style="height: 30px;width: 100px;" onclick="changeType(2)">中 三</button>
+        <button style="height: 30px;width: 100px;" onclick="changeType(3)">后 三</button>
+        <input id="hiddenDate" type="hidden" value=""/>
+        <input id="showType" type="hidden" value=""/>
+        <input id="showDate" type="text" value=""/>
     </div>
-    <div>
-        <ul id="u2"></ul>
-    </div>
-    <div>
-        <ul id="u3"></ul>
-    </div>
-    <div>
-        <ul id="u4"></ul>
-    </div>
-    <div>
-        <ul id="u5"></ul>
-    </div>
-    <div>
-        <ul id="u6"></ul>
+    <div id="outDiv">
+        <div>
+            <ul id="u1"></ul>
+        </div>
+        <div>
+            <ul id="u2"></ul>
+        </div>
+        <div>
+            <ul id="u3"></ul>
+        </div>
+        <div>
+            <ul id="u4"></ul>
+        </div>
+        <div>
+            <ul id="u5"></ul>
+        </div>
+        <div>
+            <ul id="u6"></ul>
+        </div>
     </div>
 </body>
 </html>
