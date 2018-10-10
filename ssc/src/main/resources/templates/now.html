@@ -46,7 +46,9 @@
             createData(pd, showType);
         }
         // 切换类型1-前三，2-中三，3-后三
-        function changeType(type) {
+        function changeType(type, but) {
+            $(but).parent().children().css('background-color', '');
+            $(but).css('background-color', 'chartreuse');
             $('#showType').val(type);
             var day = $('#hiddenDate').val();
             day = new Date(day);
@@ -182,9 +184,11 @@
     <div id="headDiv">
         <button style="height: 30px;width: 100px;" onclick="changeDay(-1)">前一天</button>
         <button style="height: 30px;width: 100px;" onclick="changeDay(1)">后一天</button>
-        <button style="height: 30px;width: 100px;" onclick="changeType(1)">前 三</button>
-        <button style="height: 30px;width: 100px;" onclick="changeType(2)">中 三</button>
-        <button style="height: 30px;width: 100px;" onclick="changeType(3)">后 三</button>
+        <span>
+            <button style="height: 30px;width: 100px;" onclick="changeType(1, this)">前 三</button>
+            <button style="height: 30px;width: 100px;" onclick="changeType(2, this)">中 三</button>
+            <button style="height: 30px;width: 100px;" onclick="changeType(3, this)">后 三</button>
+        </span>
         <input id="hiddenDate" type="hidden" value=""/>
         <input id="showType" type="hidden" value=""/>
         <input id="showDate" type="text" value=""/>
