@@ -25,6 +25,6 @@ spring:
     open-in-view: false
 logback:
   # 日志根文件
-  file: E:/usr/logs/ssc
+  file: /usr/logs/ssc
 mybatis:
   mapper-locations: classpath*:mapper/*.xml,classpath*:auto/mapper/*.xml

@@ -12,4 +12,4 @@ spring:
     cache: false
 logback:
   # 日志根文件
-  file: E:/usr/logs/analyze
+  file: /usr/logs/analyze
