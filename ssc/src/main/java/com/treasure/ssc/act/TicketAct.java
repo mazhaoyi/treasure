@@ -1,10 +1,10 @@
 package com.treasure.ssc.act;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.treasure.common.util.ResultUtils;
+import com.treasure.common.util.SscUtils;
 import com.treasure.ssc.entity.BuyItem;
 import com.treasure.ssc.svc.TicketSvc;
-import com.treasure.ssc.util.ResultUtils;
-import com.treasure.ssc.util.SscUtils;
 import com.treasure.ssc.vo.SscOutVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;

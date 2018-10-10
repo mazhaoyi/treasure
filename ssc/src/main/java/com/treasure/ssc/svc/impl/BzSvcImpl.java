@@ -1,12 +1,12 @@
 package com.treasure.ssc.svc.impl;
 
-import com.treasure.auto.entity.Bz;
-import com.treasure.auto.entity.BzExample;
-import com.treasure.auto.mapper.BzMapper;
-import com.treasure.ssc.cons.SscConst;
+import com.treasure.mbgenerator.entity.Bz;
+import com.treasure.mbgenerator.entity.BzExample;
+import com.treasure.mbgenerator.mapper.BzMapper;
+import com.treasure.common.constant.SscConst;
+import com.treasure.common.util.DateUtils;
+import com.treasure.common.util.HttpUtils;
 import com.treasure.ssc.svc.BzSvc;
-import com.treasure.ssc.util.DateUtils;
-import com.treasure.ssc.util.HttpUtils;
 import com.treasure.ssc.vo.BzOtherVo;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 
 /**

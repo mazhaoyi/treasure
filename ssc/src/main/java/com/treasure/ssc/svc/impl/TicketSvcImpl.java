@@ -2,12 +2,12 @@ package com.treasure.ssc.svc.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
-import com.treasure.ssc.cons.SscConst;
+import com.treasure.common.constant.SscConst;
+import com.treasure.common.util.SscUtils;
 import com.treasure.ssc.dao.TicketDao;
 import com.treasure.ssc.entity.BuyItem;
 import com.treasure.ssc.entity.Ticket;
 import com.treasure.ssc.svc.TicketSvc;
-import com.treasure.ssc.util.SscUtils;
 import com.treasure.ssc.vo.SscOutVo;
 import com.treasure.ssc.vo.SscVo;
 import org.apache.commons.lang3.StringUtils;

@@ -70,7 +70,7 @@
 		<appender-ref ref="FILE_OUT"/>
 	</logger>
 	<!-- SQL 输出到 FILE_OUT -->
-	<logger name="com.treasure.auto.mapper" level="DEBUG">
+	<logger name="com.treasure.mbgenerator.mapper" level="DEBUG">
 		<appender-ref ref="FILE_OUT"/>
 	</logger>
 

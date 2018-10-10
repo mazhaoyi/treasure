@@ -1,7 +1,7 @@
 package com.treasure.ssc.act;
 
+import com.treasure.common.util.ResultUtils;
 import com.treasure.ssc.svc.BzSvc;
-import com.treasure.ssc.util.ResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

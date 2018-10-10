@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+	<!-- 日志保存路径读取application中的配置，key=logback.file。logback会自动创建文件夹，这样设置了就可以输出日志文件了 -->
+	<springProperty scope="context" name="logbase" source="logback.file"/>
+	<!-- 这个是要配置输出文件的 -->
+	<jmxConfigurator />
+
+	<!-- 彩色日志依赖的渲染类 -->
+	<conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+	<conversionRule conversionWord="wex" converterClass="org.springframework.boot.logging.logback.WhitespaceThrowableProxyConverter" />
+	<conversionRule conversionWord="wEx" converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter" />
+	<!-- 彩色日志格式 -->
+	<property name="CONSOLE_LOG_PATTERN"
+			  value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}" />
+
+	<!-- 控制台输出，彩色日志，注意log文件一般不要用彩色的日志，TXT文件解析不了颜色 -->
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<!-- logger中的appender-ref，决定着日志的输出方式 -->
+	<!-- 按照每天生成日志文件 -->
+	<appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!--日志文件输出的文件名 -->
+			<FileNamePattern>
+				${logbase}/log.%d{yyyy-MM-dd}.log
+			</FileNamePattern>
+			<MaxHistory>30</MaxHistory>
+		</rollingPolicy>
+		<encoder>
+			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+			<pattern>
+				%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread]	%-5level	%logger{50}	-	%msg%n
+			</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+		<!--日志文件最大的大小 -->
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>100MB</MaxFileSize>
+		</triggeringPolicy>
+	</appender>
+
+	<appender name="FILE_OUT" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!--日志文件输出的文件名 -->
+			<FileNamePattern>
+				${logbase}/out/out.%d{yyyy-MM-dd}.log
+			</FileNamePattern>
+			<MaxHistory>30</MaxHistory>
+		</rollingPolicy>
+		<encoder>
+			<!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符 -->
+			<pattern>
+				%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread]	%-5level	%logger{50}	-	%msg%n
+			</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+		<!--日志文件最大的大小 -->
+		<triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<MaxFileSize>100MB</MaxFileSize>
+		</triggeringPolicy>
+	</appender>
+
+	<!-- controller 输出到 FILE_OUT -->
+	<logger name="com.treasure.analyze.act" level="DEBUG">
+		<appender-ref ref="FILE_OUT"/>
+	</logger>
+	<!-- service 输出到 FILE_OUT -->
+	<logger name="com.treasure.analyze.svc" level="DEBUG">
+		<appender-ref ref="FILE_OUT"/>
+	</logger>
+
+	<!-- root是logger的一种，是根logger，所以我们可以配置多个logger，但只能配置一个root根logger -->
+	<root>
+		<level value="INFO"/>
+		<!-- 所有日志输出到控制台 -->
+		<appender-ref ref="CONSOLE"/>
+		<!-- 所有日志输出到FILE -->
+		<appender-ref ref="FILE"/>
+	</root>
+
+</configuration>
