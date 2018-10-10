@@ -22,9 +22,13 @@ public class SpringConfig extends SpringConfigBase {
         // 注册静态资源
         registry.addResourceHandler("/static/**")
                 .addResourceLocations("classpath:/templates/static/");
+        // ico
+        registry.addResourceHandler("favicon.ico")
+                .addResourceLocations("classpath:/templates/static/img/favicon.ico");
         // now资源
         registry.addResourceHandler("index.html")
                 .addResourceLocations("classpath:/templates/index.html");
+
     }
 
 }
