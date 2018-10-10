@@ -7,7 +7,7 @@ import com.treasure.ssc.act.vo.BaseOutVo;
  * @author: mazy
  * @date: 2018/9/25 17:58
  */
-public class ResUtils {
+public class ResultUtils {
     /**
      * 组装正确结果
      * @param data

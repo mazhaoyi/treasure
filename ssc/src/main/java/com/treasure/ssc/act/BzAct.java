@@ -1,7 +1,7 @@
 package com.treasure.ssc.act;
 
 import com.treasure.ssc.svc.BzSvc;
-import com.treasure.ssc.util.ResUtils;
+import com.treasure.ssc.util.ResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +20,6 @@ public class BzAct {
     @GetMapping("/init")
     public Object init() {
         bzSvc.initBz();
-        return ResUtils.success(null);
+        return ResultUtils.success(null);
     }
 }

@@ -1,7 +1,7 @@
 package com.treasure.ssc.act;
 
 import com.treasure.ssc.svc.AnalyzeSvc;
-import com.treasure.ssc.util.ResUtils;
+import com.treasure.ssc.util.ResultUtils;
 import com.treasure.ssc.vo.AnalyzeVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +24,6 @@ public class AnalyzeAct {
     @GetMapping(value = "/list")
     public Object list(Date date) {
         List<AnalyzeVo> list = analyzeSvc.getDateFromRemote(date);
-        return ResUtils.success(list);
+        return ResultUtils.success(list);
     }
 }

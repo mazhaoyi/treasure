@@ -38,6 +38,7 @@
                 <executions>
                     <execution>
                         <id>Generate MyBatis Artifacts</id>
+                        <phase>deploy</phase>
                         <goals>
                             <goal>generate</goal>
                         </goals>
@@ -64,7 +65,6 @@
                         <artifactId>mybatis</artifactId>
                         <version>${mybatis.version}</version>
                     </dependency>
-
                 </dependencies>
             </plugin>
         </plugins>

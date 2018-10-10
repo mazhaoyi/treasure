@@ -3,7 +3,7 @@ package com.treasure.ssc.act;
 import com.alibaba.fastjson.annotation.JSONField;
 import com.treasure.ssc.entity.BuyItem;
 import com.treasure.ssc.svc.TicketSvc;
-import com.treasure.ssc.util.ResUtils;
+import com.treasure.ssc.util.ResultUtils;
 import com.treasure.ssc.util.SscUtils;
 import com.treasure.ssc.vo.SscOutVo;
 import org.apache.commons.lang3.StringUtils;
@@ -30,48 +30,48 @@ public class TicketAct {
     /*@GetMapping(value = "/init")
     public Object initTicket() {
         ticketSvc.initTickets();
-        return ResUtils.success(null);
+        return ResultUtils.success(null);
     }*/
 
     @GetMapping("/next")
     public Object next(String ticketNo, @JSONField(format = "yyyy-MM-dd") Date ticketDate) {
         if (!StringUtils.isNumeric(ticketNo)) {
-            return ResUtils.error("期数必须是数字！");
+            return ResultUtils.error("期数必须是数字！");
         }
         Integer noInt = Integer.valueOf(ticketNo);
         // 最大期数
         int maxNo = 120;
         if (noInt < 1) {
-            return ResUtils.error("必须是从1期开始！");
+            return ResultUtils.error("必须是从1期开始！");
         }
         if (noInt > maxNo) {
-            return ResUtils.error(120, "最大期数为120！", null);
+            return ResultUtils.error(120, "最大期数为120！", null);
         }
 
         // 把no转换成3位数
         ticketNo = SscUtils.frontZero(noInt, 3);
 
         SscOutVo outVo = ticketSvc.next(ticketNo, ticketDate);
-        return ResUtils.success(outVo);
+        return ResultUtils.success(outVo);
     }
 
     @GetMapping("/buy")
     public Object buy(String ticketNo, @JSONField(format = "yyyy-MM-dd") Date ticketDate, Short count, BigDecimal start) {
         if (!StringUtils.isNumeric(ticketNo)) {
-            return ResUtils.error("期数必须是数字！");
+            return ResultUtils.error("期数必须是数字！");
         }
         Integer noInt = Integer.valueOf(ticketNo);
         // 最大期数
         int maxNo = 120;
         if (noInt < 1) {
-            return ResUtils.error("必须是从1期开始！");
+            return ResultUtils.error("必须是从1期开始！");
         }
         if (noInt > maxNo) {
-            return ResUtils.error(120, "最大期数为120！", null);
+            return ResultUtils.error(120, "最大期数为120！", null);
         }
         // 把no转换成3位数
         ticketNo = SscUtils.frontZero(noInt, 3);
         List<BuyItem> list = ticketSvc.buy(ticketNo, ticketDate, count, start);
-        return ResUtils.success(list);
+        return ResultUtils.success(list);
     }
 }
