@@ -24,15 +24,28 @@
     <script type="application/javascript">
         // 自动加载JavaScript
         $(function () {
-            initData();
+            var today = new Date();
+            createData(today.toLocaleDateString(), 3);
         });
-        // 初始化数据
-        function initData() {
+
+        /**
+         * 获取数据
+         * @param date 日期
+         * @param type 类型1-前三，2-中三，3-后三
+         */
+        function createData(date, type) {
+            // 1-前三，2-中三，3-后三
+            var befType = 1, midType = 2, aftType = 3;
+            // 默认后三
+            if (type == null || type != 1 || type != 2 || type != 3) {
+                type = 3;
+            }
             $.ajax({
                 type: 'GET',
                 dataType: 'json',
                 url: '/analyze/list',
                 contentType: 'application/json;charset=utf-8',
+                data: {'date':date},
                 success: function (data) {
                     if (data == null) {
                         alert('没有响应结果！');
@@ -65,22 +78,60 @@
                         } else if (i >= 100 && i < 120) {
                             $('#u6').append(jli);
                         }
-
-                        // 后三最大相同个数
-                        var aft3MaxCount = dt.aft3MaxCount;
-                        // 后三012路
-                        var aft3012 = dt.aft3012;
-                        if (aft3MaxCount == 2) {
-                            jli.append('<span style="color: red;width: 10px;"> 组三</span>');
-                        } else if (aft3MaxCount == 1) {
-                            jli.append('<span style="width: 10px;"> 组六</span>');
-                        } else if (aft3MaxCount == 3) {
-                            jli.append('<span style="color: #5865ff;width: 10px;"> 豹子</span>');
-                        }
-                        if (aft3012) {
-                            jli.append('<span style="color: #ffdc10;width: 10px;"> 012</span>');
-                        } else {
-                            jli.append('<span style="width: 10px;"> </span>');
+                        // 前三
+                        if (type == befType) {
+                            // 前三最大相同个数
+                            var bef3MaxCount = dt.bef3MaxCount;
+                            // 前三012路
+                            var bef3012 = dt.bef3012;
+                            if (bef3MaxCount == 2) {
+                                jli.append('<span style="color: red;width: 10px;"> 组三</span>');
+                            } else if (bef3MaxCount == 1) {
+                                jli.append('<span style="width: 10px;"> 组六</span>');
+                            } else if (bef3MaxCount == 3) {
+                                jli.append('<span style="color: #5865ff;width: 10px;"> 豹子</span>');
+                            }
+                            if (bef3012) {
+                                jli.append('<span style="color: #ffdc10;width: 10px;"> 012</span>');
+                            } else {
+                                jli.append('<span style="width: 10px;"> </span>');
+                            }
+                        // 中三
+                        } else if (type == midType) {
+                            // 中三最大相同个数
+                            var mid3MaxCount = dt.mid3MaxCount;
+                            // 中三012路
+                            var mid3012 = dt.mid3012;
+                            if (mid3MaxCount == 2) {
+                                jli.append('<span style="color: red;width: 10px;"> 组三</span>');
+                            } else if (mid3MaxCount == 1) {
+                                jli.append('<span style="width: 10px;"> 组六</span>');
+                            } else if (mid3MaxCount == 3) {
+                                jli.append('<span style="color: #5865ff;width: 10px;"> 豹子</span>');
+                            }
+                            if (mid3012) {
+                                jli.append('<span style="color: #ffdc10;width: 10px;"> 012</span>');
+                            } else {
+                                jli.append('<span style="width: 10px;"> </span>');
+                            }
+                        // 后三
+                        } else if (type == aftType) {
+                            // 后三最大相同个数
+                            var aft3MaxCount = dt.aft3MaxCount;
+                            // 后三012路
+                            var aft3012 = dt.aft3012;
+                            if (aft3MaxCount == 2) {
+                                jli.append('<span style="color: red;width: 10px;"> 组三</span>');
+                            } else if (aft3MaxCount == 1) {
+                                jli.append('<span style="width: 10px;"> 组六</span>');
+                            } else if (aft3MaxCount == 3) {
+                                jli.append('<span style="color: #5865ff;width: 10px;"> 豹子</span>');
+                            }
+                            if (aft3012) {
+                                jli.append('<span style="color: #ffdc10;width: 10px;"> 012</span>');
+                            } else {
+                                jli.append('<span style="width: 10px;"> </span>');
+                            }
                         }
                     }
                 }

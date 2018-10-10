@@ -6,11 +6,11 @@ import com.treasure.ssc.util.HttpUtils;
 import com.treasure.ssc.util.SscUtils;
 import com.treasure.ssc.vo.AnalyzeVo;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author: mazy
@@ -20,8 +20,14 @@ import java.util.List;
 @Transactional(rollbackFor = Exception.class)
 public class AnalyzeSvcImpl implements AnalyzeSvc {
     @Override
-    public List<AnalyzeVo> getDateFromRemote() {
-        List<AnalyzeVo> datas = HttpUtils.postList(SscConst.DATA_URL, null, AnalyzeVo.class);
+    public List<AnalyzeVo> getDateFromRemote(Date date) {
+        Map<String, Object> params = null;
+        if (date != null) {
+            params = new HashMap<>(1);
+            params.put("selectDay", DateFormatUtils.format(date, "yyyyMMdd"));
+        }
+
+        List<AnalyzeVo> datas = HttpUtils.postList(SscConst.DATA_URL, params, AnalyzeVo.class);
         if (CollectionUtils.isEmpty(datas)) {
             return datas;
         }

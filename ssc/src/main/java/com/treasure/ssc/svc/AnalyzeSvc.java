@@ -2,6 +2,7 @@ package com.treasure.ssc.svc;
 
 import com.treasure.ssc.vo.AnalyzeVo;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,5 +15,5 @@ public interface AnalyzeSvc {
      * 从远程获取当前数据
      * @return
      */
-    List<AnalyzeVo> getDateFromRemote();
+    List<AnalyzeVo> getDateFromRemote(Date date);
 }

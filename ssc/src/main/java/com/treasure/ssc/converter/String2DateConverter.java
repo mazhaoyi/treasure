@@ -1,9 +1,9 @@
 package com.treasure.ssc.converter;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.core.convert.converter.Converter;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -19,21 +19,14 @@ public class String2DateConverter implements Converter<String, Date> {
         if (StringUtils.isBlank(s)) {
             return null;
         }
-        DateFormat dateFormat;
-        switch (s.length()){
-            case 10:
-                dateFormat = DateFormat.getDateInstance();
-                break;
-            case 19:
-                dateFormat = DateFormat.getDateTimeInstance();
-                break;
-            default:
-                dateFormat = DateFormat.getDateInstance();
-        }
-
         Date date = null;
         try {
-            date = dateFormat.parse(s);
+            String[] parsePatterns = {
+                    "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd", "yyyy-MM-dd HH:mm",
+                    "yyyy/MM/dd HH:mm:ss", "yyyy/MM/dd", "yyyy/MM/dd HH:mm",
+                    "yyyyMMdd"
+            };
+            date = DateUtils.parseDate(s, parsePatterns);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -41,10 +34,15 @@ public class String2DateConverter implements Converter<String, Date> {
     }
 
     public static void main(String[] args) {
-        DateFormat dateFormat = DateFormat.getDateInstance();
         try {
-            Date date = dateFormat.parse("2018-09-17 00:00:01");
-            System.out.println(date);
+            String[] parsePatterns = {
+                    "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd", "yyyy-MM-dd HH:mm",
+                    "yyyy/MM/dd HH:mm:ss", "yyyy/MM/dd", "yyyy/MM/dd HH:mm",
+                    "yyyyMMdd"
+            };
+            System.out.println(DateUtils.parseDate("2009/09/01 10:10:10", parsePatterns));
+            System.out.println(DateUtils.parseDate("2009/9/1 10:10:10", parsePatterns));
+            System.out.println(DateUtils.parseDate("20090901", parsePatterns));
         } catch (ParseException e) {
             e.printStackTrace();
         }

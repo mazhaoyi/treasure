@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,8 +22,8 @@ public class AnalyzeAct {
     private AnalyzeSvc analyzeSvc;
 
     @GetMapping(value = "/list")
-    public Object list() {
-        List<AnalyzeVo> list = analyzeSvc.getDateFromRemote();
+    public Object list(Date date) {
+        List<AnalyzeVo> list = analyzeSvc.getDateFromRemote(date);
         return ResUtils.success(list);
     }
 }
