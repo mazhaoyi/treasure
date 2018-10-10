@@ -18,7 +18,7 @@ import java.util.List;
  * @author: mazy
  * @date: 2018/5/25 10:56
  */
-public class SpringConfigBase extends WebMvcConfigurationSupport {
+public abstract class SpringConfigBase extends WebMvcConfigurationSupport {
 
     /**
      * 请求参数-格式化
