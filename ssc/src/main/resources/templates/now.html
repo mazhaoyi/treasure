@@ -28,6 +28,7 @@
             $('#hiddenDate').val(today);
             $('#showDate').val(today.toLocaleDateString());
             $('#showType').val(3);
+            $('#aft3But').css('background-color', 'chartreuse');
             createData(today, 3);
         });
         // 修改日期
@@ -187,7 +188,7 @@
         <span>
             <button style="height: 30px;width: 100px;" onclick="changeType(1, this)">前 三</button>
             <button style="height: 30px;width: 100px;" onclick="changeType(2, this)">中 三</button>
-            <button style="height: 30px;width: 100px;" onclick="changeType(3, this)">后 三</button>
+            <button id="aft3But" style="height: 30px;width: 100px;" onclick="changeType(3, this)">后 三</button>
         </span>
         <input id="hiddenDate" type="hidden" value=""/>
         <input id="showType" type="hidden" value=""/>
