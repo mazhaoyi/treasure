@@ -6,6 +6,11 @@
     <style type="text/css">
         #outDiv div {
             float: left;
+            width: 636px;
+            border: none;
+        }
+        #outDiv div div {
+            float: left;
             margin-left: 10px;
             width: 202px;
         }
@@ -182,7 +187,7 @@
     </script>
 </head>
 <body>
-    <div id="headDiv">
+    <div id="headDiv" style="width: 636px;">
         <button style="height: 30px;width: 100px;" onclick="changeDay(-1)">前一天</button>
         <button style="height: 30px;width: 100px;" onclick="changeDay(1)">后一天</button>
         <span>
@@ -192,26 +197,30 @@
         </span>
         <input id="hiddenDate" type="hidden" value=""/>
         <input id="showType" type="hidden" value=""/>
-        <input id="showDate" type="text" value=""/>
+        <input id="showDate" type="text" style="width: 108px;" value=""/>
     </div>
     <div id="outDiv">
         <div>
-            <ul id="u1"></ul>
+            <div>
+                <ul id="u1"></ul>
+            </div>
+            <div>
+                <ul id="u2"></ul>
+            </div>
+            <div>
+                <ul id="u3"></ul>
+            </div>
         </div>
         <div>
-            <ul id="u2"></ul>
-        </div>
-        <div>
-            <ul id="u3"></ul>
-        </div>
-        <div>
-            <ul id="u4"></ul>
-        </div>
-        <div>
-            <ul id="u5"></ul>
-        </div>
-        <div>
-            <ul id="u6"></ul>
+            <div>
+                <ul id="u4"></ul>
+            </div>
+            <div>
+                <ul id="u5"></ul>
+            </div>
+            <div>
+                <ul id="u6"></ul>
+            </div>
         </div>
     </div>
 </body>
