@@ -45,6 +45,62 @@ public class AnalyzeVo implements Serializable {
      */
     private Boolean aft3012;
     /**
+     * 万千十
+     */
+    private Integer wqsMaxCount;
+    /**
+     * 万千十012路
+     */
+    private Boolean wqs012;
+    /**
+     * 万千个
+     */
+    private Integer wqgMaxCount;
+    /**
+     * 万千个012路
+     */
+    private Boolean wqg012;
+    /**
+     * 万百十
+     */
+    private Integer wbsMaxCount;
+    /**
+     * 万百十012路
+     */
+    private Boolean wbs012;
+    /**
+     * 万百个
+     */
+    private Integer wbgMaxCount;
+    /**
+     * 万百个012路
+     */
+    private Boolean wbg012;
+    /**
+     * 万十个
+     */
+    private Integer wsgMaxCount;
+    /**
+     * 万十个012路
+     */
+    private Boolean wsg012;
+    /**
+     * 千百个
+     */
+    private Integer qbgMaxCount;
+    /**
+     * 千百个012路
+     */
+    private Boolean qbg012;
+    /**
+     * 千十个
+     */
+    private Integer qsgMaxCount;
+    /**
+     * 千十个012路
+     */
+    private Boolean qsg012;
+    /**
      * 五星组30
      */
     private Boolean wxz30;
@@ -60,6 +116,118 @@ public class AnalyzeVo implements Serializable {
      * 五星组5
      */
     private Boolean wxz5;
+
+    public Boolean getWqs012() {
+        return this.wqs012;
+    }
+
+    public void setWqs012(Boolean wqs012) {
+        this.wqs012 = wqs012;
+    }
+
+    public Boolean getWqg012() {
+        return this.wqg012;
+    }
+
+    public void setWqg012(Boolean wqg012) {
+        this.wqg012 = wqg012;
+    }
+
+    public Boolean getWbs012() {
+        return this.wbs012;
+    }
+
+    public void setWbs012(Boolean wbs012) {
+        this.wbs012 = wbs012;
+    }
+
+    public Boolean getWbg012() {
+        return this.wbg012;
+    }
+
+    public void setWbg012(Boolean wbg012) {
+        this.wbg012 = wbg012;
+    }
+
+    public Boolean getWsg012() {
+        return this.wsg012;
+    }
+
+    public void setWsg012(Boolean wsg012) {
+        this.wsg012 = wsg012;
+    }
+
+    public Boolean getQbg012() {
+        return this.qbg012;
+    }
+
+    public void setQbg012(Boolean qbg012) {
+        this.qbg012 = qbg012;
+    }
+
+    public Boolean getQsg012() {
+        return this.qsg012;
+    }
+
+    public void setQsg012(Boolean qsg012) {
+        this.qsg012 = qsg012;
+    }
+
+    public Integer getWqsMaxCount() {
+        return this.wqsMaxCount;
+    }
+
+    public void setWqsMaxCount(Integer wqsMaxCount) {
+        this.wqsMaxCount = wqsMaxCount;
+    }
+
+    public Integer getWqgMaxCount() {
+        return this.wqgMaxCount;
+    }
+
+    public void setWqgMaxCount(Integer wqgMaxCount) {
+        this.wqgMaxCount = wqgMaxCount;
+    }
+
+    public Integer getWbsMaxCount() {
+        return this.wbsMaxCount;
+    }
+
+    public void setWbsMaxCount(Integer wbsMaxCount) {
+        this.wbsMaxCount = wbsMaxCount;
+    }
+
+    public Integer getWbgMaxCount() {
+        return this.wbgMaxCount;
+    }
+
+    public void setWbgMaxCount(Integer wbgMaxCount) {
+        this.wbgMaxCount = wbgMaxCount;
+    }
+
+    public Integer getWsgMaxCount() {
+        return this.wsgMaxCount;
+    }
+
+    public void setWsgMaxCount(Integer wsgMaxCount) {
+        this.wsgMaxCount = wsgMaxCount;
+    }
+
+    public Integer getQbgMaxCount() {
+        return this.qbgMaxCount;
+    }
+
+    public void setQbgMaxCount(Integer qbgMaxCount) {
+        this.qbgMaxCount = qbgMaxCount;
+    }
+
+    public Integer getQsgMaxCount() {
+        return this.qsgMaxCount;
+    }
+
+    public void setQsgMaxCount(Integer qsgMaxCount) {
+        this.qsgMaxCount = qsgMaxCount;
+    }
 
     public Boolean getWxz10() {
         return this.wxz10;

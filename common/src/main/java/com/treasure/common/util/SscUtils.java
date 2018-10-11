@@ -1,6 +1,7 @@
 package com.treasure.common.util;
 
 import com.google.common.collect.Lists;
+import com.treasure.common.vo.Point;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Comparator;
@@ -44,6 +45,66 @@ public class SscUtils {
             return str;
         }
         return StringUtils.substring(str, 1, 4);
+    }
+
+    /**
+     * 提取长度是5的字符串其中3个字符
+     * @param str
+     * @param point1
+     * @param point2
+     * @param point3
+     * @return
+     */
+    public static final String pickUp3Char(String str, Point point1, Point point2, Point point3) {
+        if (StringUtils.isBlank(str)) {
+            return str;
+        }
+        // 字符串长度要==5
+        int strLength = 5;
+        if (StringUtils.length(str) != strLength) {
+            throw new RuntimeException("str's length must == 5");
+        }
+        if (point1 == null || point2 == null || point3 == null) {
+            throw new RuntimeException("Point cannot be null");
+        }
+        String res = pickUpChar(str, point1) + pickUpChar(str, point2) + pickUpChar(str, point3);
+        return res;
+    }
+
+    /**
+     * 提取字符串某一个字符
+     * @param str 字符串
+     * @param point 位置
+     * @return
+     */
+    public static final String pickUpChar(String str, Point point) {
+        // 字符串长度要==5
+        int strLength = 5;
+        if (StringUtils.length(str) != strLength) {
+            throw new RuntimeException("str's length must == 5");
+        }
+        if (point == null) {
+            throw new RuntimeException("Point cannot be null");
+        }
+        String res = null;
+        switch (point) {
+            case W:
+                res = str.substring(0, 1);
+                break;
+            case Q:
+                res = str.substring(1, 2);
+                break;
+            case B:
+                res = str.substring(2, 3);
+                break;
+            case S:
+                res = str.substring(3, 4);
+                break;
+            case G:
+                res = str.substring(4, 5);
+                break;
+        }
+        return res;
     }
 
     /**
@@ -246,6 +307,14 @@ public class SscUtils {
         System.out.println(SscUtils.checkZu20(str) + "组20");
         System.out.println(SscUtils.checkZu10(str) + "组10");
         System.out.println(SscUtils.checkZu5(str) + "组5");
+
+        System.out.println(pickUp3Char(str, Point.W, Point.Q, Point.S));
+        System.out.println(pickUp3Char(str, Point.W, Point.Q, Point.G));
+        System.out.println(pickUp3Char(str, Point.W, Point.B, Point.S));
+        System.out.println(pickUp3Char(str, Point.W, Point.B, Point.G));
+        System.out.println(pickUp3Char(str, Point.W, Point.S, Point.G));
+        System.out.println(pickUp3Char(str, Point.Q, Point.B, Point.G));
+        System.out.println(pickUp3Char(str, Point.Q, Point.S, Point.G));
     }
 
 }
