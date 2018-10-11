@@ -44,6 +44,54 @@ public class AnalyzeVo implements Serializable {
      * 后三012路
      */
     private Boolean aft3012;
+    /**
+     * 五星组30
+     */
+    private Boolean wxz30;
+    /**
+     * 五星组20
+     */
+    private Boolean wxz20;
+    /**
+     * 五星组10
+     */
+    private Boolean wxz10;
+    /**
+     * 五星组5
+     */
+    private Boolean wxz5;
+
+    public Boolean getWxz10() {
+        return this.wxz10;
+    }
+
+    public void setWxz10(Boolean wxz10) {
+        this.wxz10 = wxz10;
+    }
+
+    public Boolean getWxz5() {
+        return this.wxz5;
+    }
+
+    public void setWxz5(Boolean wxz5) {
+        this.wxz5 = wxz5;
+    }
+
+    public Boolean getWxz30() {
+        return this.wxz30;
+    }
+
+    public void setWxz30(Boolean wxz30) {
+        this.wxz30 = wxz30;
+    }
+
+    public Boolean getWxz20() {
+        return this.wxz20;
+    }
+
+    public void setWxz20(Boolean wxz20) {
+        this.wxz20 = wxz20;
+    }
 
     public String getDay() {
         return this.day;

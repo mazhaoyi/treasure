@@ -34,12 +34,23 @@ public class AnalyzeSvcImpl implements AnalyzeSvc {
             String bef3Str = SscUtils.create3Before(num);
             String mid3Str = SscUtils.create3Middle(num);
             String aft3Str = SscUtils.create3After(num);
+            // 前三
             e.setBef3MaxCount(SscUtils.maxCountChar(bef3Str));
             e.setBef3012(SscUtils.check012(bef3Str));
+            // 中三
             e.setMid3MaxCount(SscUtils.maxCountChar(mid3Str));
             e.setMid3012(SscUtils.check012(mid3Str));
+            // 后三
             e.setAft3MaxCount(SscUtils.maxCountChar(aft3Str));
             e.setAft3012(SscUtils.check012(aft3Str));
+            // 五星组30
+            e.setWxz30(SscUtils.checkZu30(num));
+            // 五星组20
+            e.setWxz20(SscUtils.checkZu20(num));
+            // 五星组10
+            e.setWxz10(SscUtils.checkZu10(num));
+            // 五星组5
+            e.setWxz5(SscUtils.checkZu5(num));
         });
         return datas;
     }

@@ -19,23 +19,33 @@
             width: 300px;
             border: 1px solid darkgray;
             padding: 0px;
-            height: 602px;
+            height: 632px;
         }
         ul li {
             height: 30px;
+        }
+        ul li span {
+            display: block;
+            float: left;
+            width: 46px;
+        }
+        .num_span {
+            width: 51px;
         }
     </style>
     <script src="static/js/jquery-3.3.1.min.js" type="application/javascript"></script>
     <script type="application/javascript">
         // 自动加载JavaScript
         $(function () {
+            initPage();
+        });
+        // 初始化页面
+        function initPage() {
             var today = new Date();
             $('#hiddenDate').val(today);
             $('#showDate').val(today.toLocaleDateString());
-            $('#showType').val(3);
-            $('#aft3But').css('background-color', 'chartreuse');
-            createData(today, 3);
-        });
+            createData(today);
+        }
         // 修改日期
         function changeDay(day) {
             var hiddenDate = $('#hiddenDate');
@@ -48,17 +58,7 @@
             $('#hiddenDate').val(pd);
             $('#showDate').val(pd.toLocaleDateString());
 
-            var showType = $('#showType').val();
-            createData(pd, showType);
-        }
-        // 切换类型1-前三，2-中三，3-后三
-        function changeType(type, but) {
-            $(but).parent().children().css('background-color', '');
-            $(but).css('background-color', 'chartreuse');
-            $('#showType').val(type);
-            var day = $('#hiddenDate').val();
-            day = new Date(day);
-            createData(day, type);
+            createData(pd);
         }
 
         /**
@@ -66,27 +66,27 @@
          * @param date 日期
          * @param type 类型1-前三，2-中三，3-后三
          */
-        function createData(date, type) {
+        function createData(date) {
             date = date.toLocaleDateString();
-            var u1 = $('#u1');
-            var u2 = $('#u2');
-            var u3 = $('#u3');
-            var u4 = $('#u4');
-            var u5 = $('#u5');
-            var u6 = $('#u6');
+            var u1 = $('#u1'), u2 = $('#u2'), u3 = $('#u3'), u4 = $('#u4'), u5 = $('#u5'), u6 = $('#u6');
+            // 表头
+            var ulHead = '<li>' +
+                '<span>期数</span>' +
+                '<span class="num_span">号码</span>' +
+                '<span>前三</span>' +
+                '<span>中三</span>' +
+                '<span>后三</span>' +
+                '<span>五星</span>' +
+                '</li>';
             // 清空页面
-            u1.html('');
-            u2.html('');
-            u3.html('');
-            u4.html('');
-            u5.html('');
-            u6.html('');
+            u1.html(ulHead);
+            u2.html(ulHead);
+            u3.html(ulHead);
+            u4.html(ulHead);
+            u5.html(ulHead);
+            u6.html(ulHead);
             // 1-前三，2-中三，3-后三
             var befType = 1, midType = 2, aftType = 3;
-            // 默认后三
-            if (type == null || (type != 1 && type != 2 && type != 3)) {
-                type = 3;
-            }
             $.ajax({
                 type: 'GET',
                 dataType: 'json',
@@ -109,7 +109,7 @@
                         var no = dt.no;
                         // 号码
                         var num = dt.num;
-                        var li = '<li>' + no + ' ' + num + '</li>';
+                        var li = '<li><span>' + no + '</span><span class="num_span">' + num + '</span></li>';
                         // jquery li对象
                         var jli = $(li);
                         if (i >= 0 && i < 20) {
@@ -125,64 +125,78 @@
                         } else if (i >= 100 && i < 120) {
                             u6.append(jli);
                         }
-                        // 前三
-                        if (type == befType) {
-                            // 前三最大相同个数
-                            var bef3MaxCount = dt.bef3MaxCount;
-                            // 前三012路
-                            var bef3012 = dt.bef3012;
-                            if (bef3MaxCount == 2) {
-                                jli.append('<span style="color: red;width: 10px;"> 组三</span>');
-                            } else if (bef3MaxCount == 1) {
-                                jli.append('<span style="width: 10px;"> 组六</span>');
-                            } else if (bef3MaxCount == 3) {
-                                jli.append('<span style="color: #5865ff;width: 10px;"> 豹子</span>');
-                            }
-                            if (bef3012) {
-                                jli.append('<span style="color: #ffdc10;width: 10px;"> 012</span>');
-                            } else {
-                                jli.append('<span style="width: 10px;"> </span>');
-                            }
-                        // 中三
-                        } else if (type == midType) {
-                            // 中三最大相同个数
-                            var mid3MaxCount = dt.mid3MaxCount;
-                            // 中三012路
-                            var mid3012 = dt.mid3012;
-                            if (mid3MaxCount == 2) {
-                                jli.append('<span style="color: red;width: 10px;"> 组三</span>');
-                            } else if (mid3MaxCount == 1) {
-                                jli.append('<span style="width: 10px;"> 组六</span>');
-                            } else if (mid3MaxCount == 3) {
-                                jli.append('<span style="color: #5865ff;width: 10px;"> 豹子</span>');
-                            }
-                            if (mid3012) {
-                                jli.append('<span style="color: #ffdc10;width: 10px;"> 012</span>');
-                            } else {
-                                jli.append('<span style="width: 10px;"> </span>');
-                            }
-                        // 后三
-                        } else if (type == aftType) {
-                            // 后三最大相同个数
-                            var aft3MaxCount = dt.aft3MaxCount;
-                            // 后三012路
-                            var aft3012 = dt.aft3012;
-                            if (aft3MaxCount == 2) {
-                                jli.append('<span style="color: red;width: 10px;"> 组三</span>');
-                            } else if (aft3MaxCount == 1) {
-                                jli.append('<span style="width: 10px;"> 组六</span>');
-                            } else if (aft3MaxCount == 3) {
-                                jli.append('<span style="color: #5865ff;width: 10px;"> 豹子</span>');
-                            }
-                            if (aft3012) {
-                                jli.append('<span style="color: #ffdc10;width: 10px;"> 012</span>');
-                            } else {
-                                jli.append('<span style="width: 10px;"> </span>');
-                            }
-                        }
+                        // 前三最大相同个数
+                        var bef3MaxCount = dt.bef3MaxCount;
+                        // 前三012路
+                        var bef3012 = dt.bef3012;
+                        createZu3(jli, bef3MaxCount, bef3012);
+
+                        // 中三最大相同个数
+                        var mid3MaxCount = dt.mid3MaxCount;
+                        // 中三012路
+                        var mid3012 = dt.mid3012;
+                        createZu3(jli, mid3MaxCount, mid3012);
+
+                        // 后三最大相同个数
+                        var aft3MaxCount = dt.aft3MaxCount;
+                        // 后三012路
+                        var aft3012 = dt.aft3012;
+                        createZu3(jli, aft3MaxCount, aft3012);
+
+                        var wxz5 = dt.wxz5, wxz10 = dt.wxz10, wxz20 = dt.wxz20, wxz30 = dt.wxz30;
+                        // 组5，组10，组20，组30
+                        createWx(jli, wxz5, wxz10, wxz20, wxz30)
                     }
                 }
             });
+        }
+
+        /**
+         * 012路，组3渲染
+         * @param li jQuery对象
+         * @param maxCount 最大重复数
+         * @param if012 是否012路
+         */
+        function createZu3(li, maxCount, if012) {
+            var span = null;
+            // 组装span
+            if (maxCount == 2) {
+                span = '<span style="color: red;">组三</span>';
+            } else if (maxCount == 1) {
+                span = '<span>组六</span>';
+            } else if (maxCount == 3) {
+                span = '<span style="color: #5865ff;">豹子</span>';
+            }
+            span = $(span);
+            // span放到li下面
+            li.append(span);
+            if (if012) {
+                span.css('color', '#5fff65');
+            }
+        }
+
+        /**
+         * 五星组5，组10，组20，组30渲染
+         * @param wxz5 是否组5
+         * @param wxz10 是否组10
+         * @param wxz20 是否组20
+         * @param wxz30 是否组30
+         */
+        function createWx(li, wxz5, wxz10, wxz20, wxz30) {
+            var val = '';
+            var color = '#5865ff';
+            if (wxz5) {
+                val = '组5';
+            } else if (wxz10) {
+                val = '组10';
+            } else if (wxz20) {
+                val = '组20';
+            } else if (wxz30) {
+                val = '组30';
+            } else {
+                color = 'black';
+            }
+            li.append('<span style="color: ' + color + ';">' + val + '</span>');
         }
     </script>
 </head>
@@ -190,14 +204,10 @@
     <div id="headDiv" style="width: 636px;">
         <button style="height: 30px;width: 100px;" onclick="changeDay(-1)">前一天</button>
         <button style="height: 30px;width: 100px;" onclick="changeDay(1)">后一天</button>
-        <span>
-            <button style="height: 30px;width: 100px;" onclick="changeType(1, this)">前 三</button>
-            <button style="height: 30px;width: 100px;" onclick="changeType(2, this)">中 三</button>
-            <button id="aft3But" style="height: 30px;width: 100px;" onclick="changeType(3, this)">后 三</button>
-        </span>
         <input id="hiddenDate" type="hidden" value=""/>
         <input id="showType" type="hidden" value=""/>
         <input id="showDate" type="text" style="width: 108px;" value=""/>
+        <button style="height: 30px;width: 100px;" onclick="initPage()">今 天</button>
     </div>
     <div id="outDiv">
         <div>
