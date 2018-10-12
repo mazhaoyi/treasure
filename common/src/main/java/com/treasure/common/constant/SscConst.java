@@ -11,12 +11,14 @@ import java.nio.file.Path;
 public class SscConst {
     /**
      * 源数据抓取地址
+     * http://39.108.143.25:8080/stock/cqssc/getCurrentDay.sc
      */
-    public static final String DATA_URL = "http://39.108.143.25:8080/stock/cqssc/getCurrentDay.sc";
+    public static final String DATA_URL = "http://localhost:8080/stock/cqssc/getCurrentDay.sc";
     /**
      * 豹子数据抓取地址
+     * http://39.108.143.25:8080/stock/cqssc/getBzList.sc
      */
-    public static final String BZ_URL = "http://39.108.143.25:8080/stock/cqssc/getBzList.sc";
+    public static final String BZ_URL = "http://localhost:8080/stock/cqssc/getBzList.sc";
     /**
      * 组三maxCount数字
      */
