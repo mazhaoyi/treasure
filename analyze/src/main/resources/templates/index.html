@@ -212,7 +212,7 @@
             if (maxCount == 2) {
                 span = '<span style="color: red;">组三</span>';
             } else if (maxCount == 1) {
-                span = '<span>组六</span>';
+                span = '<span style="color: #f0f6ff;">组六</span>';
             } else if (maxCount == 3) {
                 span = '<span style="color: #5865ff;">豹子</span>';
             }
@@ -221,6 +221,7 @@
             li.append(span);
             if (if012) {
                 span.css('color', '#2db69d');
+                // span.html('012');
             }
         }
 
@@ -252,12 +253,15 @@
 </head>
 <body>
     <div id="headDiv" style="width: 636px;">
-        <button style="height: 30px;width: 100px;" onclick="changeDay(-1)">前一天</button>
-        <button style="height: 30px;width: 100px;" onclick="changeDay(1)">后一天</button>
+        <button style="height: 30px;width: 100px;border: 1px solid blue;" onclick="changeDay(-1)">前一天</button>
+        <button style="height: 30px;width: 100px;border: 1px solid blue;" onclick="changeDay(1)">后一天</button>
         <input id="hiddenDate" type="hidden" value=""/>
         <input id="showType" type="hidden" value=""/>
         <input id="showDate" type="text" style="width: 108px;" value=""/>
-        <button style="height: 30px;width: 100px;" onclick="initPage()">今 天</button>
+        <button style="height: 30px;width: 100px;" onclick="initPage()">刷新今天</button>
+        <a href="zu.html" target="_blank">
+            <button style="height: 30px;width: 100px;" onclick="initPage()">组三跳转</button>
+        </a>
     </div>
     <div id="outDiv">
         <div>

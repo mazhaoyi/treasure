@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>组三</title>
+    <style type="text/css">
+        #outDiv div {
+            float: left;
+            width: 936px;
+            border: none;
+        }
+        #outDiv div div {
+            float: left;
+            margin-left: 10px;
+            width: 302px;
+        }
+        ul {
+            list-style: none;
+            width: 300px;
+            border: 1px solid darkgray;
+            padding: 0px;
+            height: 602px;
+        }
+        ul li {
+            height: 30px;
+        }
+        ul li span {
+            display: block;
+            float: left;
+            width: 45px;
+        }
+        .num_span {
+            width: 70px;
+        }
+    </style>
+    <script src="static/js/jquery-3.3.1.min.js" type="application/javascript"></script>
+    <script type="application/javascript">
+        // 自动加载JavaScript
+        $(function () {
+            initPage();
+        });
+        // 初始化页面
+        function initPage() {
+            var today = new Date();
+            $('#hiddenDate').val(today);
+            $('#showDate').val(today.toLocaleDateString());
+            $('#showType').val(3);
+            $('#aft3But').css('background-color', 'chartreuse');
+            createData(today, 3);
+        }
+        // 修改日期
+        function changeDay(day) {
+            var hiddenDate = $('#hiddenDate');
+            if (hiddenDate.val() == null) {
+                var today = new Date();
+                $('#hiddenDate').val(today);
+            }
+            var pd = new Date(hiddenDate.val());
+            pd.setDate(pd.getDate() + day);
+            $('#hiddenDate').val(pd);
+            $('#showDate').val(pd.toLocaleDateString());
+
+            var showType = $('#showType').val();
+            createData(pd, showType);
+        }
+        // 切换类型1-前三，2-中三，3-后三
+        function changeType(type, but) {
+            $(but).parent().children().css('background-color', '');
+            $(but).css('background-color', '#0aa82f');
+            $('#showType').val(type);
+            var day = $('#hiddenDate').val();
+            day = new Date(day);
+            createData(day, type);
+        }
+
+        /**
+         * 获取数据
+         * @param date 日期
+         * @param type 类型1-前三，2-中三，3-后三
+         */
+        function createData(date, type) {
+            date = date.toLocaleDateString();
+            var u1 = $('#u1'), u2 = $('#u2'), u3 = $('#u3'), u4 = $('#u4'), u5 = $('#u5'), u6 = $('#u6');
+            var ulHead = '';
+            // 清空页面
+            u1.html(ulHead);
+            u2.html(ulHead);
+            u3.html(ulHead);
+            u4.html(ulHead);
+            u5.html(ulHead);
+            u6.html(ulHead);
+            // 1-前三，2-中三，3-后三
+            var befType = 1, midType = 2, aftType = 3, wqsType = 4, wqgType = 5, wbsType = 6, wbgType = 7, wsgType = 8, qbgType = 9, qsgType = 10;
+            // 默认后三
+            if (type == null) {
+                type = 3;
+            }
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: '/analyze/list',
+                contentType: 'application/json;charset=utf-8',
+                data: {'date':date},
+                success: function (data) {
+                    if (data == null) {
+                        alert('没有响应结果！');
+                        return;
+                    }
+                    if (data.code != 200) {
+                        alert(data.message);
+                        return;
+                    }
+                    var datas = data.data;
+                    for (var i = 0; i < datas.length; i++) {
+                        var dt = datas[i];
+                        // 期号
+                        var no = dt.no;
+                        // 号码
+                        var num = dt.num;
+                        var li = '<li><span>' + no + '</span><span class="num_span">' + num + '</span></li>';
+                        // jquery li对象
+                        var jli = $(li);
+                        if (i >= 0 && i < 20) {
+                            u1.append(jli);
+                        } else if (i >= 20 && i < 40) {
+                            u2.append(jli);
+                        } else if (i >= 40 && i < 60) {
+                            u3.append(jli);
+                        } else if (i >= 60 && i < 80) {
+                            u4.append(jli);
+                        } else if (i >= 80 && i < 100) {
+                            u5.append(jli);
+                        } else if (i >= 100 && i < 120) {
+                            u6.append(jli);
+                        }
+                        // 前三
+                        if (type == befType) {
+                            // 前三最大相同个数
+                            var bef3MaxCount = dt.bef3MaxCount;
+                            // 前三012路
+                            var bef3012 = dt.bef3012;
+                            createZu3(jli, bef3MaxCount, bef3012);
+                        // 中三
+                        } else if (type == midType) {
+                            // 中三最大相同个数
+                            var mid3MaxCount = dt.mid3MaxCount;
+                            // 中三012路
+                            var mid3012 = dt.mid3012;
+                            createZu3(jli, mid3MaxCount, mid3012);
+                        // 后三
+                        } else if (type == aftType) {
+                            // 后三最大相同个数
+                            var aft3MaxCount = dt.aft3MaxCount;
+                            // 后三012路
+                            var aft3012 = dt.aft3012;
+                            createZu3(jli, aft3MaxCount, aft3012);
+                        // 万千十
+                        } else if (type == wqsType) {
+                            // 万千十大相同个数
+                            var wqsMaxCount = dt.wqsMaxCount;
+                            // 万千十012路
+                            var wqs012 = dt.wqs012;
+                            createZu3(jli, wqsMaxCount, wqs012);
+                        // 万千个
+                        } else if (type == wqgType) {
+                            // 万千个大相同个数
+                            var wqgMaxCount = dt.wqgMaxCount;
+                            // 万千个012路
+                            var wqg012 = dt.wqg012;
+                            createZu3(jli, wqgMaxCount, wqg012);
+                        // 万百十
+                        } else if (type == wbsType) {
+                            // 万百十大相同个数
+                            var wbsMaxCount = dt.wbsMaxCount;
+                            // 万百十012路
+                            var wbs012 = dt.wbs012;
+                            createZu3(jli, wbsMaxCount, wbs012);
+                        // 万百个
+                        } else if (type == wbgType) {
+                            // 万百个大相同个数
+                            var wbgMaxCount = dt.wbgMaxCount;
+                            // 万百个012路
+                            var wbg012 = dt.wbg012;
+                            createZu3(jli, wbgMaxCount, wbg012);
+                        // 万十个
+                        } else if (type == wsgType) {
+                            // 万十个大相同个数
+                            var wsgMaxCount = dt.wsgMaxCount;
+                            // 万十个012路
+                            var wsg012 = dt.wsg012;
+                            createZu3(jli, wsgMaxCount, wsg012);
+                        // 千百个
+                        } else if (type == qbgType) {
+                            // 千百个大相同个数
+                            var qbgMaxCount = dt.qbgMaxCount;
+                            // 千百个012路
+                            var qbg012 = dt.qbg012;
+                            createZu3(jli, qbgMaxCount, qbg012);
+                        // 千十个
+                        } else if (type == qsgType) {
+                            // 千十个大相同个数
+                            var qsgMaxCount = dt.qsgMaxCount;
+                            // 千十个012路
+                            var qsg012 = dt.qsg012;
+                            createZu3(jli, qsgMaxCount, qsg012);
+                        }
+
+                        var wxz5 = dt.wxz5, wxz10 = dt.wxz10, wxz20 = dt.wxz20, wxz30 = dt.wxz30;
+                        // 组5，组10，组20，组30
+                        createWx(jli, wxz5, wxz10, wxz20, wxz30)
+                    }
+                }
+            });
+        }
+
+        /**
+         * 012路，组3渲染
+         * @param li jQuery对象
+         * @param maxCount 最大重复数
+         * @param if012 是否012路
+         */
+        function createZu3(li, maxCount, if012) {
+            var span = null;
+            // 组装span
+            if (maxCount == 2) {
+                span = '<span style="color: red;">组三</span>';
+            } else if (maxCount == 1) {
+                span = '<span style="color: #f0f6ff;">组六</span>';
+            } else if (maxCount == 3) {
+                span = '<span style="color: #5865ff;">豹子</span>';
+            }
+            // span放到li下面
+            li.append(span);
+            // 012路
+            if (if012) {
+                li.append('<span style="color: #2db69d;">012</span>');
+            } else {
+                if (maxCount > 0) {
+                    li.append('<span style="color: #f0f6ff;">012</span>');
+                }
+            }
+        }
+
+        /**
+         * 五星组5，组10，组20，组30渲染
+         * @param wxz5 是否组5
+         * @param wxz10 是否组10
+         * @param wxz20 是否组20
+         * @param wxz30 是否组30
+         */
+        function createWx(li, wxz5, wxz10, wxz20, wxz30) {
+            var val = '';
+            var color = '#5865ff';
+            if (wxz5) {
+                val = '组5';
+            } else if (wxz10) {
+                val = '组10';
+            } else if (wxz20) {
+                val = '组20';
+            } else if (wxz30) {
+                val = '组30';
+                color = 'red';
+            } else {
+                color = 'black';
+            }
+            li.append('<span style="color: ' + color + ';">' + val + '</span>');
+        }
+    </script>
+</head>
+<body>
+<div id="headDiv" style="width: 636px;">
+    <button style="height: 30px;width: 100px;border: 1px solid blue;" onclick="changeDay(-1)">前一天</button>
+    <button style="height: 30px;width: 100px;border: 1px solid blue;" onclick="changeDay(1)">后一天</button>
+    <span>
+        <button style="height: 30px;width: 100px;" onclick="changeType(1, this)">前 三</button>
+        <button style="height: 30px;width: 100px;" onclick="changeType(2, this)">中 三</button>
+        <button id="aft3But" style="height: 30px;width: 100px;" onclick="changeType(3, this)">后 三</button>
+        <button style="height: 30px;width: 100px;" onclick="changeType(4, this)">万千十</button>
+        <button style="height: 30px;width: 100px;" onclick="changeType(5, this)">万千个</button>
+        <button style="height: 30px;width: 100px;" onclick="changeType(6, this)">万百十</button>
+        <button style="height: 30px;width: 100px;" onclick="changeType(7, this)">万百个</button>
+        <button style="height: 30px;width: 100px;" onclick="changeType(8, this)">万十个</button>
+        <button style="height: 30px;width: 100px;" onclick="changeType(9, this)">千百个</button>
+        <button style="height: 30px;width: 100px;" onclick="changeType(10, this)">千十个</button>
+    </span>
+    <input id="hiddenDate" type="hidden" value=""/>
+    <input id="showType" type="hidden" value=""/>
+    <input id="showDate" type="text" style="width: 108px;" value=""/>
+</div>
+<div id="outDiv">
+    <div>
+        <div>
+            <ul id="u1"></ul>
+        </div>
+        <div>
+            <ul id="u2"></ul>
+        </div>
+        <div>
+            <ul id="u3"></ul>
+        </div>
+    </div>
+    <div>
+        <div>
+            <ul id="u4"></ul>
+        </div>
+        <div>
+            <ul id="u5"></ul>
+        </div>
+        <div>
+            <ul id="u6"></ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>
