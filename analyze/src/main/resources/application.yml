@@ -15,5 +15,7 @@ logback:
   file: /usr/logs/analyze
 self:
   data:
+    # 数据抓取地址
     data-url: http://39.108.143.25:8080/stock/cqssc/getCurrentDay.sc
+    # 豹子抓取地址
     bz-url: http://39.108.143.25:8080/stock/cqssc/getBzList.sc

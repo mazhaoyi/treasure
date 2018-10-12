@@ -1,15 +1,13 @@
 package com.treasure.analyze.svc.impl;
 
-import com.treasure.analyze.ConfigFile;
 import com.treasure.analyze.svc.AnalyzeSvc;
 import com.treasure.analyze.vo.AnalyzeVo;
-import com.treasure.common.constant.SscConst;
 import com.treasure.common.util.HttpUtils;
 import com.treasure.common.util.SscUtils;
 import com.treasure.common.vo.Point;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -20,8 +18,8 @@ import java.util.*;
  */
 @Service
 public class AnalyzeSvcImpl implements AnalyzeSvc {
-    @Autowired
-    private ConfigFile configFile;
+    @Value("${self.data.data-url}")
+    private String dataUrl;
 
     @Override
     public List<AnalyzeVo> getDateFromRemote(Date date) {
@@ -31,7 +29,7 @@ public class AnalyzeSvcImpl implements AnalyzeSvc {
             params.put("selectDay", DateFormatUtils.format(date, "yyyyMMdd"));
         }
 
-        List<AnalyzeVo> datas = HttpUtils.postList(configFile.getDataUrl(), params, AnalyzeVo.class);
+        List<AnalyzeVo> datas = HttpUtils.postList(dataUrl, params, AnalyzeVo.class);
         if (CollectionUtils.isEmpty(datas)) {
             return datas;
         }
