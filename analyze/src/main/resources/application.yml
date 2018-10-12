@@ -13,3 +13,7 @@ spring:
 logback:
   # 日志根文件
   file: /usr/logs/analyze
+self:
+  data:
+    data-url: http://39.108.143.25:8080/stock/cqssc/getCurrentDay.sc
+    bz-url: http://39.108.143.25:8080/stock/cqssc/getBzList.sc
