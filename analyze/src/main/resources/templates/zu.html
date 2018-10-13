@@ -53,6 +53,8 @@
         }
         // 修改日期
         function changeDay(day) {
+            $('#zu3Num').val('0');
+            $('#wxNum').val('0');
             var hiddenDate = $('#hiddenDate');
             if (hiddenDate.val() == null) {
                 var today = new Date();
@@ -68,6 +70,8 @@
         }
         // 切换类型1-前三，2-中三，3-后三
         function changeType(type, but) {
+            $('#zu3Num').val('0');
+            $('#wxNum').val('0');
             $(but).parent().children().css('background-color', '');
             $(but).css('background-color', '#0aa82f');
             $('#showType').val(type);
@@ -210,7 +214,10 @@
 
                         var wxz5 = dt.wxz5, wxz10 = dt.wxz10, wxz20 = dt.wxz20, wxz30 = dt.wxz30;
                         // 组5，组10，组20，组30
-                        createWx(jli, wxz5, wxz10, wxz20, wxz30)
+                        if (num.trim() != '') {
+                            createWx(jli, wxz5, wxz10, wxz20, wxz30);
+                        }
+
                     }
                 }
             });
@@ -223,13 +230,18 @@
          * @param if012 是否012路
          */
         function createZu3(li, maxCount, if012) {
+            var zu3Num = $('#zu3Num').val();
             var span = null;
             // 组装span
             if (maxCount == 2) {
                 span = '<span style="color: red;">组三</span>';
+                $('#zu3Num').val(0);
             } else if (maxCount == 1) {
-                span = '<span style="color: #f0f6ff;">组六</span>';
+                zu3Num++;
+                span = '<span>' + zu3Num + '</span>';
+                $('#zu3Num').val(zu3Num);
             } else if (maxCount == 3) {
+                $('#zu3Num').val(0);
                 span = '<span style="color: #5865ff;">豹子</span>';
             }
             // span放到li下面
@@ -252,19 +264,27 @@
          * @param wxz30 是否组30
          */
         function createWx(li, wxz5, wxz10, wxz20, wxz30) {
+            var wxNum = $('#wxNum').val();
             var val = '';
             var color = '#5865ff';
             if (wxz5) {
+                $('#wxNum').val(0);
                 val = '组5';
             } else if (wxz10) {
+                $('#wxNum').val(0);
                 val = '组10';
             } else if (wxz20) {
+                $('#wxNum').val(0);
                 val = '组20';
             } else if (wxz30) {
+                $('#wxNum').val(0);
                 val = '组30';
                 color = 'red';
             } else {
-                color = 'black';
+                wxNum++;
+                $('#wxNum').val(wxNum);
+                val = wxNum;
+                color = '#8A98FF';
             }
             li.append('<span style="color: ' + color + ';">' + val + '</span>');
         }
@@ -288,6 +308,8 @@
     </span>
     <input id="hiddenDate" type="hidden" value=""/>
     <input id="showType" type="hidden" value=""/>
+    <input id="zu3Num" type="hidden" value="0"/>
+    <input id="wxNum" type="hidden" value="0"/>
     <input id="showDate" type="text" style="width: 108px;" value=""/>
 </div>
 <div id="outDiv">
