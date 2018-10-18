@@ -42,7 +42,6 @@
         // 自动加载JavaScript
         $(function () {
             initPage();
-            //lineChart();
         });
         // 初始化页面
         function initPage() {
@@ -120,6 +119,11 @@
                         return;
                     }
                     var datas = data.data;
+                    // 线形图列表数据
+                    var lineDatas = new Array();
+                    // 线性数据初始化数据
+                    var initLineData = 0;
+                    var subtitle = '';
                     for (var i = 0; i < datas.length; i++) {
                         var dt = datas[i];
                         // 期号
@@ -142,12 +146,22 @@
                         } else if (i >= 100 && i < 120) {
                             u6.append(jli);
                         }
+                        // 每期金钱
+                        var oneMoney = 1;
                         // 前三
                         if (type == befType) {
                             // 前三最大相同个数
                             var bef3MaxCount = dt.bef3MaxCount;
                             // 前三012路
                             var bef3012 = dt.bef3012;
+                            if (bef3MaxCount >= 2) {
+                                initLineData = initLineData - oneMoney + oneMoney*3.23/0.9;
+                                lineDatas[i] = initLineData;
+                            } else if (bef3MaxCount == 1) {
+                                initLineData = initLineData - oneMoney;
+                                lineDatas[i] = initLineData;
+                            }
+                            subtitle = '前三';
                             createZu3(jli, bef3MaxCount, bef3012);
                         // 中三
                         } else if (type == midType) {
@@ -155,6 +169,14 @@
                             var mid3MaxCount = dt.mid3MaxCount;
                             // 中三012路
                             var mid3012 = dt.mid3012;
+                            if (mid3MaxCount >= 2) {
+                                initLineData = initLineData - oneMoney + oneMoney*3.23/0.9;
+                                lineDatas[i] = initLineData;
+                            } else if (mid3MaxCount == 1) {
+                                initLineData = initLineData - oneMoney;
+                                lineDatas[i] = initLineData;
+                            }
+                            subtitle = '中三';
                             createZu3(jli, mid3MaxCount, mid3012);
                         // 后三
                         } else if (type == aftType) {
@@ -162,6 +184,14 @@
                             var aft3MaxCount = dt.aft3MaxCount;
                             // 后三012路
                             var aft3012 = dt.aft3012;
+                            if (aft3MaxCount >= 2) {
+                                initLineData = initLineData - oneMoney + oneMoney*3.23/0.9;
+                                lineDatas[i] = initLineData;
+                            } else if (aft3MaxCount == 1) {
+                                initLineData = initLineData - oneMoney;
+                                lineDatas[i] = initLineData;
+                            }
+                            subtitle = '后三';
                             createZu3(jli, aft3MaxCount, aft3012);
                         // 万千十
                         } else if (type == wqsType) {
@@ -169,6 +199,14 @@
                             var wqsMaxCount = dt.wqsMaxCount;
                             // 万千十012路
                             var wqs012 = dt.wqs012;
+                            if (wqsMaxCount >= 2) {
+                                initLineData = initLineData - oneMoney + oneMoney*3.23/0.9;
+                                lineDatas[i] = initLineData;
+                            } else if (wqsMaxCount == 1) {
+                                initLineData = initLineData - oneMoney;
+                                lineDatas[i] = initLineData;
+                            }
+                            subtitle = '万千十';
                             createZu3(jli, wqsMaxCount, wqs012);
                         // 万千个
                         } else if (type == wqgType) {
@@ -176,6 +214,14 @@
                             var wqgMaxCount = dt.wqgMaxCount;
                             // 万千个012路
                             var wqg012 = dt.wqg012;
+                            if (wqgMaxCount >= 2) {
+                                initLineData = initLineData - oneMoney + oneMoney*3.23/0.9;
+                                lineDatas[i] = initLineData;
+                            } else if (wqgMaxCount == 1) {
+                                initLineData = initLineData - oneMoney;
+                                lineDatas[i] = initLineData;
+                            }
+                            subtitle = '万千个';
                             createZu3(jli, wqgMaxCount, wqg012);
                         // 万百十
                         } else if (type == wbsType) {
@@ -183,6 +229,14 @@
                             var wbsMaxCount = dt.wbsMaxCount;
                             // 万百十012路
                             var wbs012 = dt.wbs012;
+                            if (wbsMaxCount >= 2) {
+                                initLineData = initLineData - oneMoney + oneMoney*3.23/0.9;
+                                lineDatas[i] = initLineData;
+                            } else if (wbsMaxCount == 1) {
+                                initLineData = initLineData - oneMoney;
+                                lineDatas[i] = initLineData;
+                            }
+                            subtitle = '万百十';
                             createZu3(jli, wbsMaxCount, wbs012);
                         // 万百个
                         } else if (type == wbgType) {
@@ -190,6 +244,14 @@
                             var wbgMaxCount = dt.wbgMaxCount;
                             // 万百个012路
                             var wbg012 = dt.wbg012;
+                            if (wbgMaxCount >= 2) {
+                                initLineData = initLineData - oneMoney + oneMoney*3.23/0.9;
+                                lineDatas[i] = initLineData;
+                            } else if (wbgMaxCount == 1) {
+                                initLineData = initLineData - oneMoney;
+                                lineDatas[i] = initLineData;
+                            }
+                            subtitle = '万百个';
                             createZu3(jli, wbgMaxCount, wbg012);
                         // 万十个
                         } else if (type == wsgType) {
@@ -197,6 +259,14 @@
                             var wsgMaxCount = dt.wsgMaxCount;
                             // 万十个012路
                             var wsg012 = dt.wsg012;
+                            if (wsgMaxCount >= 2) {
+                                initLineData = initLineData - oneMoney + oneMoney*3.23/0.9;
+                                lineDatas[i] = initLineData;
+                            } else if (wsgMaxCount == 1) {
+                                initLineData = initLineData - oneMoney;
+                                lineDatas[i] = initLineData;
+                            }
+                            subtitle = '万十个';
                             createZu3(jli, wsgMaxCount, wsg012);
                         // 千百个
                         } else if (type == qbgType) {
@@ -204,6 +274,14 @@
                             var qbgMaxCount = dt.qbgMaxCount;
                             // 千百个012路
                             var qbg012 = dt.qbg012;
+                            if (qbgMaxCount >= 2) {
+                                initLineData = initLineData - oneMoney + oneMoney*3.23/0.9;
+                                lineDatas[i] = initLineData;
+                            } else if (qbgMaxCount == 1) {
+                                initLineData = initLineData - oneMoney;
+                                lineDatas[i] = initLineData;
+                            }
+                            subtitle = '千百个';
                             createZu3(jli, qbgMaxCount, qbg012);
                         // 千十个
                         } else if (type == qsgType) {
@@ -211,6 +289,14 @@
                             var qsgMaxCount = dt.qsgMaxCount;
                             // 千十个012路
                             var qsg012 = dt.qsg012;
+                            if (qsgMaxCount >= 2) {
+                                initLineData = initLineData - oneMoney + oneMoney*3.23/0.9;
+                                lineDatas[i] = initLineData;
+                            } else if (qsgMaxCount == 1) {
+                                initLineData = initLineData - oneMoney;
+                                lineDatas[i] = initLineData;
+                            }
+                            subtitle = '千十个';
                             createZu3(jli, qsgMaxCount, qsg012);
                         }
 
@@ -221,6 +307,7 @@
                         }
 
                     }
+                    lineChart(subtitle, lineDatas);
                 }
             });
         }
@@ -291,12 +378,12 @@
             li.append('<span style="color: ' + color + ';">' + val + '</span>');
         }
         
-        function lineChart() {
+        function lineChart(subtitle, datas) {
             var title = {
                 text: '走势线形图'
             };
             var subtitle = {
-                text: '后三'
+                text: subtitle
             };
             var xAxis = {
                 categories: ["001","002","003","004","005","006","007","008","009","010","011","012","013","014","015","016","017","018","019","020","021","022","023","024","025","026","027","028","029","030","031","032","033","034","035","036","037","038","039","040","041","042","043","044","045","046","047","048","049","050","051","052","053","054","055","056","057","058","059","060","061","062","063","064","065","066","067","068","069","070","071","072","073","074","075","076","077","078","079","080","081","082","083","084","085","086","087","088","089","090","091","092","093","094","095","096","097","098","099","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120"]
@@ -310,7 +397,7 @@
                 }]
             };
             var tooltip = {
-                valueSuffix: '\xB0C'
+                valueSuffix: '次'
             }
             var legend = {
                 layout: 'vertical',
@@ -321,11 +408,7 @@
             var series =  [
                 {
                     name: '组三',
-                    data: [7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
-                        26.5, 23.3, 18.3, 13.9, 9.6, 7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
-                        26.5, 23.3, 18.3, 13.9, 9.6,7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
-                        26.5, 23.3, 18.3, 13.9, 9.6, 7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2,
-                        26.5, 23.3, 18.3, 13.9, 9.6]
+                    data: datas
                 }
             ];
             var json = {};
