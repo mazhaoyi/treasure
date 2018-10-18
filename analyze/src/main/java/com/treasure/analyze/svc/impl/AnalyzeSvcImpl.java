@@ -1,5 +1,6 @@
 package com.treasure.analyze.svc.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.treasure.analyze.svc.AnalyzeSvc;
 import com.treasure.analyze.vo.AnalyzeVo;
 import com.treasure.common.util.HttpUtils;
@@ -95,5 +96,13 @@ public class AnalyzeSvcImpl implements AnalyzeSvc {
             e.setWxz5(SscUtils.checkZu5(num));
         });
         return datas;
+    }
+
+    public static void main(String[] args) {
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < 120; i++) {
+            list.add(SscUtils.frontZero(i + 1, 3));
+        }
+        System.out.println(JSON.toJSONString(list));
     }
 }
