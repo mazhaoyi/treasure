@@ -335,7 +335,7 @@ function createWx(li, wxz5, wxz10, wxz20, wxz30) {
 
 function lineChart(subtitle, datas) {
     var title = {
-        text: '走势线形图'
+        text: '金钱线形图'
     };
     var subtitle = {
         text: subtitle
@@ -352,7 +352,7 @@ function lineChart(subtitle, datas) {
         }]
     };
     var tooltip = {
-        valueSuffix: '次'
+        valueSuffix: '元'
     }
     var legend = {
         layout: 'vertical',
