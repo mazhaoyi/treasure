@@ -17,7 +17,7 @@ spring:
     #username: root
     #password: Admin123!
     ### 公司
-    url: jdbc:mysql://10.0.19.142:3306/red_myb?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false&useSSL=false&useTimezone=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://10.0.3.15:3306/red_myb?useUnicode=true&characterEncoding=utf-8&autoReconnect=true&failOverReadOnly=false&useSSL=false&useTimezone=true&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: root123
@@ -28,3 +28,9 @@ logback:
   file: /usr/logs/ssc
 mybatis:
   mapper-locations: classpath*:mapper/*.xml,classpath*:auto/mapper/*.xml
+self:
+  data:
+    # 数据抓取地址
+    data-url: http://39.108.143.25:8080/stock/cqssc/getCurrentDay.sc
+    # 豹子抓取地址
+    bz-url: http://39.108.143.25:8080/stock/cqssc/getBzList.sc

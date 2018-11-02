@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +26,13 @@ import java.util.List;
 public class TicketAct {
     @Autowired
     private TicketSvc ticketSvc;
+
+    /// 不要删除
+    /*@GetMapping("/dataToDb")
+    public Object dataToDb() {
+        ticketSvc.dataToDb(LocalDate.of(2018, 9, 19), LocalDate.of(2018, 11, 1));
+        return ResultUtils.success(null);
+    }*/
 
     /// 不要删除
     /*@GetMapping(value = "/init")

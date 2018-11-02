@@ -1,8 +1,10 @@
 package com.treasure.analyze.svc.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.google.common.collect.Maps;
 import com.treasure.analyze.svc.AnalyzeSvc;
 import com.treasure.analyze.vo.AnalyzeVo;
+import com.treasure.analyze.vo.TicketVo;
 import com.treasure.common.util.HttpUtils;
 import com.treasure.common.util.SscUtils;
 import com.treasure.common.vo.Point;
@@ -11,6 +13,11 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 /**
@@ -98,11 +105,57 @@ public class AnalyzeSvcImpl implements AnalyzeSvc {
         return datas;
     }
 
-    public static void main(String[] args) {
-        List<String> list = new ArrayList<>();
-        for (int i = 0; i < 120; i++) {
-            list.add(SscUtils.frontZero(i + 1, 3));
+    @Override
+    public Map<Integer, Integer> analyzeWxSite(Integer flag) {
+        Map<Integer, Integer> map = Maps.newHashMap();
+        map.put(1, 0);
+        map.put(2, 0);
+        map.put(3, 0);
+        map.put(4, 0);
+        map.put(5, 0);
+        map.put(6, 0);
+        try {
+            byte[] bytes = Files.readAllBytes(Paths.get(ClassLoader.getSystemResource("templates/static/data/ticket.json").toURI()));
+            String listStr = new String(bytes, Charset.defaultCharset());
+            List<TicketVo> list = JSON.parseArray(listStr, TicketVo.class);
+            list.stream().forEach(e -> {
+                Integer line = e.getLine();
+                Integer num = e.getTicket_num();
+                // 组5
+                if (SscUtils.checkZu5(num.toString()) && flag.equals(5)) {
+                    Integer mapNum = map.get(line);
+                    map.put(line, ++mapNum);
+                // 组10
+                } else if (SscUtils.checkZu10(num.toString()) && flag.equals(10)) {
+                    Integer mapNum = map.get(line);
+                    map.put(line, ++mapNum);
+                // 组20
+                } else if (SscUtils.checkZu20(num.toString()) && flag.equals(20)) {
+                    Integer mapNum = map.get(line);
+                    map.put(line, ++mapNum);
+                // 组30
+                } else if (SscUtils.checkZu30(num.toString()) && flag.equals(30)) {
+                    Integer mapNum = map.get(line);
+                    map.put(line, ++mapNum);
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
         }
-        System.out.println(JSON.toJSONString(list));
+        return map;
+    }
+
+    public static void main(String[] args) {
+        AnalyzeSvcImpl impl = new AnalyzeSvcImpl();
+        Map<Integer, Integer> map = impl.analyzeWxSite(5);
+        System.out.println("组5 -> " + map);
+        map = impl.analyzeWxSite(10);
+        System.out.println("组10 -> " + map);
+        map = impl.analyzeWxSite(20);
+        System.out.println("组20 -> " + map);
+        map = impl.analyzeWxSite(30);
+        System.out.println("组30 -> " + map);
     }
 }

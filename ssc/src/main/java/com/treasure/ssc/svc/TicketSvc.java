@@ -4,6 +4,7 @@ import com.treasure.ssc.entity.BuyItem;
 import com.treasure.ssc.vo.SscOutVo;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +18,13 @@ public interface TicketSvc {
      * @return
      */
     void initTickets();
+
+    /**
+     * 源数据放入数据库
+     * @param startDate
+     * @param endDate
+     */
+    void dataToDb(LocalDate startDate, LocalDate endDate);
 
     /**
      * 下一期
