@@ -9,6 +9,7 @@ import com.treasure.ssc.dao.TicketDao;
 import com.treasure.ssc.entity.BuyItem;
 import com.treasure.ssc.entity.Ticket;
 import com.treasure.ssc.svc.TicketSvc;
+import com.treasure.ssc.vo.AnalyzeKlineVo;
 import com.treasure.ssc.vo.BaseDataVo;
 import com.treasure.ssc.vo.SscOutVo;
 import com.treasure.ssc.vo.SscVo;
@@ -147,6 +148,11 @@ public class TicketSvcImpl implements TicketSvc {
             end = end.multiply(BigDecimal.valueOf(2));
         }
         return end;
+    }
+
+    @Override
+    public List<AnalyzeKlineVo> zu3KList(LocalDate startDate, LocalDate endDate) {
+        return null;
     }
 
 }

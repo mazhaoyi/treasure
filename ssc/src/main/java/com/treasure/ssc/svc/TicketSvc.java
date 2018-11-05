@@ -1,6 +1,7 @@
 package com.treasure.ssc.svc;
 
 import com.treasure.ssc.entity.BuyItem;
+import com.treasure.ssc.vo.AnalyzeKlineVo;
 import com.treasure.ssc.vo.SscOutVo;
 
 import java.math.BigDecimal;
@@ -54,5 +55,13 @@ public interface TicketSvc {
      * @return
      */
     BigDecimal getMoneyByTimes(BigDecimal start, int times);
+
+    /**
+     * 查询组3日K列表
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    List<AnalyzeKlineVo> zu3KList(LocalDate startDate, LocalDate endDate);
 
 }
