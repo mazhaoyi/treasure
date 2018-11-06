@@ -5,6 +5,7 @@ import com.treasure.common.util.ResultUtils;
 import com.treasure.common.util.SscUtils;
 import com.treasure.ssc.entity.BuyItem;
 import com.treasure.ssc.svc.TicketSvc;
+import com.treasure.ssc.vo.AnalyzeKlineVo;
 import com.treasure.ssc.vo.SscOutVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -30,7 +32,7 @@ public class TicketAct {
     /// 不要删除
     /*@GetMapping("/dataToDb")
     public Object dataToDb() {
-        ticketSvc.dataToDb(LocalDate.of(2018, 9, 19), LocalDate.of(2018, 11, 1));
+        ticketSvc.dataToDb(LocalDate.of(2018, 11, 2), LocalDate.of(2018, 11, 5));
         return ResultUtils.success(null);
     }*/
 
@@ -81,5 +83,11 @@ public class TicketAct {
         ticketNo = SscUtils.frontZero(noInt, 3);
         List<BuyItem> list = ticketSvc.buy(ticketNo, ticketDate, count, start);
         return ResultUtils.success(list);
+    }
+
+    @GetMapping("/kline")
+    public Object kline(@JSONField(format = "yyyy-MM-dd") Date startDate, @JSONField(format = "yyyy-MM-dd") Date endDate) {
+        List<AnalyzeKlineVo> results = ticketSvc.zu3KList(startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        return ResultUtils.success(results);
     }
 }

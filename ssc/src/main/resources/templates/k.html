@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>K线图</title>
+    <script src="static/js/jquery-3.3.1.min.js" type="application/javascript"></script>
+    <script src="static/js/highcharts.js" type="application/javascript"></script>
+    <script type="application/javascript">
+        // 自动加载JavaScript
+        $(function () {
+            initPage();
+        });
+        function initPage() {
+            $('#showType').val(3);
+            $('#aft3But').css('background-color', '#0aa82f');
+            $('#startDate').val('2018-10-05');
+            $('#endDate').val('2018-11-05');
+            tongji();
+        }
+        function tongji() {
+            var startDate = $('#startDate').val();
+            var endDate = $('#endDate').val();
+            createData(startDate, endDate);
+        }
+        function createData(startDate, endDate) {
+            // 1-前三，2-中三，3-后三
+            var befType = 1, midType = 2, aftType = 3, wqsType = 4, wqgType = 5, wbsType = 6, wbgType = 7, wsgType = 8, qbgType = 9, qsgType = 10;
+            // 默认后三
+            var type = $('#showType').val();
+            if (type == null) {
+                type = 3;
+            }
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: '/ticketctr/kline',
+                contentType: 'application/json;charset=utf-8',
+                data: {'startDate':startDate, 'endDate': endDate},
+                success: function (data) {
+                    if (data == null) {
+                        alert('没有响应结果！');
+                        return;
+                    }
+                    if (data.code != 200) {
+                        alert(data.message);
+                        return;
+                    }
+                    var datas = data.data;
+                    // 线形图列表数据
+                    var lineDatas = new Array();
+                    // 日期
+                    var dates = new Array();
+                    // 线性数据初始化数据
+                    var initLineData = 0;
+                    var subtitle = '';
+                    var mul = 32.3/9;
+                    var allBuy = 120;
+                    for (var i = 0; i < datas.length; i++) {
+                        var dt = datas[i];
+                        dates[i] = dt.date;
+                        // 前三
+                        if (type == befType) {
+                            subtitle = '前三';
+                            var bef3times = dt.bef3times;
+                            var bef6times = dt.bef6times;
+                            initLineData = initLineData + mul*bef3times - allBuy;
+                        // 中三
+                        } else if (type == midType) {
+                            subtitle = '中三';
+                            var mid3times = dt.mid3times;
+                            var mid6times = dt.mid6times;
+                            initLineData = initLineData + mul*mid3times - allBuy;
+                        // 后三
+                        } else if (type == aftType) {
+                            subtitle = '后三';
+                            var aft3times = dt.aft3times;
+                            var aft6times = dt.aft6times;
+                            initLineData = initLineData + mul*aft3times - allBuy;
+                        // 万千十
+                        } else if (type == wqsType) {
+                            subtitle = '万千十';
+                            var wqs3times = dt.wqs3times;
+                            var wqs6times = dt.wqs6times;
+                            initLineData = initLineData + mul*wqs3times - allBuy;
+                        // 万千个
+                        } else if (type == wqgType) {
+                            subtitle = '万千个';
+                            var wqg3times = dt.wqg3times;
+                            var wqg6times = dt.wqg6times;
+                            initLineData = initLineData + mul*wqg3times - allBuy;
+                        // 万百十
+                        } else if (type == wbsType) {
+                            subtitle = '万百十';
+                            var wbs3times = dt.wbs3times;
+                            var wbs6times = dt.wbs6times;
+                            initLineData = initLineData + mul*wbs3times - allBuy;
+                        // 万百个
+                        } else if (type == wbgType) {
+                            subtitle = '万百个';
+                            var wbg3times = dt.wbg3times;
+                            var wbg6times = dt.wbg6times;
+                            initLineData = initLineData + mul*wbg3times - allBuy;
+                        // 万十个
+                        } else if (type == wsgType) {
+                            subtitle = '万十个';
+                            var wsg3times = dt.wsg3times;
+                            var wsg6times = dt.wsg6times;
+                            initLineData = initLineData + mul*wsg3times - allBuy;
+                        // 千百个
+                        } else if (type == qbgType) {
+                            subtitle = '千百个';
+                            var qbg3times = dt.qbg3times;
+                            var qbg6times = dt.qbg6times;
+                            initLineData = initLineData + mul*qbg3times - allBuy;
+                        // 千十个
+                        } else if (type == qsgType) {
+                            subtitle = '千十个';
+                            var qsg3times = dt.qsg3times;
+                            var qsg6times = dt.qsg6times;
+                            initLineData = initLineData + mul*qsg3times - allBuy;
+                        }
+                        lineDatas[i] = parseFloat(initLineData.toFixed(2));
+                    }
+                    lineChart(subtitle, lineDatas, dates);
+                }
+            });
+        }
+        function lineChart(subtitle, datas, dates) {
+            var title = {
+                text: '组三K线图'
+            };
+            var subtitle = {
+                text: subtitle
+            };
+            var xAxis = {
+                categories: dates
+            };
+            var yAxis = {
+                title: {},
+                plotLines:[{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
+            };
+            var tooltip = {
+                valueSuffix: '元'
+            }
+            var legend = {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            };
+            var series =  [
+                {
+                    name: '组三',
+                    data: datas
+                }
+            ];
+            var plotOptions = {
+                line: {
+                    dataLabels: {
+                        enabled: true
+                    },
+                    enableMouseTracking: true
+                }
+            };
+            var json = {};
+            json.title = title;
+            json.subtitle = subtitle;
+            json.xAxis = xAxis;
+            json.yAxis = yAxis;
+            json.tooltip = tooltip;
+            json.legend = legend;
+            json.series = series;
+            json.plotOptions = plotOptions;
+            $('#chartDiv').highcharts(json);
+        }
+        function changeType(type, but) {
+            $(but).parent().children().css('background-color', '');
+            $(but).css('background-color', '#0aa82f');
+            $('#showType').val(type);
+            tongji();
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <div>
+            <span>
+                <button style="height: 30px;width: 100px;" onclick="changeType(1, this)">前 三</button>
+                <button style="height: 30px;width: 100px;" onclick="changeType(2, this)">中 三</button>
+                <button id="aft3But" style="height: 30px;width: 100px;" onclick="changeType(3, this)">后 三</button>
+                <button style="height: 30px;width: 100px;" onclick="changeType(4, this)">万千十</button>
+                <button style="height: 30px;width: 100px;" onclick="changeType(5, this)">万千个</button>
+                <button style="height: 30px;width: 100px;" onclick="changeType(6, this)">万百十</button>
+                <button style="height: 30px;width: 100px;" onclick="changeType(7, this)">万百个</button>
+                <button style="height: 30px;width: 100px;" onclick="changeType(8, this)">万十个</button>
+                <button style="height: 30px;width: 100px;" onclick="changeType(9, this)">千百个</button>
+                <button style="height: 30px;width: 100px;" onclick="changeType(10, this)">千十个</button>
+            </span>
+            <input id="showType" type="hidden" value=""/>
+            开始时间：
+            <input type="date" id="startDate" value=""/>
+            结束时间：
+            <input type="date" id="endDate" value=""/>
+            <button onclick="tongji()">统计</button>
+        </div>
+        <div id="chartDiv" style="height: 800px;">
+
+        </div>
+    </div>
+</body>
+</html>

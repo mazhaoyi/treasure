@@ -2,6 +2,7 @@ package com.treasure.ssc.dao;
 
 import com.treasure.ssc.entity.Ticket;
 import com.treasure.ssc.vo.SscOutVo;
+import com.treasure.ssc.vo.TicketSscVo;
 import org.apache.ibatis.annotations.Param;
 
 import java.time.LocalDate;
@@ -26,4 +27,12 @@ public interface TicketDao {
      * @return
      */
     SscOutVo getByNoAndDate(@Param("ticketNo") String ticketNo, @Param("ticketDate") LocalDate ticketDate);
+
+    /**
+     * 根据开始结束时间查询开奖号码
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    List<TicketSscVo> ticketList(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 }

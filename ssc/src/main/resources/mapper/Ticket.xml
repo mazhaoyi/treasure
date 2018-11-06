@@ -42,4 +42,17 @@
             and ticket_date = #{ticketDate}
         </where>
     </select>
+    <select id="ticketList" resultType="com.treasure.ssc.vo.TicketSscVo">
+        SELECT
+            ti.ticket_id ticketId,
+            ti.ticket_no ticketNo,
+            ti.ticket_num ticketNum,
+            ti.ticket_date ticketDate
+        FROM
+            ticket ti
+        WHERE
+            ti.ticket_date BETWEEN #{startDate} AND #{endDate}
+        ORDER BY
+            ti.ticket_date ASC
+    </select>
 </mapper>
