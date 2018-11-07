@@ -13,8 +13,12 @@
         function initPage() {
             $('#showType').val(3);
             $('#aft3But').css('background-color', '#0aa82f');
-            $('#startDate').val('2018-10-05');
-            $('#endDate').val('2018-11-05');
+            var today = new Date();
+            var day30Bef = new Date(today - 1000 * 60 * 60 * 24 * 30);
+            var startDate = day30Bef.getFullYear() + '-' + (day30Bef.getMonth() + 1) + '-' + day30Bef.getDate();
+            var endDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+            $('#startDate').val(startDate);
+            $('#endDate').val(endDate);
             tongji();
         }
         function tongji() {
