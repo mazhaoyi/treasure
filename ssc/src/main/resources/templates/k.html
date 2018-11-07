@@ -10,13 +10,26 @@
         $(function () {
             initPage();
         });
+        function formatDate(date) {
+            var tmpDate = new Date(date);
+            var year = tmpDate.getFullYear();
+            var month = tmpDate.getMonth() + 1;
+            var day = tmpDate.getDate();
+            if (month < 10) {
+                month = '0' + month;
+            }
+            if (day < 10) {
+                day = '0' + day;
+            }
+            return year + '-' + month + '-' + day;
+        }
         function initPage() {
             $('#showType').val(3);
             $('#aft3But').css('background-color', '#0aa82f');
             var today = new Date();
             var day30Bef = new Date(today - 1000 * 60 * 60 * 24 * 30);
-            var startDate = day30Bef.getFullYear() + '-' + (day30Bef.getMonth() + 1) + '-' + day30Bef.getDate();
-            var endDate = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+            var startDate = formatDate(day30Bef);
+            var endDate = formatDate(today);
             $('#startDate').val(startDate);
             $('#endDate').val(endDate);
             tongji();
