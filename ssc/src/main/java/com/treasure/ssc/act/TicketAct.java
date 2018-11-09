@@ -32,7 +32,8 @@ public class TicketAct {
     /// 不要删除
     /*@GetMapping("/dataToDb")
     public Object dataToDb() {
-        ticketSvc.dataToDb(LocalDate.of(2018, 11, 2), LocalDate.of(2018, 11, 5));
+        // 最早2016-2-3，过年不开
+        ticketSvc.dataToDb(LocalDate.of(2018, 11, 9), LocalDate.of(2018, 11, 9));
         return ResultUtils.success(null);
     }*/
 
