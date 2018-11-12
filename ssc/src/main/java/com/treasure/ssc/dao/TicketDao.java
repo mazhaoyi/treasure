@@ -35,4 +35,11 @@ public interface TicketDao {
      * @return
      */
     List<TicketSscVo> ticketList(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+    /**
+     * 根据开始结束时间查询开奖号码
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    List<TicketSscVo> ticket5List(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 }

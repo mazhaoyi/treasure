@@ -55,4 +55,25 @@
         ORDER BY
             ti.ticket_date ASC
     </select>
+    <select id="ticket5List" resultType="com.treasure.ssc.vo.TicketSscVo">
+        SELECT
+        ti.ticket_id ticketId,
+        ti.ticket_no ticketNo,
+        ti.ticket_num ticketNum,
+        ti.ticket_date ticketDate
+        FROM
+        ticket ti
+        WHERE
+        ti.ticket_date BETWEEN #{startDate} AND #{endDate}
+        AND (
+        ( ti.ticket_no >= 5 AND ti.ticket_no <![CDATA[<=]]> 14 )
+        OR ( ti.ticket_no >= 25 AND ti.ticket_no <![CDATA[<=]]> 34 )
+        OR ( ti.ticket_no >= 45 AND ti.ticket_no <![CDATA[<=]]> 54 )
+        OR ( ti.ticket_no >= 65 AND ti.ticket_no <![CDATA[<=]]> 74 )
+        OR ( ti.ticket_no >= 85 AND ti.ticket_no <![CDATA[<=]]> 94 )
+        OR ( ti.ticket_no >= 105 AND ti.ticket_no <![CDATA[<=]]> 114 )
+        )
+        ORDER BY
+        ti.ticket_date ASC
+    </select>
 </mapper>

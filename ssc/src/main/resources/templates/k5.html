@@ -50,7 +50,7 @@
             $.ajax({
                 type: 'GET',
                 dataType: 'json',
-                url: '/ticketctr/kline',
+                url: '/ticketctr/k5line',
                 contentType: 'application/json;charset=utf-8',
                 data: {'startDate':startDate, 'endDate': endDate},
                 success: function (data) {
@@ -71,7 +71,7 @@
                     var initLineData = 0;
                     var subtitle = '';
                     var mul = 32.3/9;
-                    var allBuy = 132;
+                    var allBuy = 60 + 60*0.1;
                     for (var i = 0; i < datas.length; i++) {
                         var dt = datas[i];
                         dates[i] = dt.date;

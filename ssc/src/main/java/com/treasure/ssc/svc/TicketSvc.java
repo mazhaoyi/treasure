@@ -62,6 +62,13 @@ public interface TicketSvc {
      * @param endDate
      * @return
      */
-    List<AnalyzeKlineVo> zu3KList(LocalDate startDate, LocalDate endDate);
+    List<AnalyzeKlineVo> zu3KList(LocalDate startDate, LocalDate endDate, Boolean if54);
+    /**
+     * 查询组3日K列表
+     * @param startDate
+     * @param endDate
+     * @return
+     */
+    List<AnalyzeKlineVo> zu3K5List(LocalDate startDate, LocalDate endDate);
 
 }

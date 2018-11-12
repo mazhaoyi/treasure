@@ -128,6 +128,22 @@ public class SscUtils {
     }
 
     /**
+     * 换算组3次数，其中 1豹子=3组三
+     * 这个方法主要是结合了自己买彩票 组三和豹子结合的方式 统计出来的方法
+     * @param str
+     * @return
+     */
+    public static int zu3times(String str) {
+        Integer zu3times = 0;
+        if (SscUtils.maxCountChar(str) == 2) {
+            zu3times = 1;
+        } else if (SscUtils.maxCountChar(str) == 3) {
+            zu3times = 3;
+        }
+        return zu3times;
+    }
+
+    /**
      * 查询一个字符串，每个字符在字符串中，重复的数目，去重，倒序
      * eg: str=aaabc 那么 return = [3, 1, 1];
      * @param str

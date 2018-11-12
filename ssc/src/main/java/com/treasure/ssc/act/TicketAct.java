@@ -30,12 +30,12 @@ public class TicketAct {
     private TicketSvc ticketSvc;
 
     /// 不要删除
-    /*@GetMapping("/dataToDb")
+    @GetMapping("/dataToDb")
     public Object dataToDb() {
         // 最早2016-2-3，过年不开
-        ticketSvc.dataToDb(LocalDate.of(2018, 9, 19), LocalDate.of(2018, 11, 9));
+        ticketSvc.dataToDb(LocalDate.of(2018, 11, 9), LocalDate.of(2018, 11, 11));
         return ResultUtils.success(null);
-    }*/
+    }
 
     /// 不要删除
     /*@GetMapping(value = "/init")
@@ -88,7 +88,13 @@ public class TicketAct {
 
     @GetMapping("/kline")
     public Object kline(@JSONField(format = "yyyy-MM-dd") Date startDate, @JSONField(format = "yyyy-MM-dd") Date endDate) {
-        List<AnalyzeKlineVo> results = ticketSvc.zu3KList(startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
+        List<AnalyzeKlineVo> results = ticketSvc.zu3KList(startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), false);
+        return ResultUtils.success(results);
+    }
+
+    @GetMapping("/k5line")
+    public Object k5line(@JSONField(format = "yyyy-MM-dd") Date startDate, @JSONField(format = "yyyy-MM-dd") Date endDate) {
+        List<AnalyzeKlineVo> results = ticketSvc.zu3K5List(startDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), endDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
         return ResultUtils.success(results);
     }
 }

@@ -147,7 +147,10 @@ public class TicketSvcImpl implements TicketSvc {
     }
 
     @Override
-    public List<AnalyzeKlineVo> zu3KList(LocalDate startDate, LocalDate endDate) {
+    public List<AnalyzeKlineVo> zu3KList(LocalDate startDate, LocalDate endDate, Boolean ifk5) {
+        if (ifk5 == null) {
+            ifk5 = false;
+        }
         if (startDate == null) {
             throw new RuntimeException("开始时间不能为空！");
         }
@@ -157,7 +160,12 @@ public class TicketSvcImpl implements TicketSvc {
         if (startDate.isAfter(endDate)) {
             throw new RuntimeException("开始时间不能晚于结束时间！");
         }
-        List<TicketSscVo> list = ticketDao.ticketList(startDate, endDate);
+        List<TicketSscVo> list = null;
+        if (ifk5) {
+            list = ticketDao.ticket5List(startDate, endDate);
+        } else {
+            list = ticketDao.ticketList(startDate, endDate);
+        }
         if (CollectionUtils.isEmpty(list)) {
             return null;
         }
@@ -217,67 +225,72 @@ public class TicketSvcImpl implements TicketSvc {
              * 前三
              */
             String bef3num = SscUtils.pickUp3Char(num, Point.W, Point.Q, Point.B);
-            Integer bef3times = SscUtils.maxCountChar(bef3num) == 2 ? 1 : 0;
+            Integer bef3times = SscUtils.zu3times(bef3num);
             vo.setBef3times(bef3timesInit + bef3times);
             /**
              * 中三
              */
             String mid3num = SscUtils.pickUp3Char(num, Point.Q, Point.B, Point.S);
-            Integer mid3times = SscUtils.maxCountChar(mid3num) == 2 ? 1 : 0;
+            Integer mid3times = SscUtils.zu3times(mid3num);
             vo.setMid3times(mid3timesInit + mid3times);
             /**
              * 后三
              */
             String aft3num = SscUtils.pickUp3Char(num, Point.B, Point.S, Point.G);
-            Integer aft3times = SscUtils.maxCountChar(aft3num) == 2 ? 1 : 0;
+            Integer aft3times = SscUtils.zu3times(aft3num);
             vo.setAft3times(aft3timesInit + aft3times);
             /**
              * 万千十
              */
             String wqs3num = SscUtils.pickUp3Char(num, Point.W, Point.Q, Point.S);
-            Integer wqs3times = SscUtils.maxCountChar(wqs3num) == 2 ? 1 : 0;
+            Integer wqs3times = SscUtils.zu3times(wqs3num);
             vo.setWqs3times(wqs3timesInit + wqs3times);
             /**
              * 万千个
              */
             String wqg3num = SscUtils.pickUp3Char(num, Point.W, Point.Q, Point.G);
-            Integer wqg3times = SscUtils.maxCountChar(wqg3num) == 2 ? 1 : 0;
+            Integer wqg3times = SscUtils.zu3times(wqg3num);
             vo.setWqg3times(wqg3timesInit + wqg3times);
             /**
              * 万百十
              */
             String wbs3num = SscUtils.pickUp3Char(num, Point.W, Point.B, Point.S);
-            Integer wbs3times = SscUtils.maxCountChar(wbs3num) == 2 ? 1 : 0;
+            Integer wbs3times = SscUtils.zu3times(wbs3num);
             vo.setWbs3times(wbs3timesInit + wbs3times);
             /**
              * 万百个
              */
             String wbg3num = SscUtils.pickUp3Char(num, Point.W, Point.B, Point.G);
-            Integer wbg3times = SscUtils.maxCountChar(wbg3num) == 2 ? 1 : 0;
+            Integer wbg3times = SscUtils.zu3times(wbg3num);
             vo.setWbg3times(wbg3timesInit + wbg3times);
             /**
              * 万十个
              */
             String wsg3num = SscUtils.pickUp3Char(num, Point.W, Point.S, Point.G);
-            Integer wsg3times = SscUtils.maxCountChar(wsg3num) == 2 ? 1 : 0;
+            Integer wsg3times = SscUtils.zu3times(wsg3num);
             vo.setWsg3times(wsg3timesInit + wsg3times);
             /**
              * 千百个
              */
             String qbg3num = SscUtils.pickUp3Char(num, Point.Q, Point.B, Point.G);
-            Integer qbg3times = SscUtils.maxCountChar(qbg3num) == 2 ? 1 : 0;
+            Integer qbg3times = SscUtils.zu3times(qbg3num);
             vo.setQbg3times(qbg3timesInit + qbg3times);
             /**
              * 千十个
              */
             String qsg3num = SscUtils.pickUp3Char(num, Point.Q, Point.S, Point.G);
-            Integer qsg3times = SscUtils.maxCountChar(qsg3num) == 2 ? 1 : 0;
+            Integer qsg3times = SscUtils.zu3times(qsg3num);
             vo.setQsg3times(qsg3timesInit + qsg3times);
 
             tmpMap.put(date, vo);
         });
         List<AnalyzeKlineVo> results = tmpMap.values().stream().sorted(Comparator.comparing(e -> e.getDate())).collect(Collectors.toList());
         return results;
+    }
+
+    @Override
+    public List<AnalyzeKlineVo> zu3K5List(LocalDate startDate, LocalDate endDate) {
+        return zu3KList(startDate, endDate, true);
     }
 
 }
