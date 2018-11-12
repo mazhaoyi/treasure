@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.treasure.ssc.dao.AdcCenterDao">
+    <select id="getByDateAndNo" resultType="com.treasure.ssc.vo.TicketSscVo">
+        SELECT
+            t.ticket_id ticketId,
+            t.ticket_no ticketNo,
+            t.ticket_num ticketNum,
+            t.ticket_date ticketDate
+        FROM
+            ticket t
+        WHERE
+            t.ticket_no = #{no}
+            AND t.ticket_date = #{date}
+    </select>
+    <update id="updateSscUserByUsername">
+        UPDATE ssc_user
+        <set>
+            <if test="user.money != null">
+                money = #{user.money},
+            </if>
+            <if test="user.nowNo != null and user.nowNo != ''">
+                now_no = #{user.nowNo},
+            </if>
+            <if test="user.nowDate != null">
+                now_date = #{user.nowDate},
+            </if>
+            update_time = now()
+        </set>
+        <where>
+            username = #{user.username}
+        </where>
+    </update>
+    <select id="listBuyItem" resultType="com.treasure.ssc.entity.BuyItem">
+        SELECT
+            bi.buy_item_id buyItemId,
+            bi.user_id userId,
+            bi.create_time createTime,
+            bi.update_time updateTime,
+            bi.item_flag itemFlag,
+            bi.buy_money buyMoney,
+            bi.ticket_id ticketId
+        FROM
+            buy_item bi
+        WHERE
+            bi.ticket_id = #{ticketId}
+
+            AND bi.item_flag = #{itemFlag}
+    </select>
+    <select id="getUserById" resultType="com.treasure.ssc.entity.SscUser">
+        SELECT
+            su.user_id userId,
+            su.username username,
+            su.money money,
+            su.create_time createTime,
+            su.update_time updateTime,
+            su.now_no nowNo,
+            su.now_date nowDate
+        FROM
+            ssc_user su
+        WHERE
+            su.user_id = #{userId}
+    </select>
+    <select id="getUserByUsername" resultType="com.treasure.ssc.entity.SscUser">
+        SELECT
+            su.user_id userId,
+            su.username username,
+            su.money money,
+            su.create_time createTime,
+            su.update_time updateTime,
+            su.now_no nowNo,
+            su.now_date nowDate
+        FROM
+            ssc_user su
+        WHERE
+            su.username = #{username}
+    </select>
+</mapper>
