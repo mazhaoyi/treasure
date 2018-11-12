@@ -5,10 +5,14 @@ import com.treasure.ssc.svc.AdcCenterSvc;
 import com.treasure.ssc.vo.TicketSscVo;
 import com.treasure.ssc.vo.adc.req.BuyReqVo;
 import com.treasure.ssc.vo.adc.req.NextnoReqVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.math.BigDecimal;
 
 /**
  * 模拟中心
@@ -18,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/adc")
 public class AdcCenterAct {
+    private static final Logger logger = LoggerFactory.getLogger(AdcCenterAct.class);
+
     @Autowired
     private AdcCenterSvc adcCenterSvc;
 
@@ -27,7 +33,13 @@ public class AdcCenterAct {
      */
     @PostMapping(value = "/nextno")
     public Object nextNo(NextnoReqVo reqVo) {
-        TicketSscVo vo = adcCenterSvc.nextNum(reqVo);
+        TicketSscVo vo = null;
+        try {
+            vo = adcCenterSvc.nextNum(reqVo);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return ResultUtils.error(e.getMessage());
+        }
         return ResultUtils.success(vo);
     }
 
@@ -37,6 +49,13 @@ public class AdcCenterAct {
      */
     @PostMapping(value = "/buy")
     public Object buy(BuyReqVo reqVo) {
-        return null;
+        BigDecimal res = null;
+        try {
+            res = adcCenterSvc.buy(reqVo);
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            ResultUtils.error(e.getMessage());
+        }
+        return ResultUtils.success(res);
     }
 }

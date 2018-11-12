@@ -5,6 +5,7 @@ import com.treasure.ssc.entity.SscUser;
 import com.treasure.ssc.vo.TicketSscVo;
 import org.apache.ibatis.annotations.Param;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -49,4 +50,13 @@ public interface AdcCenterDao {
      * @return
      */
     List<BuyItem> listBuyItem(@Param("ticketId") Integer ticketId, @Param("itemFlag") Short itemFlag);
+
+    /**
+     * 购买一期组3
+     * @param userId
+     * @param ticketId
+     * @param buyMoney
+     * @return
+     */
+    int buyTicket(@Param("userId") Integer userId, @Param("ticketId") Integer ticketId, @Param("buyMoney") BigDecimal buyMoney);
 }

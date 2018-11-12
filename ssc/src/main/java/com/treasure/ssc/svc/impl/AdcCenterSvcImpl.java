@@ -121,10 +121,47 @@ public class AdcCenterSvcImpl implements AdcCenterSvc {
 
     @Override
     public BigDecimal buy(BuyReqVo reqVo) {
+        LocalDate date = reqVo.getTicketDate();
+        String no = reqVo.getNowTicketNo();
+        if (date == null) {
+            throw new RuntimeException("日期不能为空！");
+        }
+        if (StringUtils.isNumeric(no)) {
+            throw new RuntimeException("期数必须是数字！");
+        }
+        Integer nowNo = Integer.valueOf(no);
+        if (nowNo > 119) {
+            throw new RuntimeException("今天已经结束，请购买第二天的！");
+        }
+
         // 当前用户
         SscUser sscUser = adcCenterDao.getUserByUsername(uname);
+        // 还剩金钱
         BigDecimal money = sscUser.getMoney();
-
-        return null;
+        // 购买组3金钱
+        BigDecimal zu3money = reqVo.getBuyMoney();
+        // 购买豹子金钱
+        BigDecimal bzmoney = zu3money.divide(BigDecimal.valueOf(10));
+        // 判断是否还有钱购买
+        BigDecimal remainMoney = money.subtract(zu3money).subtract(bzmoney);
+        if (remainMoney.compareTo(BigDecimal.ZERO) < 0) {
+            throw new RuntimeException("所剩余的钱不够购买组三和豹子！");
+        }
+        TicketSscVo ticketSscVo = adcCenterDao.getByDateAndNo(date, SscUtils.frontZero(nowNo + 1, 3));
+        if (ticketSscVo == null) {
+            throw new RuntimeException("该期票还没有出来，请耐心等待！");
+        }
+        // 新增购买项
+        int buyRes = adcCenterDao.buyTicket(sscUser.getUserId(), ticketSscVo.getTicketId(), zu3money);
+        if (buyRes > 0) {
+            // 用户账号扣钱
+            SscUser su = new SscUser();
+            su.setMoney(remainMoney);
+            su.setUsername(uname);
+            adcCenterDao.updateSscUserByUsername(su);
+        } else {
+            throw new RuntimeException("购买失败！");
+        }
+        return remainMoney;
     }
 }

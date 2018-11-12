@@ -75,4 +75,10 @@
         WHERE
             su.username = #{username}
     </select>
+    <insert id="buyTicket">
+        INSERT INTO buy_item ( user_id, item_flag, buy_money, ticket_id )
+        VALUES (
+        #{userId}, 1, #{buyMoney}, #{ticketId}
+        )
+    </insert>
 </mapper>
