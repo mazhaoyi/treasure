@@ -7,6 +7,7 @@ import com.treasure.ssc.entity.SscUser;
 import com.treasure.ssc.svc.AdcCenterSvc;
 import com.treasure.ssc.vo.TicketSscVo;
 import com.treasure.ssc.vo.adc.req.BuyReqVo;
+import com.treasure.ssc.vo.adc.resp.AdcListVo;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,15 +34,27 @@ public class AdcCenterSvcImpl implements AdcCenterSvc {
     private AdcCenterDao adcCenterDao;
 
     @Override
+    public AdcListVo nowList() {
+        // 当前用户
+        SscUser sscUser = adcCenterDao.getUserByUsername(uname);
+        LocalDate date = sscUser.getNowDate();
+        String nowTicketNo = sscUser.getNowNo();
+
+        List<TicketSscVo> list = adcCenterDao.listByDateAndNo(date, nowTicketNo);
+
+        AdcListVo vo = new AdcListVo();
+        vo.setNowMoney(sscUser.getMoney());
+        vo.setTicketSscVos(list);
+        return vo;
+    }
+
+    @Override
     public TicketSscVo nextNum() {
         // 当前用户
         SscUser sscUser = adcCenterDao.getUserByUsername(uname);
 
         LocalDate date = sscUser.getNowDate();
         String nowTicketNo = sscUser.getNowNo();
-        if (date == null || StringUtils.isBlank(nowTicketNo)) {
-            throw new RuntimeException("日期和当前期号不能为空！");
-        }
         Integer ticketNo = Integer.valueOf(nowTicketNo) + 1;
         if (ticketNo > 120) {
             ticketNo = 1;
@@ -63,7 +76,10 @@ public class AdcCenterSvcImpl implements AdcCenterSvc {
 
         recordUserNowNo(date, vo.getTicketNo());
 
-        vo.setNowMoney(sscUser.getMoney());
+        // 计算过金钱后的用户
+        SscUser lastUser = adcCenterDao.getUserByUsername(uname);
+
+        vo.setNowMoney(lastUser.getMoney());
 
         return vo;
     }
@@ -97,11 +113,21 @@ public class AdcCenterSvcImpl implements AdcCenterSvc {
             // 组3
             if (maxNum == 2) {
                 // 组三赚
-                getFee = BigDecimal.valueOf(32.3).multiply(bd).divide(BigDecimal.valueOf(9));
+                getFee = BigDecimal.valueOf(32.3).multiply(bd).divide(BigDecimal.valueOf(9), BigDecimal.ROUND_HALF_UP);
             } else if (maxNum == 3) {
                 // 豹子赚
                 getFee = bzDb.multiply(BigDecimal.valueOf(96.9));
             }
+
+            // 修改组3子订单状态
+            if (maxNum == 2) {
+                // 中奖组3
+                adcCenterDao.updateItemFlag(item.getBuyItemId(), (short) 2);
+            } else {
+                // 组3未中奖
+                adcCenterDao.updateItemFlag(item.getBuyItemId(), (short) 3);
+            }
+
             SscUser sscUser = adcCenterDao.getUserById(userId);
             if (sscUser != null) {
                 // 更新用户资金
@@ -118,6 +144,14 @@ public class AdcCenterSvcImpl implements AdcCenterSvc {
 
     @Override
     public BigDecimal buy(BuyReqVo reqVo) {
+        if (reqVo == null) {
+            throw new RuntimeException("请求参数不能为空！");
+        }
+        // 购买组3金钱
+        BigDecimal zu3money = reqVo.getBuyMoney();
+        if (zu3money == null) {
+            throw new RuntimeException("必须填写金钱！");
+        }
         // 当前用户
         SscUser sscUser = adcCenterDao.getUserByUsername(uname);
 
@@ -125,9 +159,6 @@ public class AdcCenterSvcImpl implements AdcCenterSvc {
         String no = sscUser.getNowNo();
         if (date == null) {
             throw new RuntimeException("日期不能为空！");
-        }
-        if (StringUtils.isNumeric(no)) {
-            throw new RuntimeException("期数必须是数字！");
         }
         Integer nowNo = Integer.valueOf(no);
 
@@ -139,14 +170,12 @@ public class AdcCenterSvcImpl implements AdcCenterSvc {
 
         // 还剩金钱
         BigDecimal money = sscUser.getMoney();
-        // 购买组3金钱
-        BigDecimal zu3money = reqVo.getBuyMoney();
         // 购买豹子金钱
         BigDecimal bzmoney = zu3money.divide(BigDecimal.valueOf(10));
         // 判断是否还有钱购买
         BigDecimal remainMoney = money.subtract(zu3money).subtract(bzmoney);
         if (remainMoney.compareTo(BigDecimal.ZERO) < 0) {
-            throw new RuntimeException("所剩余的钱不够购买组三和豹子！");
+            throw new RuntimeException("所剩余的钱不够购买组三和豹子！剩余¥ " + money + "，需要¥ " + zu3money.add(bzmoney));
         }
         TicketSscVo ticketSscVo = adcCenterDao.getByDateAndNo(date, SscUtils.frontZero(nowNo + 1, 3));
         if (ticketSscVo == null) {

@@ -2,6 +2,7 @@ package com.treasure.ssc.svc;
 
 import com.treasure.ssc.vo.TicketSscVo;
 import com.treasure.ssc.vo.adc.req.BuyReqVo;
+import com.treasure.ssc.vo.adc.resp.AdcListVo;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,6 +13,11 @@ import java.time.LocalDate;
  * @date: 2018/11/12 15:41
  */
 public interface AdcCenterSvc {
+    /**
+     * 获取今天已经出了的期数列表
+     * @return
+     */
+    AdcListVo nowList();
     /**
      * 获取下一期
      * @return

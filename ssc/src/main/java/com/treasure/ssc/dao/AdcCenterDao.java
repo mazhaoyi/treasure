@@ -23,6 +23,13 @@ public interface AdcCenterDao {
     TicketSscVo getByDateAndNo(@Param("date") LocalDate date, @Param("no") String no);
 
     /**
+     * 获取当天已经出过的期的列表
+     * @param date
+     * @param no
+     * @return
+     */
+    List<TicketSscVo> listByDateAndNo(@Param("date") LocalDate date, @Param("no") String no);
+    /**
      * 根据username更新user
      * @param user
      * @return
@@ -50,6 +57,14 @@ public interface AdcCenterDao {
      * @return
      */
     List<BuyItem> listBuyItem(@Param("ticketId") Integer ticketId, @Param("itemFlag") Short itemFlag);
+
+    /**
+     * 计算过当前期金钱后，修改购买状态为中奖，或者未中奖，这里先不考虑撤单
+     * @param buyItemId
+     * @param itemFlag
+     * @return
+     */
+    int updateItemFlag(@Param("buyItemId") Integer buyItemId, @Param("itemFlag") Short itemFlag);
 
     /**
      * 购买一期组3

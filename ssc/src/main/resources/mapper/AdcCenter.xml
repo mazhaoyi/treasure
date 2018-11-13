@@ -7,11 +7,26 @@
             t.ticket_no ticketNo,
             t.ticket_num ticketNum,
             t.ticket_date ticketDate,
-            t.line
+            t.line,
+            t.aft3_max_count aft3num
         FROM
             ticket t
         WHERE
             t.ticket_no = #{no}
+            AND t.ticket_date = #{date}
+    </select>
+    <select id="listByDateAndNo" resultType="com.treasure.ssc.vo.TicketSscVo">
+        SELECT
+            t.ticket_id ticketId,
+            t.ticket_no ticketNo,
+            t.ticket_num ticketNum,
+            t.ticket_date ticketDate,
+            t.line,
+            t.aft3_max_count aft3num
+        FROM
+            ticket t
+        WHERE
+            t.ticket_no <![CDATA[<=]]> #{no}
             AND t.ticket_date = #{date}
     </select>
     <update id="updateSscUserByUsername">
@@ -82,4 +97,8 @@
         #{userId}, 1, #{buyMoney}, #{ticketId}
         )
     </insert>
+    <update id="updateItemFlag">
+        UPDATE buy_item
+        SET item_flag = #{itemFlag}, update_time = now() where buy_item_id = #{buyItemId}
+    </update>
 </mapper>

@@ -4,10 +4,12 @@ import com.treasure.common.util.ResultUtils;
 import com.treasure.ssc.svc.AdcCenterSvc;
 import com.treasure.ssc.vo.TicketSscVo;
 import com.treasure.ssc.vo.adc.req.BuyReqVo;
+import com.treasure.ssc.vo.adc.resp.AdcListVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,7 +34,8 @@ public class AdcCenterAct {
      */
     @PostMapping(value = "/list")
     public Object list() {
-        return null;
+        AdcListVo vo = adcCenterSvc.nowList();
+        return ResultUtils.success(vo);
     }
 
     /**
@@ -56,13 +59,13 @@ public class AdcCenterAct {
      * @return
      */
     @PostMapping(value = "/buy")
-    public Object buy(BuyReqVo reqVo) {
+    public Object buy(@RequestBody BuyReqVo reqVo) {
         BigDecimal res = null;
         try {
             res = adcCenterSvc.buy(reqVo);
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
-            ResultUtils.error(e.getMessage());
+            return ResultUtils.error(e.getMessage());
         }
         return ResultUtils.success(res);
     }
