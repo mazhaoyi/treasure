@@ -6,7 +6,8 @@
             t.ticket_id ticketId,
             t.ticket_no ticketNo,
             t.ticket_num ticketNum,
-            t.ticket_date ticketDate
+            t.ticket_date ticketDate,
+            t.line
         FROM
             ticket t
         WHERE

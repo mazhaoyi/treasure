@@ -18,6 +18,15 @@ public class SscUser implements Serializable {
     private LocalDateTime updateTime;
     private String nowNo;
     private LocalDate nowDate;
+    private Boolean newDate;
+
+    public Boolean getNewDate() {
+        return this.newDate;
+    }
+
+    public void setNewDate(Boolean newDate) {
+        this.newDate = newDate;
+    }
 
     public String getNowNo() {
         return this.nowNo;

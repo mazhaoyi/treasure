@@ -34,6 +34,9 @@ public class SpringConfig extends SpringConfigBase {
         // K5线图
         registry.addResourceHandler("k5.html")
                 .addResourceLocations("classpath:/templates/k5.html");
+        // 购买页面
+        registry.addResourceHandler("buy.html")
+                .addResourceLocations("classpath:/templates/buy.html");
     }
 
 }

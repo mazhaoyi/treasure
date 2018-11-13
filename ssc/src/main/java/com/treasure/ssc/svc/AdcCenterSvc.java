@@ -2,7 +2,6 @@ package com.treasure.ssc.svc;
 
 import com.treasure.ssc.vo.TicketSscVo;
 import com.treasure.ssc.vo.adc.req.BuyReqVo;
-import com.treasure.ssc.vo.adc.req.NextnoReqVo;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -15,10 +14,9 @@ import java.time.LocalDate;
 public interface AdcCenterSvc {
     /**
      * 获取下一期
-     * @param reqVo
      * @return
      */
-    TicketSscVo nextNum(NextnoReqVo reqVo);
+    TicketSscVo nextNum();
 
     /**
      * 记录当前用户的玩到了那里

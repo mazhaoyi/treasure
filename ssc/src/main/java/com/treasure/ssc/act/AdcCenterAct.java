@@ -4,7 +4,6 @@ import com.treasure.common.util.ResultUtils;
 import com.treasure.ssc.svc.AdcCenterSvc;
 import com.treasure.ssc.vo.TicketSscVo;
 import com.treasure.ssc.vo.adc.req.BuyReqVo;
-import com.treasure.ssc.vo.adc.req.NextnoReqVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,14 +27,23 @@ public class AdcCenterAct {
     private AdcCenterSvc adcCenterSvc;
 
     /**
+     * 今天已经出了的期号
+     * @return
+     */
+    @PostMapping(value = "/list")
+    public Object list() {
+        return null;
+    }
+
+    /**
      * 下一期期号
      * @return
      */
     @PostMapping(value = "/nextno")
-    public Object nextNo(NextnoReqVo reqVo) {
+    public Object nextNo() {
         TicketSscVo vo = null;
         try {
-            vo = adcCenterSvc.nextNum(reqVo);
+            vo = adcCenterSvc.nextNum();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
             return ResultUtils.error(e.getMessage());

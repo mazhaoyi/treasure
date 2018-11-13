@@ -15,10 +15,19 @@ public class TicketSscVo implements Serializable {
     private String ticketNum;
     private LocalDate ticketDate;
     private Integer aft3num;
+    private Integer line;
     /**
      * 用户当前金钱
      */
     private BigDecimal nowMoney;
+
+    public Integer getLine() {
+        return this.line;
+    }
+
+    public void setLine(Integer line) {
+        this.line = line;
+    }
 
     public BigDecimal getNowMoney() {
         return this.nowMoney;

@@ -7,7 +7,6 @@ import com.treasure.ssc.entity.SscUser;
 import com.treasure.ssc.svc.AdcCenterSvc;
 import com.treasure.ssc.vo.TicketSscVo;
 import com.treasure.ssc.vo.adc.req.BuyReqVo;
-import com.treasure.ssc.vo.adc.req.NextnoReqVo;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,18 +33,19 @@ public class AdcCenterSvcImpl implements AdcCenterSvc {
     private AdcCenterDao adcCenterDao;
 
     @Override
-    public TicketSscVo nextNum(NextnoReqVo reqVo) {
-        if (reqVo == null) {
-            throw new RuntimeException("请求参数不能为空！");
-        }
-        LocalDate date = reqVo.getTicketDate();
-        String nowTicketNo = reqVo.getNowTicketNo();
+    public TicketSscVo nextNum() {
+        // 当前用户
+        SscUser sscUser = adcCenterDao.getUserByUsername(uname);
+
+        LocalDate date = sscUser.getNowDate();
+        String nowTicketNo = sscUser.getNowNo();
         if (date == null || StringUtils.isBlank(nowTicketNo)) {
             throw new RuntimeException("日期和当前期号不能为空！");
         }
         Integer ticketNo = Integer.valueOf(nowTicketNo) + 1;
         if (ticketNo > 120) {
-            throw new RuntimeException("已经是最后一期了！");
+            ticketNo = 1;
+            date = date.plusDays(1);
         }
         TicketSscVo vo = adcCenterDao.getByDateAndNo(date, SscUtils.frontZero(ticketNo, 3));
         if (vo == null) {
@@ -63,10 +63,7 @@ public class AdcCenterSvcImpl implements AdcCenterSvc {
 
         recordUserNowNo(date, vo.getTicketNo());
 
-        SscUser sscUser = adcCenterDao.getUserByUsername(uname);
-        if (sscUser != null) {
-            vo.setNowMoney(sscUser.getMoney());
-        }
+        vo.setNowMoney(sscUser.getMoney());
 
         return vo;
     }
@@ -121,8 +118,11 @@ public class AdcCenterSvcImpl implements AdcCenterSvc {
 
     @Override
     public BigDecimal buy(BuyReqVo reqVo) {
-        LocalDate date = reqVo.getTicketDate();
-        String no = reqVo.getNowTicketNo();
+        // 当前用户
+        SscUser sscUser = adcCenterDao.getUserByUsername(uname);
+
+        LocalDate date = sscUser.getNowDate();
+        String no = sscUser.getNowNo();
         if (date == null) {
             throw new RuntimeException("日期不能为空！");
         }
@@ -130,12 +130,13 @@ public class AdcCenterSvcImpl implements AdcCenterSvc {
             throw new RuntimeException("期数必须是数字！");
         }
         Integer nowNo = Integer.valueOf(no);
+
         if (nowNo > 119) {
-            throw new RuntimeException("今天已经结束，请购买第二天的！");
+            nowNo = 1;
+            date = date.plusDays(1);
         }
 
-        // 当前用户
-        SscUser sscUser = adcCenterDao.getUserByUsername(uname);
+
         // 还剩金钱
         BigDecimal money = sscUser.getMoney();
         // 购买组3金钱

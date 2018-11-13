@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>购买</title>
+    <style type="text/css">
+        #tbId {
+            border-collapse: collapse;
+        }
+        #tbId td {
+            width: 166px;
+            height: 25px;
+            border: 1px solid black;
+        }
+    </style>
+    <script src="static/js/jquery-3.3.1.min.js" type="application/javascript"></script>
+    <script type="application/javascript">
+        $(function () {
+            initTable();
+        });
+
+        /**
+         * 初始化表格
+         */
+        function initTable() {
+            for (var i = 0; i < 20; i++) {
+                var $tr = $('<tr id="tr_' + i + '"></tr>');
+                $('#tbId').append($tr);
+                for (var j = 0; j < 6; j++) {
+                    var tdId = (i + 1) + 20*j;
+                    $tr.append('<td id="td_' + tdId + '"></td>');
+                }
+            }
+        }
+        function getData() {
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/adc/nextno',
+                contentType: 'application/json;charset=utf-8',
+                success: function (data) {
+                    if (data == null) {
+                        alert('没有响应结果！');
+                        return;
+                    }
+                    if (data.code != 200) {
+                        alert(data.message);
+                        return;
+                    }
+                    var datas = data.data;
+
+                }
+            });
+        }
+        function buy() {
+            var buyMoney = $('#buyId').val();
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/adc/buy',
+                contentType: 'application/json;charset=utf-8',
+                data: {'buyMoney':buyMoney},
+                success: function (data) {
+                    if (data == null) {
+                        alert('没有响应结果！');
+                        return;
+                    }
+                    if (data.code != 200) {
+                        alert(data.message);
+                        return;
+                    }
+                    var datas = data.data;
+
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <div id="msgId"></div>
+        <input id="buyId" type="text" value="10"/>
+        <input type="button" value="购买" onclick="buy()"/>
+        <input type="button" value="下一期" onclick="getData()"/>
+    </div>
+    <div id="outDiv">
+        <table id="tbId">
+        </table>
+    </div>
+</body>
+</html>
