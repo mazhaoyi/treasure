@@ -163,7 +163,7 @@ public class AdcCenterSvcImpl implements AdcCenterSvc {
         Integer nowNo = Integer.valueOf(no);
 
         if (nowNo > 119) {
-            nowNo = 1;
+            nowNo = 0;
             date = date.plusDays(1);
         }
 
