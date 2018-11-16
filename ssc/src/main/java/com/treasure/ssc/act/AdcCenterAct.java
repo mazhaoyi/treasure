@@ -69,4 +69,16 @@ public class AdcCenterAct {
         }
         return ResultUtils.success(res);
     }
+
+    @PostMapping(value = "/reset/money")
+    public Object resetMoney(BigDecimal resetMoney) {
+        if (resetMoney == null) {
+            return ResultUtils.error("金钱不能为空！");
+        }
+        if (resetMoney.compareTo(BigDecimal.ZERO) < 0) {
+            return ResultUtils.error("金钱不能为负数！");
+        }
+        adcCenterSvc.resetMoney(resetMoney);
+        return ResultUtils.success(true);
+    }
 }

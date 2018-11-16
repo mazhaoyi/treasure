@@ -101,4 +101,8 @@
         UPDATE buy_item
         SET item_flag = #{itemFlag}, update_time = now() where buy_item_id = #{buyItemId}
     </update>
+    <update id="resetMoney">
+        UPDATE ssc_user
+        SET money = #{money} WHERE user_id = #{userId}
+    </update>
 </mapper>

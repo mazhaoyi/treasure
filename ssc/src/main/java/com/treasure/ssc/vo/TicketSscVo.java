@@ -16,10 +16,28 @@ public class TicketSscVo implements Serializable {
     private LocalDate ticketDate;
     private Integer aft3num;
     private Integer line;
+    private Boolean ifzu5;
+    private Boolean ifzu10;
     /**
      * 用户当前金钱
      */
     private BigDecimal nowMoney;
+
+    public Boolean getIfzu5() {
+        return this.ifzu5;
+    }
+
+    public void setIfzu5(Boolean ifzu5) {
+        this.ifzu5 = ifzu5;
+    }
+
+    public Boolean getIfzu10() {
+        return this.ifzu10;
+    }
+
+    public void setIfzu10(Boolean ifzu10) {
+        this.ifzu10 = ifzu10;
+    }
 
     public Integer getLine() {
         return this.line;

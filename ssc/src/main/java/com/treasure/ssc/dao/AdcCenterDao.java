@@ -74,4 +74,12 @@ public interface AdcCenterDao {
      * @return
      */
     int buyTicket(@Param("userId") Integer userId, @Param("ticketId") Integer ticketId, @Param("buyMoney") BigDecimal buyMoney);
+
+    /**
+     * 重置金钱
+     * @param userId
+     * @param money
+     * @return
+     */
+    int resetMoney(@Param("userId") Integer userId, @Param("money") BigDecimal money);
 }

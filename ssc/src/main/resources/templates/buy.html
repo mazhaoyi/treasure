@@ -57,12 +57,14 @@
                     for (var i = 0; i < datas.length; i++) {
                         var ticket = datas[i];
                         var aft3num = ticket.aft3num;
-                        parseNowData(aft3num, ticket.ticketNo, ticket.ticketDate, ticket.ticketNum);
+                        var ifzu5 = ticket.ifzu5;
+                        var ifzu10 = ticket.ifzu10;
+                        parseNowData(aft3num, ticket.ticketNo, ticket.ticketDate, ticket.ticketNum, ifzu5, ifzu10);
                     }
                 }
             });
         }
-        function parseNowData(aft3num, ticketNo, ticketDate, ticketNum) {
+        function parseNowData(aft3num, ticketNo, ticketDate, ticketNum, ifzu5, ifzu10) {
             var oldDate = $('#dateDiv').html();
             if (oldDate != ticketDate) {
                 $('#tbId td').html('');
@@ -79,9 +81,17 @@
                 txt = '组六';
                 col = 'black';
             }
+
             var $td = $('#td_' + parseInt(ticketNo));
             $td.css('color', col);
-            $td.html(ticketNo + ' ' + ticketNum + ' ' + txt);
+            var inTxt = ticketNo + ' ' + ticketNum + ' ' + txt;
+            if (ifzu5) {
+                inTxt = inTxt + ' 组5';
+            }
+            if (ifzu10) {
+                inTxt = inTxt + ' 组10';
+            }
+            $td.html(inTxt);
 
             $('#dateDiv').html(ticketDate);
         }
@@ -103,7 +113,9 @@
                     var ticket = data.data;
                     $('#msgId').html('当前账户还有金钱：' + ticket.nowMoney);
                     var aft3num = ticket.aft3num;
-                    parseNowData(aft3num, ticket.ticketNo, ticket.ticketDate, ticket.ticketNum);
+                    var ifzu5 = ticket.ifzu5;
+                    var ifzu10 = ticket.ifzu10;
+                    parseNowData(aft3num, ticket.ticketNo, ticket.ticketDate, ticket.ticketNum, ifzu5, ifzu10);
                 }
             });
         }
@@ -138,6 +150,32 @@
             var data = $('#buyId').val();
             $('#buyId').val(data*2);
         }
+        function resetMoney() {
+            var resetMoney = $('#resetMoneyId').val();
+            $.ajax({
+                type: 'POST',
+                dataType: 'json',
+                url: '/adc/reset/money',
+                contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+                data: {'resetMoney':resetMoney},
+                success: function (data) {
+                    if (data == null) {
+                        alert('没有响应结果！');
+                        $('#msgId').html('没有响应结果！');
+                        $('#msgId').css('color', 'red');
+                        return;
+                    }
+                    if (data.code != 200) {
+                        alert(data.message);
+                        $('#msgId').html(data.message);
+                        $('#msgId').css('color', 'red');
+                        return;
+                    }
+                    $('#msgId').html('重置金钱成功，当前账户还剩金钱：' + resetMoney);
+                    $('#msgId').css('color', 'green');
+                }
+            });
+        }
     </script>
 </head>
 <body>
@@ -148,6 +186,8 @@
         <input type="button" value="下一期" onclick="nextNo()"/>
         <input type="button" value="购买" onclick="buy()"/>
         <input type="button" value="翻倍" onclick="mul()"/>
+        <input id="resetMoneyId" type="text" value="" style="margin-left: 100px;width: 80px;"/>
+        <input type="button" value="重置金钱" onclick="resetMoney()"/>
     </div>
     <div id="outDiv">
         <table id="tbId">

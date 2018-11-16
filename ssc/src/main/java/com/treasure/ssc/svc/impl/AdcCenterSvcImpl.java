@@ -41,6 +41,13 @@ public class AdcCenterSvcImpl implements AdcCenterSvc {
         String nowTicketNo = sscUser.getNowNo();
 
         List<TicketSscVo> list = adcCenterDao.listByDateAndNo(date, nowTicketNo);
+        if (CollectionUtils.isNotEmpty(list)) {
+            list.forEach(e -> {
+                String tn = e.getTicketNum();
+                e.setIfzu5(SscUtils.checkZu5(tn));
+                e.setIfzu10(SscUtils.checkZu10(tn));
+            });
+        }
 
         AdcListVo vo = new AdcListVo();
         vo.setNowMoney(sscUser.getMoney());
@@ -67,9 +74,14 @@ public class AdcCenterSvcImpl implements AdcCenterSvc {
             vo.setTicketNo(SscUtils.frontZero(ticketNo, 3));
             vo.setTicketNum("");
             vo.setAft3num(1);
+            vo.setIfzu5(false);
+            vo.setIfzu10(false);
         } else {
             Integer maxNum = SscUtils.maxCountChar(SscUtils.create3After(vo.getTicketNum()));
             vo.setAft3num(maxNum);
+            String tn = vo.getTicketNum();
+            vo.setIfzu5(SscUtils.checkZu5(tn));
+            vo.setIfzu10(SscUtils.checkZu10(tn));
             // 计算本期金钱
             computeMoney(vo.getTicketId(), vo.getTicketNum());
         }
@@ -193,5 +205,12 @@ public class AdcCenterSvcImpl implements AdcCenterSvc {
             throw new RuntimeException("购买失败！");
         }
         return remainMoney;
+    }
+
+    @Override
+    public void resetMoney(BigDecimal money) {
+        // 当前用户
+        SscUser sscUser = adcCenterDao.getUserByUsername(uname);
+        adcCenterDao.resetMoney(sscUser.getUserId(), money);
     }
 }

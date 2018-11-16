@@ -43,4 +43,10 @@ public interface AdcCenterSvc {
      * @return 当前用户剩余金钱
      */
     BigDecimal buy(BuyReqVo reqVo);
+
+    /**
+     * 设置金钱
+     * @param money
+     */
+    void resetMoney(BigDecimal money);
 }
