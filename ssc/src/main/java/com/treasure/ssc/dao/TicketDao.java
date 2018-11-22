@@ -42,4 +42,11 @@ public interface TicketDao {
      * @return
      */
     List<TicketSscVo> ticket5List(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
+    /**
+     * 查询当天最大的No
+     * @param theDate
+     * @return
+     */
+    String selectMaxNoByDate(@Param("theDate") LocalDate theDate);
 }

@@ -96,6 +96,10 @@ public class TicketSvcImpl implements TicketSvc {
                 params = new HashMap<>(1);
                 params.put("selectDay", startDate.format(DateTimeFormatter.ofPattern("yyyyMMdd")));
             }
+
+            // 查询的当天日期
+            LocalDate theDate = startDate;
+
             // 开始时间+1天
             startDate = startDate.plusDays(1);
 
@@ -103,6 +107,10 @@ public class TicketSvcImpl implements TicketSvc {
             if (CollectionUtils.isEmpty(datas)) {
                 continue;
             }
+
+            // 查询当天最新的票的no，如果没有票的话，那么返回000
+            String maxNo = ticketDao.selectMaxNoByDate(theDate);
+            // list只要数据库中没有的票
             List<Ticket> list = datas.stream().map(t -> {
                 Ticket ticket = new Ticket();
                 ticket.setTicketDate(LocalDate.parse(t.getDay(), DateTimeFormatter.ofPattern("yyyyMMdd")));
@@ -115,8 +123,18 @@ public class TicketSvcImpl implements TicketSvc {
                 Integer line = Integer.valueOf(t.getNo()) / 20 + (Integer.valueOf(t.getNo()) % 20 == 0 ? 0 : 1);
                 ticket.setLine(line.shortValue());
                 return ticket;
+            }).filter(t -> {
+                String tkNo = t.getTicketNo();
+                if (StringUtils.compare(tkNo, maxNo) > 0) {
+                    return true;
+                } else {
+                    return false;
+                }
             }).collect(Collectors.toList());
-            ticketDao.insertBatch(list);
+
+            if (CollectionUtils.isNotEmpty(list)) {
+                ticketDao.insertBatch(list);
+            }
         }
     }
 

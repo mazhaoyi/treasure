@@ -76,4 +76,12 @@
         ORDER BY
         ti.ticket_date ASC
     </select>
+    <select id="selectMaxNoByDate" resultType="java.lang.String">
+        SELECT COALESCE
+            ( max( t.ticket_no ), '000' ) AS ticket_no
+        FROM
+            ticket t
+        WHERE
+            t.ticket_date = #{theDate}
+    </select>
 </mapper>

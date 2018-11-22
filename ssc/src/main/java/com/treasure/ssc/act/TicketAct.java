@@ -29,13 +29,15 @@ public class TicketAct {
     @Autowired
     private TicketSvc ticketSvc;
 
-    /// 不要删除
-    /*@GetMapping("/dataToDb")
+    @GetMapping("/dataToDb")
     public Object dataToDb() {
+        LocalDate startDate = LocalDate.now().minusDays(3);
+
+        LocalDate endDate = LocalDate.now();
         // 最早2016-2-3，过年不开
-        ticketSvc.dataToDb(LocalDate.of(2018, 11, 10), LocalDate.of(2018, 11, 14));
+        ticketSvc.dataToDb(startDate, endDate);
         return ResultUtils.success(null);
-    }*/
+    }
 
     /// 不要删除
     /*@GetMapping(value = "/init")
