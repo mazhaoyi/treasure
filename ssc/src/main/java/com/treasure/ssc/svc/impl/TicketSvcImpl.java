@@ -130,7 +130,7 @@ public class TicketSvcImpl implements TicketSvc {
                 } else {
                     return false;
                 }
-            }).collect(Collectors.toList());
+            }).filter(t -> StringUtils.isNotBlank(t.getTicketNum())).collect(Collectors.toList());
 
             if (CollectionUtils.isNotEmpty(list)) {
                 ticketDao.insertBatch(list);
