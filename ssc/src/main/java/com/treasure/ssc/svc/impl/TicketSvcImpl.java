@@ -300,6 +300,12 @@ public class TicketSvcImpl implements TicketSvc {
             Integer qsg3times = SscUtils.zu3times(qsg3num);
             vo.setQsg3times(qsg3timesInit + qsg3times);
 
+            if (date.isEqual(LocalDate.now())) {
+                vo.setAllBuy(getAllBuyDate(date));
+            } else {
+                vo.setAllBuy(120);
+            }
+
             tmpMap.put(date, vo);
         });
         List<AnalyzeKlineVo> results = tmpMap.values().stream().sorted(Comparator.comparing(e -> e.getDate())).collect(Collectors.toList());
@@ -309,6 +315,14 @@ public class TicketSvcImpl implements TicketSvc {
     @Override
     public List<AnalyzeKlineVo> zu3K5List(LocalDate startDate, LocalDate endDate) {
         return zu3KList(startDate, endDate, true);
+    }
+
+    @Override
+    public Integer getAllBuyDate(LocalDate theDate) {
+        if (theDate == null) {
+            theDate = LocalDate.now();
+        }
+        return ticketDao.getAllBuyDate(theDate);
     }
 
 }

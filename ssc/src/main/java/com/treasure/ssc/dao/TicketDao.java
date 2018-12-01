@@ -49,4 +49,11 @@ public interface TicketDao {
      * @return
      */
     String selectMaxNoByDate(@Param("theDate") LocalDate theDate);
+
+    /**
+     * 获取该日期出了多少期
+     * @param theDate
+     * @return
+     */
+    Integer getAllBuyDate(@Param("theDate") LocalDate theDate);
 }

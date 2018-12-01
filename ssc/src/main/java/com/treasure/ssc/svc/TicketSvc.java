@@ -71,4 +71,11 @@ public interface TicketSvc {
      */
     List<AnalyzeKlineVo> zu3K5List(LocalDate startDate, LocalDate endDate);
 
+    /**
+     * 获取该日期出了多少期
+     * @param theDate
+     * @return
+     */
+    Integer getAllBuyDate(LocalDate theDate);
+
 }

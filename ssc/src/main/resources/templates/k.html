@@ -71,10 +71,14 @@
                     var initLineData = 0;
                     var subtitle = '';
                     var mul = 32.3/9;
-                    var allBuy = 132;
+
                     for (var i = 0; i < datas.length; i++) {
                         var dt = datas[i];
                         dates[i] = dt.date;
+
+                        var allBuyInit = dt.allBuy;
+                        var allBuy = allBuyInit + allBuyInit/10;
+
                         // 前三
                         if (type == befType) {
                             subtitle = '前三';

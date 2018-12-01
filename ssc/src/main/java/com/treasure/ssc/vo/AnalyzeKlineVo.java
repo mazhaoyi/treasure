@@ -55,6 +55,18 @@ public class AnalyzeKlineVo implements Serializable {
      * 日期
      */
     private LocalDate date;
+    /**
+     * 改天出的期数
+     */
+    private Integer allBuy;
+
+    public Integer getAllBuy() {
+        return this.allBuy;
+    }
+
+    public void setAllBuy(Integer allBuy) {
+        this.allBuy = allBuy;
+    }
 
     public Integer getBef3times() {
         return this.bef3times;

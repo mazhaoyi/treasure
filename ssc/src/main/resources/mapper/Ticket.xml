@@ -84,4 +84,12 @@
         WHERE
             t.ticket_date = #{theDate}
     </select>
+    <select id="getAllBuyDate" resultType="java.lang.Integer">
+        SELECT
+            count( 1 )
+        FROM
+            ticket t
+        WHERE
+            t.ticket_date = #{theDate};
+    </select>
 </mapper>
