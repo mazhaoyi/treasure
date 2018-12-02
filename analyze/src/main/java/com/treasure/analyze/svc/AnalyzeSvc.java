@@ -25,7 +25,7 @@ public interface AnalyzeSvc {
      * @param date
      * @return
      */
-    List<ShaVo> getShaDateFromRemote(Date date);
+    List<ShaVo> getShaDateFromRemote(Date date, String shaNum);
 
     /**
      * 统计后三数字次数

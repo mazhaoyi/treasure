@@ -48,12 +48,13 @@
          */
         function initList() {
             var date = $('#showDate').val();
+            var shaNum = $('#shaNum').val();
             $.ajax({
                 type: 'GET',
                 dataType: 'json',
                 url: '/analyze/shalist',
                 contentType: 'application/json;charset=utf-8',
-                data: {'date':date},
+                data: {'date':date, 'shaNum':shaNum},
                 success: function (data) {
                     if (data == null) {
                         alert('没有响应结果！');
@@ -87,6 +88,7 @@
     <div>
         <input id="showDate" type="text" style="width: 108px;" value=""/>
         <input type="button" value="查询" onclick="reloadData()"/>
+        <input id="shaNum" type="text" style="width: 108px;" value="018"/>
     </div>
     <div id="outDiv">
         <table id="tbId"></table>

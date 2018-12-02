@@ -4,6 +4,7 @@ import com.treasure.analyze.svc.AnalyzeSvc;
 import com.treasure.analyze.vo.AnalyzeVo;
 import com.treasure.analyze.vo.ShaVo;
 import com.treasure.common.util.ResultUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,8 +30,11 @@ public class AnalyzeAct {
     }
 
     @GetMapping(value = "/shalist")
-    public Object shaList(Date date) {
-        List<ShaVo> list = analyzeSvc.getShaDateFromRemote(date);
+    public Object shaList(Date date, String shaNum) {
+        if (StringUtils.isBlank(shaNum)) {
+            throw new RuntimeException("shaNum必填");
+        }
+        List<ShaVo> list = analyzeSvc.getShaDateFromRemote(date, shaNum);
         return ResultUtils.success(list);
     }
 

@@ -1,8 +1,6 @@
 package com.treasure.analyze.svc.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.treasure.analyze.svc.AnalyzeSvc;
 import com.treasure.analyze.vo.AnalyzeVo;
 import com.treasure.analyze.vo.ShaVo;
@@ -10,7 +8,6 @@ import com.treasure.common.util.HttpUtils;
 import com.treasure.common.util.SscUtils;
 import com.treasure.common.vo.Point;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,8 +26,6 @@ import java.util.stream.Collectors;
 public class AnalyzeSvcImpl implements AnalyzeSvc {
     @Value("${self.data.data-url}")
     private String dataUrl;
-    @Value("${self.data.sha-num}")
-    private String shaNum;
 
     @Override
     public List<AnalyzeVo> getDateFromRemote(Date date) {
@@ -109,7 +104,7 @@ public class AnalyzeSvcImpl implements AnalyzeSvc {
     }
 
     @Override
-    public List<ShaVo> getShaDateFromRemote(Date date) {
+    public List<ShaVo> getShaDateFromRemote(Date date, String shaNum) {
         Map<String, Object> params = null;
         if (date != null) {
             params = new HashMap<>(1);
@@ -195,7 +190,7 @@ public class AnalyzeSvcImpl implements AnalyzeSvc {
         Map<String, Object> params = new HashMap<>(1);
         params.put("selectDay", DateFormatUtils.format(date, "yyyyMMdd"));
         List<ShaVo> datas = HttpUtils.postList(url, params, ShaVo.class);
-//        datas = datas.stream().filter(e -> e.getNo().compareTo("021") >= 0).collect(Collectors.toList());
+//        datas = datas.stream().filter(e -> e.getNo().compareTo("080") >= 0).collect(Collectors.toList());
         StringBuffer sb = new StringBuffer();
         if (CollectionUtils.isNotEmpty(datas)) {
             datas.stream().filter(e -> StringUtils.isNotBlank(e.getNum())).forEach(e -> {
