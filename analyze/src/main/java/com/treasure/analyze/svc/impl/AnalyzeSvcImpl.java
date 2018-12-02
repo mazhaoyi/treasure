@@ -29,6 +29,8 @@ import java.util.stream.Collectors;
 public class AnalyzeSvcImpl implements AnalyzeSvc {
     @Value("${self.data.data-url}")
     private String dataUrl;
+    @Value("${self.data.sha-num}")
+    private String shaNum;
 
     @Override
     public List<AnalyzeVo> getDateFromRemote(Date date) {
@@ -162,7 +164,7 @@ public class AnalyzeSvcImpl implements AnalyzeSvc {
             String num = e.getNum();
             /// 不删除
 //            String shaNum = e.getShaNum();
-            String shaNum = "018";
+//            String shaNum = "018";
             if (StringUtils.isNotBlank(num) && StringUtils.isNotBlank(shaNum)) {
                 String aftstr = SscUtils.create3After(num);
                 Integer maxCount = SscUtils.maxCountChar(aftstr);
@@ -186,7 +188,8 @@ public class AnalyzeSvcImpl implements AnalyzeSvc {
         return results;
     }
 
-    void mapAllNum(Date date) {
+    @Override
+    public List<String> mapAllNum(Date date) {
         String url = "http://39.108.143.25:8080/stock/cqssc/getCurrentDay.sc";
 
         Map<String, Object> params = new HashMap<>(1);
@@ -201,13 +204,13 @@ public class AnalyzeSvcImpl implements AnalyzeSvc {
         }
 
         List<String> list = Lists.newArrayList();
-        System.out.println(sb.length());
         String str = sb.toString();
         for (int i = 0; i < 10; i++) {
             int count = StringUtils.countMatches(str, i + "");
             list.add(count + "-" + i);
         }
-        System.out.println(JSON.toJSONString(list.stream().sorted().collect(Collectors.toList())));
+        list = list.stream().sorted().collect(Collectors.toList());
+        return list;
     }
 
     public static void main(String[] args) {

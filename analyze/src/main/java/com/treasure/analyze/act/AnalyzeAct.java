@@ -33,4 +33,10 @@ public class AnalyzeAct {
         List<ShaVo> list = analyzeSvc.getShaDateFromRemote(date);
         return ResultUtils.success(list);
     }
+
+    @GetMapping(value = "/mapallnum")
+    public Object mapallnum(Date date) {
+        List<String> list = analyzeSvc.mapAllNum(date);
+        return ResultUtils.success(list);
+    }
 }

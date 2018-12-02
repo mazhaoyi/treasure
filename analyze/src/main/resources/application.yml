@@ -19,3 +19,5 @@ self:
     data-url: http://39.108.143.25:8080/stock/cqssc/getCurrentDay.sc
     # 豹子抓取地址
     bz-url: http://39.108.143.25:8080/stock/cqssc/getBzList.sc
+    # 0不能在最前面
+    sha-num: 180

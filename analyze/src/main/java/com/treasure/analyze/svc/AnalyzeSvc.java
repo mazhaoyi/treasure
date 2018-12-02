@@ -26,4 +26,11 @@ public interface AnalyzeSvc {
      * @return
      */
     List<ShaVo> getShaDateFromRemote(Date date);
+
+    /**
+     * 统计后三数字次数
+     * @param date
+     * @return
+     */
+    List<String> mapAllNum(Date date);
 }
