@@ -16,6 +16,8 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -158,7 +160,9 @@ public class AnalyzeSvcImpl implements AnalyzeSvc {
         List<ShaVo> results = tmpMap.entrySet().stream().sorted(Comparator.comparing(e -> e.getKey())).map(e -> e.getValue()).collect(Collectors.toList());
         results.stream().forEach(e -> {
             String num = e.getNum();
-            String shaNum = e.getShaNum();
+            /// 不删除
+//            String shaNum = e.getShaNum();
+            String shaNum = "0128";
             if (StringUtils.isNotBlank(num) && StringUtils.isNotBlank(shaNum)) {
                 String aftstr = SscUtils.create3After(num);
                 Integer maxCount = SscUtils.maxCountChar(aftstr);
@@ -182,9 +186,34 @@ public class AnalyzeSvcImpl implements AnalyzeSvc {
         return results;
     }
 
+    void mapAllNum(Date date) {
+        String url = "http://39.108.143.25:8080/stock/cqssc/getCurrentDay.sc";
+
+        Map<String, Object> params = new HashMap<>(1);
+        params.put("selectDay", DateFormatUtils.format(date, "yyyyMMdd"));
+        List<ShaVo> datas = HttpUtils.postList(url, params, ShaVo.class);
+        StringBuffer sb = new StringBuffer();
+        if (CollectionUtils.isNotEmpty(datas)) {
+            datas.stream().filter(e -> StringUtils.isNotBlank(e.getNum())).forEach(e -> {
+                sb.append(SscUtils.create3After(e.getNum()));
+            });
+        }
+
+        List<String> list = Lists.newArrayList();
+        String str = sb.toString();
+        for (int i = 0; i < 10; i++) {
+            int count = StringUtils.countMatches(str, i + "");
+            list.add(count + "-" + i);
+        }
+        System.out.println(JSON.toJSONString(list.stream().sorted().collect(Collectors.toList())));
+    }
+
     public static void main(String[] args) {
         AnalyzeSvcImpl analyzeSvc = new AnalyzeSvcImpl();
-        List<ShaVo> list = analyzeSvc.getShaDateFromRemote(new Date());
-        System.out.println(JSON.toJSONString(list));
+        ///
+        /*List<ShaVo> list = analyzeSvc.getShaDateFromRemote(new Date());
+        System.out.println(JSON.toJSONString(list));*/
+        Date date = Date.from(LocalDate.now().minusDays(0).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        analyzeSvc.mapAllNum(date);
     }
 }
