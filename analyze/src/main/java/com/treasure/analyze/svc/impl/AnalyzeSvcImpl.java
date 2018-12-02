@@ -162,7 +162,7 @@ public class AnalyzeSvcImpl implements AnalyzeSvc {
             String num = e.getNum();
             /// 不删除
 //            String shaNum = e.getShaNum();
-            String shaNum = "0128";
+            String shaNum = "018";
             if (StringUtils.isNotBlank(num) && StringUtils.isNotBlank(shaNum)) {
                 String aftstr = SscUtils.create3After(num);
                 Integer maxCount = SscUtils.maxCountChar(aftstr);
@@ -192,6 +192,7 @@ public class AnalyzeSvcImpl implements AnalyzeSvc {
         Map<String, Object> params = new HashMap<>(1);
         params.put("selectDay", DateFormatUtils.format(date, "yyyyMMdd"));
         List<ShaVo> datas = HttpUtils.postList(url, params, ShaVo.class);
+//        datas = datas.stream().filter(e -> e.getNo().compareTo("021") >= 0).collect(Collectors.toList());
         StringBuffer sb = new StringBuffer();
         if (CollectionUtils.isNotEmpty(datas)) {
             datas.stream().filter(e -> StringUtils.isNotBlank(e.getNum())).forEach(e -> {
@@ -200,6 +201,7 @@ public class AnalyzeSvcImpl implements AnalyzeSvc {
         }
 
         List<String> list = Lists.newArrayList();
+        System.out.println(sb.length());
         String str = sb.toString();
         for (int i = 0; i < 10; i++) {
             int count = StringUtils.countMatches(str, i + "");
