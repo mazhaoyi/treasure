@@ -1,7 +1,9 @@
 package com.treasure.common.util;
 
 import com.google.common.collect.Lists;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 import com.treasure.common.vo.Point;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Comparator;
@@ -316,9 +318,47 @@ public class SscUtils {
         return false;
     }
 
+    /**
+     * 字符串字符转换成int数组
+     * @param str
+     * @return
+     */
+    public static final List<Integer> str2list(String str) {
+        List<Integer> list = Lists.newArrayList();
+        if (StringUtils.isBlank(str)) {
+            return list;
+        }
+        if (!StringUtils.isNumeric(str)) {
+            return list;
+        }
+        for (int i = 0; i < str.length(); i++) {
+            String s = str.substring(i, i + 1);
+            list.add(Integer.valueOf(s));
+        }
+
+        list = list.stream().distinct().collect(Collectors.toList());
+        return list;
+    }
+
+    /**
+     * 数组转换成字符串
+     * @param list
+     * @return
+     */
+    public static final String list2str(List<?> list) {
+        if (CollectionUtils.isEmpty(list)) {
+            return null;
+        }
+        StringBuilder sb = new StringBuilder();
+        list.forEach(e -> sb.append(e));
+        return sb.toString();
+    }
+
     public static void main(String[] args) {
-        String str = "12345";
-        System.out.println(str);
+        String str = "12315";
+
+        System.out.println(str2list(str));
+        /*System.out.println(str);
         System.out.println(SscUtils.checkZu30(str) + "组30");
         System.out.println(SscUtils.checkZu20(str) + "组20");
         System.out.println(SscUtils.checkZu10(str) + "组10");
@@ -330,7 +370,7 @@ public class SscUtils {
         System.out.println(pickUp3Char(str, Point.W, Point.B, Point.G));
         System.out.println(pickUp3Char(str, Point.W, Point.S, Point.G));
         System.out.println(pickUp3Char(str, Point.Q, Point.B, Point.G));
-        System.out.println(pickUp3Char(str, Point.Q, Point.S, Point.G));
+        System.out.println(pickUp3Char(str, Point.Q, Point.S, Point.G));*/
     }
 
 }

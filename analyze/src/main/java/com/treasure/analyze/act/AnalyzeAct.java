@@ -2,6 +2,7 @@ package com.treasure.analyze.act;
 
 import com.treasure.analyze.svc.AnalyzeSvc;
 import com.treasure.analyze.vo.AnalyzeVo;
+import com.treasure.analyze.vo.ShaVo;
 import com.treasure.common.util.ResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,6 +25,12 @@ public class AnalyzeAct {
     @GetMapping(value = "/list")
     public Object list(Date date) {
         List<AnalyzeVo> list = analyzeSvc.getDateFromRemote(date);
+        return ResultUtils.success(list);
+    }
+
+    @GetMapping(value = "/shalist")
+    public Object shaList(Date date) {
+        List<ShaVo> list = analyzeSvc.getShaDateFromRemote(date);
         return ResultUtils.success(list);
     }
 }

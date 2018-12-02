@@ -2,6 +2,7 @@ package com.treasure.analyze.svc;
 
 
 import com.treasure.analyze.vo.AnalyzeVo;
+import com.treasure.analyze.vo.ShaVo;
 
 import java.util.Date;
 import java.util.List;
@@ -18,4 +19,11 @@ public interface AnalyzeSvc {
      * @return
      */
     List<AnalyzeVo> getDateFromRemote(Date date);
+
+    /**
+     * 获取杀号列表
+     * @param date
+     * @return
+     */
+    List<ShaVo> getShaDateFromRemote(Date date);
 }
