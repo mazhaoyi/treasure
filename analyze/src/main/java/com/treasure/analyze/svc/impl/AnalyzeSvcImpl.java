@@ -1,6 +1,7 @@
 package com.treasure.analyze.svc.impl;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.treasure.analyze.svc.AnalyzeSvc;
 import com.treasure.analyze.vo.AnalyzeVo;
 import com.treasure.analyze.vo.ShaVo;
@@ -184,11 +185,14 @@ public class AnalyzeSvcImpl implements AnalyzeSvc {
     }
 
     @Override
-    public List<String> mapAllNum(Date date, String no, Boolean all) {
+    public List<String> mapAllNum(Date date, String no, String endNo, Boolean all) {
         String url = "http://39.108.143.25:8080/stock/cqssc/getCurrentDay.sc";
 
         if (StringUtils.isBlank(no)) {
             no = "001";
+        }
+        if (StringUtils.isBlank(endNo)) {
+            endNo = "120";
         }
 
         if (all == null) {
@@ -196,11 +200,15 @@ public class AnalyzeSvcImpl implements AnalyzeSvc {
         }
 
         Boolean ifAll = all;
-        String comNo = no;
+        Integer comNo = Integer.valueOf(no);
+        Integer tmpEndNo = Integer.valueOf(endNo);
+
         Map<String, Object> params = new HashMap<>(1);
         params.put("selectDay", DateFormatUtils.format(date, "yyyyMMdd"));
         List<ShaVo> datas = HttpUtils.postList(url, params, ShaVo.class);
-        datas = datas.stream().filter(e -> e.getNo().compareTo(comNo) >= 0).collect(Collectors.toList());
+        datas = datas.stream()
+                .filter(e -> (Integer.valueOf(e.getNo()) >= comNo) && (Integer.valueOf(e.getNo()) <= tmpEndNo))
+                .collect(Collectors.toList());
         StringBuffer sb = new StringBuffer();
         if (CollectionUtils.isNotEmpty(datas)) {
             datas.stream().filter(e -> StringUtils.isNotBlank(e.getNum())).forEach(e -> {
@@ -214,13 +222,13 @@ public class AnalyzeSvcImpl implements AnalyzeSvc {
             });
         }
 
-        List<String> list = Lists.newArrayList();
+        Map<Integer, Integer> tmpMap = Maps.newHashMap();
         String str = sb.toString();
         for (int i = 0; i < 10; i++) {
             int count = StringUtils.countMatches(str, i + "");
-            list.add(count + "-" + i);
+            tmpMap.put(i, count);
         }
-        list = list.stream().sorted().collect(Collectors.toList());
+        List<String> list = tmpMap.entrySet().stream().sorted(Comparator.comparing(e -> e.getValue())).map(e -> e.getKey() + "-" + e.getValue()).collect(Collectors.toList());
         return list;
     }
 
@@ -230,6 +238,6 @@ public class AnalyzeSvcImpl implements AnalyzeSvc {
         /*List<ShaVo> list = analyzeSvc.getShaDateFromRemote(new Date());
         System.out.println(JSON.toJSONString(list));*/
         Date date = Date.from(LocalDate.now().minusDays(0).atStartOfDay(ZoneId.systemDefault()).toInstant());
-        analyzeSvc.mapAllNum(date, null, false);
+        analyzeSvc.mapAllNum(date, null, null,false);
     }
 }

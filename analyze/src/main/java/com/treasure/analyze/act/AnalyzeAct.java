@@ -39,8 +39,8 @@ public class AnalyzeAct {
     }
 
     @GetMapping(value = "/mapallnum")
-    public Object mapallnum(Date date, String no, Boolean all) {
-        List<String> list = analyzeSvc.mapAllNum(date, no, all);
+    public Object mapallnum(Date date, String no, String endNo, Boolean all) {
+        List<String> list = analyzeSvc.mapAllNum(date, no, endNo, all);
         return ResultUtils.success(list);
     }
 }

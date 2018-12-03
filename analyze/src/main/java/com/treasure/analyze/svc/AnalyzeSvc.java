@@ -32,5 +32,5 @@ public interface AnalyzeSvc {
      * @param date
      * @return
      */
-    List<String> mapAllNum(Date date, String no, Boolean all);
+    List<String> mapAllNum(Date date, String no, String endNo, Boolean all);
 }
