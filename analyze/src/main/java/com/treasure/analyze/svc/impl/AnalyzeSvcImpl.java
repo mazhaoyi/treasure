@@ -184,12 +184,18 @@ public class AnalyzeSvcImpl implements AnalyzeSvc {
     }
 
     @Override
-    public List<String> mapAllNum(Date date, String no) {
+    public List<String> mapAllNum(Date date, String no, Boolean all) {
         String url = "http://39.108.143.25:8080/stock/cqssc/getCurrentDay.sc";
 
         if (StringUtils.isBlank(no)) {
             no = "001";
         }
+
+        if (all == null) {
+            all = false;
+        }
+
+        Boolean ifAll = all;
         String comNo = no;
         Map<String, Object> params = new HashMap<>(1);
         params.put("selectDay", DateFormatUtils.format(date, "yyyyMMdd"));
@@ -198,7 +204,13 @@ public class AnalyzeSvcImpl implements AnalyzeSvc {
         StringBuffer sb = new StringBuffer();
         if (CollectionUtils.isNotEmpty(datas)) {
             datas.stream().filter(e -> StringUtils.isNotBlank(e.getNum())).forEach(e -> {
-                sb.append(SscUtils.create3After(e.getNum()));
+                String n = e.getNum();
+                if (ifAll) {
+                    sb.append(n);
+                } else {
+                    sb.append(SscUtils.create3After(n));
+                }
+
             });
         }
 
@@ -218,6 +230,6 @@ public class AnalyzeSvcImpl implements AnalyzeSvc {
         /*List<ShaVo> list = analyzeSvc.getShaDateFromRemote(new Date());
         System.out.println(JSON.toJSONString(list));*/
         Date date = Date.from(LocalDate.now().minusDays(0).atStartOfDay(ZoneId.systemDefault()).toInstant());
-        analyzeSvc.mapAllNum(date, null);
+        analyzeSvc.mapAllNum(date, null, false);
     }
 }
