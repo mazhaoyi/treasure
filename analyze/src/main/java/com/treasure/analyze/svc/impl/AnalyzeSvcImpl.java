@@ -133,11 +133,22 @@ public class AnalyzeSvcImpl implements AnalyzeSvc {
             ShaVo shaVo1 = tmpMap.get(no1);
             ShaVo shaVo2 = tmpMap.get(no2);
 
-            String num1 = shaVo1.getNum();
-            String num2 = shaVo2.getNum();
 
-            List<Integer> list1 = SscUtils.str2list(num1);
-            List<Integer> list2 = SscUtils.str2list(num2);
+            List<Integer> list1 = null;
+            List<Integer> list2 = null;
+
+            if (shaVo1 != null) {
+                String num1 = shaVo1.getNum();
+                list1 = SscUtils.str2list(num1);
+            } else {
+                list1 = Lists.newArrayList();
+            }
+            if (shaVo2 != null) {
+                String num2 = shaVo2.getNum();
+                list2 = SscUtils.str2list(num2);
+            } else {
+                list2 = Lists.newArrayList();
+            }
 
             List<Integer> listAllNum = Lists.newArrayList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9);
             listAllNum.removeAll(list1);
@@ -230,6 +241,41 @@ public class AnalyzeSvcImpl implements AnalyzeSvc {
         }
         List<String> list = tmpMap.entrySet().stream().sorted(Comparator.comparing(e -> e.getValue())).map(e -> e.getKey() + "-" + e.getValue()).collect(Collectors.toList());
         return list;
+    }
+
+    public List<String> numCountList(Date date, String no, String endNo, Boolean all) {
+        String url = "http://39.108.143.25:8080/stock/cqssc/getCurrentDay.sc";
+
+        if (StringUtils.isBlank(no)) {
+            no = "001";
+        }
+        if (StringUtils.isBlank(endNo)) {
+            endNo = "120";
+        }
+
+        if (all == null) {
+            all = false;
+        }
+
+        Boolean ifAll = all;
+        Integer comNo = Integer.valueOf(no);
+        Integer tmpEndNo = Integer.valueOf(endNo);
+
+        Map<String, Object> params = new HashMap<>(1);
+        params.put("selectDay", DateFormatUtils.format(date, "yyyyMMdd"));
+        List<ShaVo> datas = HttpUtils.postList(url, params, ShaVo.class);
+        datas = datas.stream()
+                .filter(e -> (Integer.valueOf(e.getNo()) >= comNo) && (Integer.valueOf(e.getNo()) <= tmpEndNo))
+                .map(e -> {
+                    if (ifAll) {
+                        return e;
+                    } else {
+                        e.setNum(SscUtils.create3After(e.getNum()));
+                        return e;
+                    }
+                })
+                .collect(Collectors.toList());
+        return null;
     }
 
     public static void main(String[] args) {
