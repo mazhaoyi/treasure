@@ -31,9 +31,12 @@ public class SpringConfig extends SpringConfigBase {
         // zu资源
         registry.addResourceHandler("zu.html")
                 .addResourceLocations("classpath:/templates/zu.html");
-        // zu资源
+        // 杀号资源
         registry.addResourceHandler("sha.html")
                 .addResourceLocations("classpath:/templates/sha.html");
+        // 组60资源
+        registry.addResourceHandler("60.html")
+                .addResourceLocations("classpath:/templates/60.html");
 
     }
 

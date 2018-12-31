@@ -31,7 +31,7 @@ public class TicketAct {
 
     @GetMapping("/dataToDb")
     public Object dataToDb() {
-        LocalDate startDate = LocalDate.now().minusDays(10);
+        LocalDate startDate = LocalDate.now().minusDays(15);
 
         LocalDate endDate = LocalDate.now();
         // 最早2016-2-3，过年不开

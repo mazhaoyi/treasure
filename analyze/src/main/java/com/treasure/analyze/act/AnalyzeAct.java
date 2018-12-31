@@ -3,6 +3,7 @@ package com.treasure.analyze.act;
 import com.treasure.analyze.svc.AnalyzeSvc;
 import com.treasure.analyze.vo.AnalyzeVo;
 import com.treasure.analyze.vo.ShaVo;
+import com.treasure.analyze.vo.Zu60Vo;
 import com.treasure.common.util.ResultUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,15 @@ public class AnalyzeAct {
     @GetMapping(value = "/mapallnum")
     public Object mapallnum(Date date, String no, String endNo, Boolean all) {
         List<String> list = analyzeSvc.mapAllNum(date, no, endNo, all);
+        return ResultUtils.success(list);
+    }
+
+    @GetMapping(value = "/zu60")
+    public Object zu60(Date date, Integer num) {
+        if (num == null) {
+            num = 3;
+        }
+        List<Zu60Vo> list = analyzeSvc.getZu60List(date, num);
         return ResultUtils.success(list);
     }
 }

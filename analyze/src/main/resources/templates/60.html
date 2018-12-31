@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>组60</title>
+    <style type="text/css">
+        #tbId {
+            border-collapse: collapse;
+        }
+        #tbId td {
+            width: 180px;
+            height: 25px;
+            border: 1px solid black;
+        }
+        input[type = button] {
+            width: 60px;
+            height: 40px;
+        }
+    </style>
+    <script src="static/js/jquery-3.3.1.min.js" type="application/javascript"></script>
+    <script type="application/javascript">
+        // 自动加载JavaScript
+        $(function () {
+            initTable();
+
+            var today = new Date();
+            $('#showDate').val(today.toLocaleDateString());
+            initList();
+        });
+
+        function reloadData() {
+            $('#tbId td').html('');
+            $('#tbId td').css('color', '');
+            initList();
+        }
+
+        /**
+         * 初始化表格
+         */
+        function initTable() {
+            for (var i = 0; i < 20; i++) {
+                var $tr = $('<tr id="tr_' + i + '"></tr>');
+                $('#tbId').append($tr);
+                for (var j = 0; j < 6; j++) {
+                    var tdId = (i + 1) + 20*j;
+                    $tr.append('<td id="td_' + tdId + '"></td>');
+                }
+            }
+        }
+        /**
+         * 初始化表格数据
+         */
+        function initList() {
+            var date = $('#showDate').val();
+            var num = $('#hidNum').val();
+            $.ajax({
+                type: 'GET',
+                dataType: 'json',
+                url: '/analyze/zu60',
+                contentType: 'application/json;charset=utf-8',
+                data: {'date':date, 'num':num},
+                success: function (data) {
+                    if (data == null) {
+                        alert('没有响应结果！');
+                        return;
+                    }
+                    if (data.code != 200) {
+                        alert(data.message);
+                        return;
+                    }
+                    var zu60Vos = data.data;
+                    for (var i = 0; i < zu60Vos.length; i++) {
+                        var zu60Vo = zu60Vos[i];
+                        var num = zu60Vo.num;
+                        var no = zu60Vo.no;
+                        var if60 = zu60Vo.if60;
+                        var $td = $('#td_' + parseInt(no));
+                        if (if60) {
+
+                            $td.css('color', 'red');
+                        }
+                        $td.html(no + ' - ' + num);
+                    }
+                }
+            });
+        }
+
+        /**
+         * 改变数字
+         * @param but
+         */
+        function changeNum(but) {
+            var $but = $(but);
+            $but.css('background-color', '');
+            $but.parent().children().css('background-color', '');
+            $but.css('background-color', '#0aa82f');
+            var butNum = $but.val();
+            $('#hidNum').val(butNum);
+            reloadData();
+        }
+        function changeDay(dayNum) {
+            var showDate = $('#showDate').val();
+            var pd = new Date(showDate);
+            pd.setDate(pd.getDate() + dayNum);
+            $('#showDate').val(pd.toLocaleDateString());
+            reloadData();
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <button style="width: 60px;height: 40px;" onclick="changeDay(-1)">前一天</button>
+        <button style="width: 60px;height: 40px;" onclick="changeDay(1)">后一天</button>
+        <input id="showDate" type="text" style="width: 108px;" value=""/>
+        <input type="hidden" value="3" id="hidNum"/>
+        <input type="button" value="0" onclick="changeNum(this)"/>
+        <input type="button" value="1" onclick="changeNum(this)"/>
+        <input type="button" value="2" onclick="changeNum(this)"/>
+        <input type="button" style="background-color: #0aa82f;" value="3" onclick="changeNum(this)"/>
+        <input type="button" value="4" onclick="changeNum(this)"/>
+        <input type="button" value="5" onclick="changeNum(this)"/>
+        <input type="button" value="6" onclick="changeNum(this)"/>
+        <input type="button" value="7" onclick="changeNum(this)"/>
+        <input type="button" value="8" onclick="changeNum(this)"/>
+        <input type="button" value="9" onclick="changeNum(this)"/>
+    </div>
+    <div id="outDiv">
+        <table id="tbId"></table>
+    </div>
+</body>
+</html>

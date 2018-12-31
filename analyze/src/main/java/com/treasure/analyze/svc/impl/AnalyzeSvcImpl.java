@@ -5,6 +5,7 @@ import com.google.common.collect.Maps;
 import com.treasure.analyze.svc.AnalyzeSvc;
 import com.treasure.analyze.vo.AnalyzeVo;
 import com.treasure.analyze.vo.ShaVo;
+import com.treasure.analyze.vo.Zu60Vo;
 import com.treasure.common.util.HttpUtils;
 import com.treasure.common.util.SscUtils;
 import com.treasure.common.vo.Point;
@@ -241,6 +242,35 @@ public class AnalyzeSvcImpl implements AnalyzeSvc {
         }
         List<String> list = tmpMap.entrySet().stream().sorted(Comparator.comparing(e -> e.getValue())).map(e -> e.getKey() + "-" + e.getValue()).collect(Collectors.toList());
         return list;
+    }
+
+    @Override
+    public List<Zu60Vo> getZu60List(Date date, Integer num) {
+        Map<String, Object> params = null;
+        if (date != null) {
+            params = new HashMap<>(1);
+            params.put("selectDay", DateFormatUtils.format(date, "yyyyMMdd"));
+        }
+
+        List<Zu60Vo> datas = HttpUtils.postList(dataUrl, params, Zu60Vo.class);
+        if (CollectionUtils.isEmpty(datas)) {
+            return datas;
+        }
+        datas = datas.stream().filter(e -> StringUtils.isNotBlank(e.getNum())).collect(Collectors.toList());
+        datas = datas.stream().map(e -> {
+            e.setIf60(false);
+            String numStr = e.getNum();
+            boolean ifZu60 = SscUtils.checkZu60(numStr);
+
+            if (ifZu60) {
+                Integer zu60CountNum = SscUtils.zu60CountNum(numStr);
+                if (num.equals(zu60CountNum)) {
+                    e.setIf60(true);
+                }
+            }
+            return e;
+        }).collect(Collectors.toList());
+        return datas;
     }
 
     public List<String> numCountList(Date date, String no, String endNo, Boolean all) {

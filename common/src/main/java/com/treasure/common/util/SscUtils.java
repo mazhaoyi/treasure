@@ -146,7 +146,25 @@ public class SscUtils {
     }
 
     /**
-     * 查询一个字符串，每个字符在字符串中，重复的数目，去重，倒序
+     * 组60，重复的数字
+     * @param str
+     * @return
+     */
+    public static Integer zu60CountNum(String str) {
+        // 既然判断组60，那么这个字符串一定是一个组60，这个就不用再判断了
+        for (int i = 0; i < str.length(); i++) {
+            char c = str.charAt(i);
+            int count = StringUtils.countMatches(str, c);
+            if (count == 2) {
+                String resStr = String.valueOf(c);
+                return Integer.valueOf(resStr);
+            }
+        }
+        return null;
+    }
+
+    /**
+     * 查询一个字符串，每个字符在字符串中，重复的数目，倒序
      * eg: str=aaabc 那么 return = [3, 1, 1];
      * @param str
      * @return
@@ -173,6 +191,32 @@ public class SscUtils {
      */
     public static final String frontZero(int num, int length) {
         return String.format("%0" + length + "d", num);
+    }
+
+    /**
+     * 判断组60
+     * @param str
+     * @return
+     */
+    public static final boolean checkZu60(String str) {
+        // 字符长度
+        int length = 5;
+        // 如果长度!=5，就不是组60
+        if (StringUtils.length(str) != length) {
+            return false;
+        }
+        List<Integer> list = countChar(str);
+        // [2, 2, 1, 1, 1]
+        if (
+                list.get(0) == 2
+                        && list.get(1) == 2
+                        && list.get(2) == 1
+                        && list.get(3) == 1
+                        && list.get(4) == 1
+        ) {
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -355,9 +399,11 @@ public class SscUtils {
     }
 
     public static void main(String[] args) {
-        String str = "12315";
+        String str = "12335";
 
-        System.out.println(str2list(str));
+        System.out.println(zu60CountNum(str));
+
+//        System.out.println(str2list(str));
         /*System.out.println(str);
         System.out.println(SscUtils.checkZu30(str) + "组30");
         System.out.println(SscUtils.checkZu20(str) + "组20");

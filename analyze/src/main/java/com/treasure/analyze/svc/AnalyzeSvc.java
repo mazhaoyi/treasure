@@ -3,6 +3,7 @@ package com.treasure.analyze.svc;
 
 import com.treasure.analyze.vo.AnalyzeVo;
 import com.treasure.analyze.vo.ShaVo;
+import com.treasure.analyze.vo.Zu60Vo;
 
 import java.util.Date;
 import java.util.List;
@@ -33,4 +34,12 @@ public interface AnalyzeSvc {
      * @return
      */
     List<String> mapAllNum(Date date, String no, String endNo, Boolean all);
+
+    /**
+     * 获取组60列表
+     * @param date
+     * @param num
+     * @return
+     */
+    List<Zu60Vo> getZu60List(Date date, Integer num);
 }
