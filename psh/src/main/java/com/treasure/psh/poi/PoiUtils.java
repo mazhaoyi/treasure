@@ -6,9 +6,9 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
@@ -297,40 +297,6 @@ public class PoiUtils {
 
     }
 
-    /*public static void main(String[] args) throws Exception {
-        Path path = Paths.get("E:", "psh", "结算", "248030623-2018-11-22.csv");
-        List<CSVRecord> list = csvRead(Charset.forName("GBK"), path, null);
-        List<String[]> contentList = new ArrayList<>();
-        for (CSVRecord r : list) {
-            int size = r.size();
-            String[] contents = new String[size];
-            for (int i = 0; i < size; i++) {
-                String rv = r.get(i);
-                contents[i] = rv;
-            }
-            contentList.add(contents);
-        }
-        Path resPath = Paths.get("E:", "psh", "结算", "res", "test.xls");
-        writeExcel(resPath, null, contentList);
-    }*/
-
-    /*public static void main(String[] args) throws Exception {
-        Path path = Paths.get("E:", "psh", "结算", "248230032-2018-11-23.csv");
-        List<CSVRecord> list = csvRead(Charset.forName("GBK"), path, null);
-        List<String[]> contentList = new ArrayList<>();
-        for (CSVRecord r : list) {
-            int size = r.size();
-            String[] contents = new String[size];
-            for (int i = 0; i < size; i++) {
-                String rv = r.get(i);
-                contents[i] = rv;
-            }
-            contentList.add(contents);
-        }
-        Path resPath = Paths.get("E:", "psh", "结算", "res", "test.csv");
-        writeCsv(null, contentList, resPath.toString());
-    }*/
-
     /**
      * 获取项目所在文件夹的绝对路径
      * @return
@@ -350,7 +316,71 @@ public class PoiUtils {
         return path;
     }
 
+    /*public static void main(String[] args) throws Exception {
+        Path path = Paths.get("E:", "psh", "结算", "248030623-2018-11-22.csv");
+        List<CSVRecord> list = csvRead(Charset.forName("GBK"), path, null);
+        List<String[]> contentList = new ArrayList<>();
+        for (CSVRecord r : list) {
+            int size = r.size();
+            String[] contents = new String[size];
+            for (int i = 0; i < size; i++) {
+                String rv = r.get(i);
+                contents[i] = rv;
+            }
+            contentList.add(contents);
+        }
+        Path resPath = Paths.get("E:", "psh", "结算", "res", "test.xls");
+        writeExcel(resPath, null, contentList);
+    }*/
+
     public static void main(String[] args) throws Exception {
-        System.out.println(getCurrentDirPath());
+        String propPath = getCurrentDirPath();
+        Properties prop = new Properties();
+        // 使用ClassLoader加载properties配置文件生成对应的输入流
+        InputStream in = null;
+        try {
+            in = Files.newInputStream(Paths.get(propPath + "/" + "psh.properties"));
+            prop.load(in);
+            String fromPath = prop.getProperty("fromPath");
+            String toPath = prop.getProperty("toPath");
+            String toName = prop.getProperty("toName");
+
+            Files.walk(Paths.get(fromPath)).filter(e -> e.toFile().isFile()).forEach(e -> {
+                List<CSVRecord> list = null;
+                try {
+                    list = csvRead(Charset.forName("GBK"), e, null);
+                } catch (Exception e1) {
+                    e1.printStackTrace();
+                }
+                if (CollectionUtils.isEmpty(list)) {
+                    return;
+                }
+                List<String[]> contentList = new ArrayList<>();
+                for (CSVRecord r : list) {
+                    int size = r.size();
+                    String[] contents = new String[size];
+                    for (int i = 0; i < size; i++) {
+                        String rv = r.get(i);
+                        contents[i] = rv;
+                    }
+                    contentList.add(contents);
+                }
+                Path resPath = Paths.get(toPath + "/" + toName);
+                try {
+                    writeCsv(null, contentList, resPath.toString());
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            });
+        } finally {
+            if (in != null) {
+                in.close();
+            }
+        }
+
+        System.out.println("完成！按任意键结束！");
+        Scanner sc = new Scanner(System.in);
+        System.out.println(sc.nextLine());
     }
+
 }
