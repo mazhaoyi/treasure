@@ -6,6 +6,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.util.*;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -335,50 +336,40 @@ public class PoiUtils {
 
     public static void main(String[] args) throws Exception {
         String propPath = getCurrentDirPath();
-        Properties prop = new Properties();
         // 使用ClassLoader加载properties配置文件生成对应的输入流
-        InputStream in = null;
-        try {
-            in = Files.newInputStream(Paths.get(propPath + "/" + "psh.properties"));
-            prop.load(in);
-            String fromPath = prop.getProperty("fromPath");
-            String toPath = prop.getProperty("toPath");
-            String toName = prop.getProperty("toName");
+        String fromPath = propPath + "/源文件";
+        String toPath = propPath + "/目标文件";
+        String toName = LocalDate.now().toString() + ".csv";
 
-            Files.walk(Paths.get(fromPath)).filter(e -> e.toFile().isFile()).forEach(e -> {
-                List<CSVRecord> list = null;
-                try {
-                    list = csvRead(Charset.forName("GBK"), e, null);
-                } catch (Exception e1) {
-                    e1.printStackTrace();
-                }
-                if (CollectionUtils.isEmpty(list)) {
-                    return;
-                }
-                List<String[]> contentList = new ArrayList<>();
-                for (CSVRecord r : list) {
-                    int size = r.size();
-                    String[] contents = new String[size];
-                    for (int i = 0; i < size; i++) {
-                        String rv = r.get(i);
-                        contents[i] = rv;
-                    }
-                    contentList.add(contents);
-                }
-                Path resPath = Paths.get(toPath + "/" + toName);
-                try {
-                    writeCsv(null, contentList, resPath.toString());
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            });
-        } finally {
-            if (in != null) {
-                in.close();
+        Files.walk(Paths.get(fromPath)).filter(e -> e.toFile().isFile()).forEach(e -> {
+            List<CSVRecord> list = null;
+            try {
+                list = csvRead(Charset.forName("GBK"), e, null);
+            } catch (Exception e1) {
+                e1.printStackTrace();
             }
-        }
+            if (CollectionUtils.isEmpty(list)) {
+                return;
+            }
+            List<String[]> contentList = new ArrayList<>();
+            for (CSVRecord r : list) {
+                int size = r.size();
+                String[] contents = new String[size];
+                for (int i = 0; i < size; i++) {
+                    String rv = r.get(i);
+                    contents[i] = rv;
+                }
+                contentList.add(contents);
+            }
+            Path resPath = Paths.get(toPath + "/" + toName);
+            try {
+                writeCsv(null, contentList, resPath.toString());
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+        });
 
-        System.out.println("完成！按任意键结束！");
+        System.out.println("完成！按回车结束！");
         Scanner sc = new Scanner(System.in);
         System.out.println(sc.nextLine());
     }
