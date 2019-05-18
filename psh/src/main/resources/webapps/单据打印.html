@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>单据打印</title>
+    <link rel="stylesheet" type="text/css" href="css/print.css"/>
+
+    <script src="js/jquery-1.4.4.min.js"></script>
+    <script src="js/papaparse.js"></script>
+    <script src="js/jschardet.js"></script>
+    <!--[if lte IE 9]>
+    <script src="js/base64.js"></script>
+    <![endif]-->
+
+    <script src="js/csv2arr.js"></script>
+    <script language="JavaScript" src="js/jquery.jqprint-0.3.js"></script>
+    <script language="JavaScript">
+        // 打印预览
+        function print() {
+            $("#print").jqprint();
+        }
+
+        // 生成打印格式总入口
+        function csv(){
+            $("input[name=csvfile]").csv2arr(function(arr){
+                // 循环整个CSV文件，获得每一行信息
+                // TODO 这里请组装需要打印的页面的信息
+                $.each( arr, function(i, line){
+                    // 循环每一行信息，获取每一个单元格信息
+                    $.each( line, function(i, cell){
+                        $('#print').append(cell);
+                    });
+                });
+            });
+        }
+
+        // 组装打印主体
+        function createBodyMain() {
+            // 获取模板
+            var bodyMainObj = $.ajax({url: "model/txt", async: false});
+            // 获取模板内容
+            var bodayMainTxt = bodyMainObj.responseText;
+            // 模板内容转换成jQuery对象
+            var jqBodyMain = $(bodayMainTxt);
+
+            $('#print').append(jqBodyMain);
+        }
+    </script>
+</head>
+<body>
+    <h2>1，请选择CSV文件：</h2>
+    <input type="file" name="csvfile" />
+    <button onclick="createBodyMain()" style="border: 1px black solid;height: 20px;width: 130px;">2，点击生成打印格式</button>
+    <button onclick="print()" style="border: 1px black solid;height: 20px;width: 130px;">3，点击打印预览</button>
+    <div id="print"></div>
+</body>
+</html>

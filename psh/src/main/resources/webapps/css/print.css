@@ -1,0 +1,140 @@
+*{
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+ul,li{
+    list-style: none;
+}
+.box{
+    width: 800px;
+    margin: 20px auto;
+    position: relative;
+    border: 1px solid #333;
+}
+.print{
+    width: 700px;
+    margin-left: 50px;
+    margin: 10px auto;
+}
+table{
+    border-collapse:collapse;
+}
+th,td{
+    padding: 0;
+}
+
+.tab1 thead{
+    background-color: #dbe3fa;
+    font:16px/30px "微软雅黑";
+}
+.tab1 thead tr th{
+    height: 50px;
+    border: 1px solid #333;
+}
+.tab1 td{
+    height: 30px;
+    border: 1px solid #333;
+    font:12px/28px "微软雅黑";
+    text-align: center;
+}
+.tab1 .item{
+    width: 80px;
+}
+.tab1 .brand{
+    width: 179px;
+}
+.tab1 .number{
+    width: 94px;
+}
+.tab1 .kong{
+    width: 3px;
+}
+.tab2 thead tr th{
+    width: 160px;
+    height: 21px;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+    border-right: 1px solid #333;
+    background-color: #dbe3fa;
+}
+.tab2 tbody tr .data{
+    height: 21px;
+    background-color: #dbe3fa;
+}
+.tab2 td{
+    height: 30px;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+    border-right: 1px solid #333;
+    font:12px/28px "微软雅黑";
+    text-align: center;
+}
+.tab1,.tab2{
+    float: left;
+}
+.tab1 tbody tr:last-child,.tab2 tbody tr:last-child{
+    height: 50px;
+}
+.tab1 tbody tr:last-child td{
+    font-size: 14px;
+    color: #000;
+    line-height: 24px;
+    letter-spacing: 6px;
+}
+.title{
+    margin-top: 20px;
+}
+.title div{
+    width: 200px;
+    text-align: center;
+    border-bottom: 1px solid #333;
+    margin: 10px auto;
+    padding-bottom: 2px;
+}
+.title div h2{
+    width: 200px;
+    border-bottom: 1px solid #333;
+    text-align: center;
+    padding-bottom: 5px;
+    font-size: 28px;
+    font-weight: 600;
+    color: #000;
+    line-height: 26px;
+    letter-spacing: 12px;
+}
+.title p{
+    position: absolute;
+    right: 64px;
+    top: 25px;
+    font-size: 24px;
+    color: #cc0000;
+}
+.sub_title h3{
+    width: 100px;
+    font-size: 18px;
+    color: #333;
+    float: left;
+    margin-left: 50px;
+}
+.sub_title p{
+    font-size: 18px;
+    color: #333;
+    float: right;
+    margin-right: 54px;
+    letter-spacing: 3px;
+}
+ul{
+    width: 700px;
+    margin:0 auto 20px;
+}
+ul li{
+    float: left;
+    width: 25%;
+}
+.clearfix:after{
+    height: 0;
+    content: '';
+    clear: both;
+    display: block;
+}
