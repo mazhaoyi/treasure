@@ -26,20 +26,16 @@
         function csv(){
             $("input[name=csvfile]").csv2arr(function(arr){
                 // 循环整个CSV文件，获得每一行信息
-                // TODO 这里请组装需要打印的页面的信息
                 $.each( arr, function(i, line){
-                    // 循环每一行信息，获取每一个单元格信息
-                    $.each( line, function(i, cell){
-                        $('#print').append(cell);
-                    });
+                    jointLabel(line);
                 });
             });
         }
 
-        // 组装打印主体
-        function createBodyMain() {
+        // 返回组装打印主体
+        function test() {
             // 获取模板
-            var bodyMainObj = $.ajax({url: "model/txt", async: false});
+            var bodyMainObj = $.ajax({url: "model/bodyMain", async: false});
             // 获取模板内容
             var bodayMainTxt = bodyMainObj.responseText;
             // 模板内容转换成jQuery对象
@@ -47,12 +43,140 @@
 
             $('#print').append(jqBodyMain);
         }
+
+        // 格式化日期
+        function exchangeDate(date) {
+            if (date == null || date.length == 0) {
+                return '';
+            }
+            // 先截取前8位做为备份
+            var subsDate = date.substr(0, 8);
+            // 年
+            var year = '';
+            // 月
+            var month = '';
+            // 日
+            var day = '';
+
+            date = new Date(date);
+            // 无效的日期格式，手动截取字符串
+            if (date.toLocaleDateString() == 'Invalid Date') {
+                year = subsDate.substr(0, 4);
+                month = subsDate.substr(4, 2);
+                day = subsDate.substr(6, 2);
+
+                return year + '年' + month + '月' + day + '日';
+            // 有效的日期格式
+            } else {
+                year = date.getFullYear();
+                month = date.getMonth() + 1;
+                day = date.getDate();
+                if (month < 10) {
+                    month = '0' + month;
+                }
+                if (day < 10) {
+                    day = '0' + day;
+                }
+                return year + "年" + month + "月" + day + "日";
+            }
+        }
+
+        // 拼接打印标签
+        function jointLabel(line) {
+            // 获取要打印的主体信息,jquery对象
+            var bodayMainTxt = createBodyMain();
+            // 编号
+            var sno = generatorSno();
+            // 名称
+            var name = line[3];
+            // 日期
+            var date = exchangeDate(line[0]);
+            alert(date);
+            // 品名及规格
+            var gg = '';
+            // 百万a
+            var rmbBaiwa = '';
+            // 百万b
+            var rmbBanwb = '';
+            // 十万a
+            var rmbShiwa = '';
+            // 十万b
+            var rmbShiwb = '';
+            // 万a
+            var rmbWana = '';
+            // 万b
+            var rmbWanb = ''
+            // 千a
+            var rmbQiana = '';
+            // 千b
+            var rmbQianb = '';
+            // 百a
+            var rmbBaia = '';
+            // 百b
+            var rmbBaib = '';
+            // 十a
+            var rmbShia = '';
+            // 十b
+            var rmbShib = '';
+            // 元a
+            var rmbYuana = '';
+            // 元b
+            var rmbYuanb = '';
+            // 角a
+            var rmbJiaoa = '';
+            // 角b
+            var rmbJiaob = '';
+            // 分a
+            var rmbFena = '';
+            // 分b
+            var rmbFenb = '';
+
+            // r 百万
+            var rbaiw = '';
+            // r 十万
+            var rshiw = '';
+            // r 万
+            var rwan = '';
+            // r 千
+            var rqian = '';
+            // r 百
+            var rbai = '';
+            // r 十
+            var rshi = '';
+            // r 元
+            var ryuan = '';
+            // r 角
+            var rjiao = '';
+            // r 分
+            var rfen = '';
+        }
+
+        // 返回组装打印主体，jQuery对象
+        function createBodyMain() {
+            // 获取模板
+            var bodyMainObj = $.ajax({url: "model/bodyMain", async: false});
+            // 获取模板内容
+            var bodayMainTxt = bodyMainObj.responseText;
+            // 模板内容转换成jQuery对象
+            var jqBodyMain = $(bodayMainTxt);
+
+            return jqBodyMain;
+        }
+
+        function generatorSno() {
+            // 获取编号，并写入新编号
+            var nowNum = $.ajax({url: "model/nowNum", async: false});
+            // 获取编号内容
+            var res = nowNum.responseText;
+            return res;
+        }
     </script>
 </head>
 <body>
     <h2>1，请选择CSV文件：</h2>
     <input type="file" name="csvfile" />
-    <button onclick="createBodyMain()" style="border: 1px black solid;height: 20px;width: 130px;">2，点击生成打印格式</button>
+    <button onclick="csv()">测试数据</button>
+    <button onclick="test()" style="border: 1px black solid;height: 20px;width: 130px;">2，点击生成打印格式</button>
     <button onclick="print()" style="border: 1px black solid;height: 20px;width: 130px;">3，点击打印预览</button>
     <div id="print"></div>
 </body>

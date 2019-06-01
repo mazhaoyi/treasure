@@ -4,12 +4,12 @@
         <div>
             <h2>收款数据</h2>
         </div>
-        <p id="id_sno">0086661</p>
+        <p atr="atr_sno">0086661</p>
     </div>
     <div class="sub_title clearfix">
         <h3>客户名称：</h3>
-        <span id="id_name">张三</span>
-        <p id="id_date">2019年4月22日</p>
+        <span atr="atr_name">张三</span>
+        <p atr="atr_date">2019年4月22日</p>
     </div>
     <div class="print clearfix">
         <table class="tab1">
@@ -26,7 +26,7 @@
             <tbody>
             <tr>
                 <td></td>
-                <td id="id_gg">测试品名及规格</td>
+                <td atr="atr_gg">测试品名及规格</td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -67,7 +67,7 @@
             <tr class="total">
                 <td class="total">合计 <p>人民币</p> </td>
                 <td colspan="4">
-                    &nbsp;&nbsp;<span id="id_rmb_baiwa">&nbsp;</span><span id="id_rmb_baiwb">&nbsp;</span>佰<span id="id_rmb_shiwa">￥</span><span id=""id_rmb_shiwb>壹</span>拾<span id="id_rmb_wana">&nbsp;</span><span id="id_rmb_wanb">&nbsp;</span>万<span id="id_rmb_qiana">&nbsp;</span><span id="id_rmb_qianb">&nbsp;</span>仟<span id="id_rmb_baia">&nbsp;</span><span id="id_rmb_baib">&nbsp;</span>佰<span id="id_rmb_shia">&nbsp;</span><span id="id_rmb_shib">&nbsp;</span>拾<span id="id_rmb_yuana">&nbsp;</span><span id="id_rmb_yuanb">&nbsp;</span>元<span id="id_rmb_jiaoa">&nbsp;</span><span id="id_rmb_jiaob">&nbsp;</span>角<span id="id_rmb_fena">&nbsp;</span><span id="id_rmb_fenb">&nbsp;</span>分</td>
+                    &nbsp;&nbsp;<span atr="atr_rmb_baiwa">&nbsp;</span><span atr="atr_rmb_baiwb">&nbsp;</span>佰<span atr="atr_rmb_shiwa">￥</span><span atr=""atr_rmb_shiwb>壹</span>拾<span atr="atr_rmb_wana">&nbsp;</span><span atr="atr_rmb_wanb">&nbsp;</span>万<span atr="atr_rmb_qiana">&nbsp;</span><span atr="atr_rmb_qianb">&nbsp;</span>仟<span atr="atr_rmb_baia">&nbsp;</span><span atr="atr_rmb_baib">&nbsp;</span>佰<span atr="atr_rmb_shia">&nbsp;</span><span atr="atr_rmb_shib">&nbsp;</span>拾<span atr="atr_rmb_yuana">&nbsp;</span><span atr="atr_rmb_yuanb">&nbsp;</span>元<span atr="atr_rmb_jiaoa">&nbsp;</span><span atr="atr_rmb_jiaob">&nbsp;</span>角<span atr="atr_rmb_fena">&nbsp;</span><span atr="atr_rmb_fenb">&nbsp;</span>分</td>
                 <td></td>
             </tr>
             </tbody>
@@ -91,15 +91,15 @@
                 <td class="data">分</td>
             </tr>
             <tr>
-                <td id="id_r_banw">￥</td>
-                <td id="id_r_shiw">2</td>
-                <td id="id_r_wan">0</td>
-                <td id="id_r_qian">0</td>
-                <td id="id_r_bai">0</td>
-                <td id="id_r_shi">0</td>
-                <td id="id_r_yuan">0</td>
-                <td id="id_r_jiao">0</td>
-                <td id="id_r_fen">0</td>
+                <td atr="atr_r_banw">￥</td>
+                <td atr="atr_r_shiw">2</td>
+                <td atr="atr_r_wan">0</td>
+                <td atr="atr_r_qian">0</td>
+                <td atr="atr_r_bai">0</td>
+                <td atr="atr_r_shi">0</td>
+                <td atr="atr_r_yuan">0</td>
+                <td atr="atr_r_jiao">0</td>
+                <td atr="atr_r_fen">0</td>
             </tr>
             <tr>
                 <td></td>
@@ -162,7 +162,7 @@
     </div>
     <ul class="clearfix">
         <li>填票：</li>
-        <li>收款人：<span id="id_receiver">王老五</span></li>
+        <li>收款人：<span atr="atr_receiver">王老五</span></li>
         <li>会计：</li>
         <li>收款单位：</li>
     </ul>
