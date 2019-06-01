@@ -30,6 +30,10 @@
                 $.each( arr, function(i, line){
                     // 组装要打印的标签
                     var $bodyMainTxt = jointLabel(line);
+                    // 偶数页，打印分页
+                    if (i % 2 != 0) {
+                        $bodyMainTxt.css('page-break-after', 'always');
+                    }
                     $('#print').append($bodyMainTxt);
                 });
             });
@@ -93,24 +97,23 @@
                 var v = money.substr(i, 1);
                 // 当前位置的大写的值
                 var vbig = strOutUnit.substr(v, 1);
-                // a属性
-                var atra = 'atr_rmb_a' + j;
+                // 大写羊角属性
+                var atrYj = 'atr_rmb_b' + (j + 1);
                 // b属性
                 var atrb = 'atr_rmb_b' + j;
+                // 小写羊角属性
+                var attrYj = 'atr_r_' + (j + 1);
                 // 小写属性
                 var atrr = 'atr_r_' + j;
 
                 if (i == 0) {
                     // 人民币+大写
-                    $bodyMainTxt.find('[atr=' + atra + ']').html('¥');
+                    $bodyMainTxt.find('[atr=' + atrYj + ']').html('¥');
                     $bodyMainTxt.find('[atr=' + atrb + ']').html(vbig);
                     // 人民币+小写
-                    $bodyMainTxt.find('[atr=' + atrr + ']').html('¥' + v);
+                    $bodyMainTxt.find('[atr=' + attrYj + ']').html('¥');
+                    $bodyMainTxt.find('[atr=' + atrr + ']').html(v);
                 } else {
-                    // 偶数页，打印分页
-                    if (i % 2 == 0) {
-                        $bodyMainTxt.css('page-break-after', 'always');
-                    }
                     // 大写
                     $bodyMainTxt.find('[atr=' + atrb + ']').html(vbig);
                     // 小写
