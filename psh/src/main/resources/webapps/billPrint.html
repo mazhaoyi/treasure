@@ -22,6 +22,7 @@
             $("#print").jqprint();
         }
 
+
         // 生成打印格式总入口
         function csv(){
             $("input[name=csvfile]").csv2arr(function(arr){
@@ -87,7 +88,7 @@
             }
 
             for (var i = 0; i < money.length; i++) {
-                var j = money.length - i;
+                var j = money.length - i - 1;
                 // 当前位的值
                 var v = money.substr(i, 1);
                 // 当前位置的大写的值
@@ -99,13 +100,17 @@
                 // 小写属性
                 var atrr = 'atr_r_' + j;
 
-                if (i = 0) {
+                if (i == 0) {
                     // 人民币+大写
                     $bodyMainTxt.find('[atr=' + atra + ']').html('¥');
                     $bodyMainTxt.find('[atr=' + atrb + ']').html(vbig);
                     // 人民币+小写
                     $bodyMainTxt.find('[atr=' + atrr + ']').html('¥' + v);
                 } else {
+                    // 偶数页，打印分页
+                    if (i % 2 == 0) {
+                        $bodyMainTxt.css('page-break-after', 'always');
+                    }
                     // 大写
                     $bodyMainTxt.find('[atr=' + atrb + ']').html(vbig);
                     // 小写
@@ -119,7 +124,7 @@
         // 拼接打印标签
         function jointLabel(line) {
             // 获取要打印的主体信息,jquery对象
-            var $bodyMainTxt = createBodyMain();
+            var $bodyMainTxt = initBodyMain();
             // 编号
             var sno = generatorSno();
             // 名称
@@ -136,8 +141,6 @@
                 // 去掉中间的逗号
                 money = money.replace(/[,]/g, '');
             }
-            // excel 数据
-            console.log(sno + ' ' + name + ' ' + date + ' ' + gg + ' ' + money + ' ');
             // 组装金钱标签
             $bodyMainTxt = joinMoney(money, $bodyMainTxt);
             // 组装编号
@@ -152,7 +155,7 @@
         }
 
         // 返回组装打印主体，jQuery对象
-        function createBodyMain() {
+        function initBodyMain() {
             // 获取模板
             var bodyMainObj = $.ajax({url: "model/bodyMain", async: false});
             // 获取模板内容

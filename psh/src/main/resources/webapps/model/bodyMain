@@ -1,5 +1,5 @@
 
-<div class="box" atr='atr_box' style="page-break-after:always;">
+<div class="box" atr='atr_box'>
     <div class="title clearfix">
         <div>
             <h2>收款数据</h2>
@@ -162,7 +162,7 @@
     </div>
     <ul class="clearfix">
         <li>填票：</li>
-        <li>收款人：<span atr="atr_receiver">王老五</span></li>
+        <li>收款人：<span atr="atr_receiver">姬会计</span></li>
         <li>会计：</li>
         <li>收款单位：</li>
     </ul>
