@@ -27,21 +27,11 @@
             $("input[name=csvfile]").csv2arr(function(arr){
                 // 循环整个CSV文件，获得每一行信息
                 $.each( arr, function(i, line){
-                    jointLabel(line);
+                    // 组装要打印的标签
+                    var $bodyMainTxt = jointLabel(line);
+                    $('#print').append($bodyMainTxt);
                 });
             });
-        }
-
-        // 返回组装打印主体
-        function test() {
-            // 获取模板
-            var bodyMainObj = $.ajax({url: "model/bodyMain", async: false});
-            // 获取模板内容
-            var bodayMainTxt = bodyMainObj.responseText;
-            // 模板内容转换成jQuery对象
-            var jqBodyMain = $(bodayMainTxt);
-
-            $('#print').append(jqBodyMain);
         }
 
         // 格式化日期
@@ -81,74 +71,84 @@
             }
         }
 
+        // 组装金钱标签
+        function joinMoney(money, $bodyMainTxt) {
+            if (money == null || money == '') {
+                return $bodyMainTxt;
+            }
+
+            var strOutUnit = '零壹贰叁肆伍陆柒捌玖';
+
+            money += '00';
+            var pointPos = money.indexOf('.');
+            // 如果没有.点的话，那么整数+2位小数拼接就可以了
+            if (pointPos > 0) {
+                money = money.substring(0, pointPos) + money.substr(pointPos + 1, 2);
+            }
+
+            for (var i = 0; i < money.length; i++) {
+                var j = money.length - i;
+                // 当前位的值
+                var v = money.substr(i, 1);
+                // 当前位置的大写的值
+                var vbig = strOutUnit.substr(v, 1);
+                // a属性
+                var atra = 'atr_rmb_a' + j;
+                // b属性
+                var atrb = 'atr_rmb_b' + j;
+                // 小写属性
+                var atrr = 'atr_r_' + j;
+
+                if (i = 0) {
+                    // 人民币+大写
+                    $bodyMainTxt.find('[atr=' + atra + ']').html('¥');
+                    $bodyMainTxt.find('[atr=' + atrb + ']').html(vbig);
+                    // 人民币+小写
+                    $bodyMainTxt.find('[atr=' + atrr + ']').html('¥' + v);
+                } else {
+                    // 大写
+                    $bodyMainTxt.find('[atr=' + atrb + ']').html(vbig);
+                    // 小写
+                    $bodyMainTxt.find('[atr=' + atrr + ']').html(v);
+                }
+
+            }
+            return $bodyMainTxt;
+        }
+
         // 拼接打印标签
         function jointLabel(line) {
             // 获取要打印的主体信息,jquery对象
-            var bodayMainTxt = createBodyMain();
+            var $bodyMainTxt = createBodyMain();
             // 编号
             var sno = generatorSno();
             // 名称
             var name = line[3];
             // 日期
             var date = exchangeDate(line[0]);
-            alert(date);
             // 品名及规格
-            var gg = '';
-            // 百万a
-            var rmbBaiwa = '';
-            // 百万b
-            var rmbBanwb = '';
-            // 十万a
-            var rmbShiwa = '';
-            // 十万b
-            var rmbShiwb = '';
-            // 万a
-            var rmbWana = '';
-            // 万b
-            var rmbWanb = ''
-            // 千a
-            var rmbQiana = '';
-            // 千b
-            var rmbQianb = '';
-            // 百a
-            var rmbBaia = '';
-            // 百b
-            var rmbBaib = '';
-            // 十a
-            var rmbShia = '';
-            // 十b
-            var rmbShib = '';
-            // 元a
-            var rmbYuana = '';
-            // 元b
-            var rmbYuanb = '';
-            // 角a
-            var rmbJiaoa = '';
-            // 角b
-            var rmbJiaob = '';
-            // 分a
-            var rmbFena = '';
-            // 分b
-            var rmbFenb = '';
-
-            // r 百万
-            var rbaiw = '';
-            // r 十万
-            var rshiw = '';
-            // r 万
-            var rwan = '';
-            // r 千
-            var rqian = '';
-            // r 百
-            var rbai = '';
-            // r 十
-            var rshi = '';
-            // r 元
-            var ryuan = '';
-            // r 角
-            var rjiao = '';
-            // r 分
-            var rfen = '';
+            var gg = line[1];
+            // 金额
+            var money = line[2];
+            if (money != null && money != '') {
+                // 去掉空格
+                money = $.trim(money);
+                // 去掉中间的逗号
+                money = money.replace(/[,]/g, '');
+            }
+            // excel 数据
+            console.log(sno + ' ' + name + ' ' + date + ' ' + gg + ' ' + money + ' ');
+            // 组装金钱标签
+            $bodyMainTxt = joinMoney(money, $bodyMainTxt);
+            // 组装编号
+            $bodyMainTxt.find('[atr=atr_sno]').html(sno);
+            // 组装名称
+            $bodyMainTxt.find('[atr=atr_name]').html(name);
+            // 组装日期
+            $bodyMainTxt.find('[atr=atr_date]').html(date);
+            // 组装品名及规格
+            $bodyMainTxt.find('[atr=atr_gg]').html(gg);
+            return $bodyMainTxt;
         }
 
         // 返回组装打印主体，jQuery对象
@@ -158,9 +158,9 @@
             // 获取模板内容
             var bodayMainTxt = bodyMainObj.responseText;
             // 模板内容转换成jQuery对象
-            var jqBodyMain = $(bodayMainTxt);
+            var $jqBodyMain = $(bodayMainTxt);
 
-            return jqBodyMain;
+            return $jqBodyMain;
         }
 
         function generatorSno() {
@@ -175,8 +175,7 @@
 <body>
     <h2>1，请选择CSV文件：</h2>
     <input type="file" name="csvfile" />
-    <button onclick="csv()">测试数据</button>
-    <button onclick="test()" style="border: 1px black solid;height: 20px;width: 130px;">2，点击生成打印格式</button>
+    <button onclick="csv()" style="border: 1px black solid;height: 20px;width: 130px;">2，点击生成打印格式</button>
     <button onclick="print()" style="border: 1px black solid;height: 20px;width: 130px;">3，点击打印预览</button>
     <div id="print"></div>
 </body>

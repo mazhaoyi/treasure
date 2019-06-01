@@ -1,15 +1,15 @@
 
-<div class="box" style="page-break-after:always;">
+<div class="box" atr='atr_box' style="page-break-after:always;">
     <div class="title clearfix">
         <div>
             <h2>收款数据</h2>
         </div>
-        <p atr="atr_sno">0086661</p>
+        <p atr="atr_sno"></p>
     </div>
     <div class="sub_title clearfix">
         <h3>客户名称：</h3>
-        <span atr="atr_name">张三</span>
-        <p atr="atr_date">2019年4月22日</p>
+        <span atr="atr_name"></span>
+        <p atr="atr_date"></p>
     </div>
     <div class="print clearfix">
         <table class="tab1">
@@ -67,7 +67,7 @@
             <tr class="total">
                 <td class="total">合计 <p>人民币</p> </td>
                 <td colspan="4">
-                    &nbsp;&nbsp;<span atr="atr_rmb_baiwa">&nbsp;</span><span atr="atr_rmb_baiwb">&nbsp;</span>佰<span atr="atr_rmb_shiwa">￥</span><span atr=""atr_rmb_shiwb>壹</span>拾<span atr="atr_rmb_wana">&nbsp;</span><span atr="atr_rmb_wanb">&nbsp;</span>万<span atr="atr_rmb_qiana">&nbsp;</span><span atr="atr_rmb_qianb">&nbsp;</span>仟<span atr="atr_rmb_baia">&nbsp;</span><span atr="atr_rmb_baib">&nbsp;</span>佰<span atr="atr_rmb_shia">&nbsp;</span><span atr="atr_rmb_shib">&nbsp;</span>拾<span atr="atr_rmb_yuana">&nbsp;</span><span atr="atr_rmb_yuanb">&nbsp;</span>元<span atr="atr_rmb_jiaoa">&nbsp;</span><span atr="atr_rmb_jiaob">&nbsp;</span>角<span atr="atr_rmb_fena">&nbsp;</span><span atr="atr_rmb_fenb">&nbsp;</span>分</td>
+                    &nbsp;&nbsp;<span atr="atr_rmb_a8">&nbsp;</span><span atr="atr_rmb_b8">&nbsp;</span>佰<span atr="atr_rmb_a7">&nbsp;</span><span atr=""atr_rmb_b7>&nbsp;</span>拾<span atr="atr_rmb_a6">&nbsp;</span><span atr="atr_rmb_b6">&nbsp;</span>万<span atr="atr_rmb_a5">&nbsp;</span><span atr="atr_rmb_b5">&nbsp;</span>仟<span atr="atr_rmb_a4">&nbsp;</span><span atr="atr_rmb_b4">&nbsp;</span>佰<span atr="atr_rmb_a3">&nbsp;</span><span atr="atr_rmb_b3">&nbsp;</span>拾<span atr="atr_rmb_a2">&nbsp;</span><span atr="atr_rmb_b2">&nbsp;</span>元<span atr="atr_rmb_a1">&nbsp;</span><span atr="atr_rmb_b1">&nbsp;</span>角<span atr="atr_rmb_a0">&nbsp;</span><span atr="atr_rmb_b0">&nbsp;</span>分</td>
                 <td></td>
             </tr>
             </tbody>
@@ -91,15 +91,15 @@
                 <td class="data">分</td>
             </tr>
             <tr>
-                <td atr="atr_r_banw">￥</td>
-                <td atr="atr_r_shiw">2</td>
-                <td atr="atr_r_wan">0</td>
-                <td atr="atr_r_qian">0</td>
-                <td atr="atr_r_bai">0</td>
-                <td atr="atr_r_shi">0</td>
-                <td atr="atr_r_yuan">0</td>
-                <td atr="atr_r_jiao">0</td>
-                <td atr="atr_r_fen">0</td>
+                <td atr="atr_r_8"></td>
+                <td atr="atr_r_7"></td>
+                <td atr="atr_r_6"></td>
+                <td atr="atr_r_5"></td>
+                <td atr="atr_r_4"></td>
+                <td atr="atr_r_3"></td>
+                <td atr="atr_r_2"></td>
+                <td atr="atr_r_1"></td>
+                <td atr="atr_r_0"></td>
             </tr>
             <tr>
                 <td></td>
