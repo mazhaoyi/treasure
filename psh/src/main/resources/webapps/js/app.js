@@ -11,6 +11,9 @@ function print() {
 
 // 生成打印格式总入口
 function csv(){
+    // 清空打印区域
+    $("#print").html('');
+    // CSV文件转换成打印标签
     $("input[name=csvfile]").csv2arr(function(arr){
         // 循环整个CSV文件，获得每一行信息
         $.each( arr, function(i, line){
