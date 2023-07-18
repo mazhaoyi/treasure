@@ -28,7 +28,7 @@
         <java.version>1.8</java.version>
         <springboot.version>2.0.5.RELEASE</springboot.version>
         <fastjson.version>1.2.49</fastjson.version>
-        <common.beanutils.version>1.9.3</common.beanutils.version>
+        <common.beanutils.version>1.9.4</common.beanutils.version>
         <complier.version>1.3</complier.version>
         <common.collection4.version>4.1</common.collection4.version>
         <guava.version>20.0</guava.version>
